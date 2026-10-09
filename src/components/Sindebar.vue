@@ -4,54 +4,69 @@
 
 <template>
     <nav 
-    class="w-xs h-screen ">
-        <div class="flex flex-row items-center p-5">
+    class="w-xs h-screen p-5 bg-white flex flex-col justify-between ">
+        <div class="flex flex-row items-center space-x-3">
             <img 
             class="h-20"
             src="../assets/logoMaterna.svg" 
             alt="Uma mãe segurando um bebe dormindo com chupeta, onde ambos estão com os olhos fechados">
-            <div class="textoMaterna">
-                <h3>Materna</h3>
-                <p>Painel institucional</p>
+            <div>
+                <h3 class="text-[18px] font-bold text-slate-800 leading-tight">Materna</h3>
+                <p class="text-[#64748B]">Painel institucional</p>
             </div>
         </div>
-        <br>
-        <ul class="pl-10">
 
-            <li class="">
+        <hr class="w-[100%] h-[3px] rounded my-6 border-0 border-t-2 border-gray-200 ">
+
+        <ul class="space-y-2">
+
+            <li class="w-full">
                 <img src="" alt="">
                 <RouterLink 
                 to="/dashboard"
-                class="rounded-lg px-3 py-2 text-gray-600 hover:bg-pink-50 [&.router-link-exact-active]:bg-pink-100 [&.router-link-exact-active]:text-pink-700" >
+                class="flex items-center space-x-3 w-full rounded-xl px-4 py-3 text-slate-600 hover:bg-pink-50 transition-colors font-medium [&.router-link-exact-active]:bg-[#DE6771] [&.router-link-exact-active]:text-white" >
                     Dashboard
                 </RouterLink>
             </li>
 
-            <li class="">
+            <li class="w-full">
                 <img src="" alt="">
                 <p>Agenda</p>
             </li>
 
-            <li class="">
+            <li class="w-full">
                 <img src="" alt="">
                 <p>Doadoras</p>
             </li>            
 
-            <li class="">
+            <li class="w-full">
                 <img src="" alt="">
                 <p>jornadas</p>
             </li>
 
-            <li class="">
+            <li class="w-full">
                 <img src="" alt="">
                 <p>Campanhas</p>
             </li>          
 
-            <li class="">
+            <li class="w-full">
                 <img src="" alt="">
                 <p>Instituição</p>
             </li>            
             
         </ul>
+
+        <hr class="w-[100%] h-[3px] rounded my-6 border-0 border-t-2 border-gray-200 ">
+          <!-- aqui seria puxado pela api fazer depois-->
+        <div class="flex flex-row items-center space-x-3">
+            <img 
+            class="h-20"
+            src="../assets/logoMaterna.svg" 
+            alt="Uma mãe segurando um bebe dormindo com chupeta, onde ambos estão com os olhos fechados">
+            <div>
+                <h3 class="text-[18px] font-bold text-slate-800 leading-tight">Materna</h3>
+                <p class="text-[#64748B]">Painel institucional</p>
+            </div>
+        </div>
     </nav>
 </template>
