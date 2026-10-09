@@ -1,12 +1,8 @@
 <script setup>
-import Sindebar from './components/Sindebar.vue';
-import Dashboard from './views/Dashboard.vue';
-import Login from './views/Login.vue';
+import { RouterView } from 'vue-router';
 
 </script>
 
 <template>
-    <Login/>
+    <RouterView/>
 </template>
-
-<style scoped></style>

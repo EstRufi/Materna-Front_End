@@ -3,47 +3,55 @@
 </script>
 
 <template>
-    <nav>
-        <div class="logoMaterna">
-            <img src="../assets/logoMaterna.svg" alt="Uma mãe segurando um bebe dormindo com chupeta, onde ambos estão com os olhos fechados">
+    <nav 
+    class="w-xs h-screen ">
+        <div class="flex flex-row items-center p-5">
+            <img 
+            class="h-20"
+            src="../assets/logoMaterna.svg" 
+            alt="Uma mãe segurando um bebe dormindo com chupeta, onde ambos estão com os olhos fechados">
             <div class="textoMaterna">
                 <h3>Materna</h3>
                 <p>Painel institucional</p>
             </div>
         </div>
         <br>
-        <div class="navegador">
+        <ul class="pl-10">
 
-            <div class="dashboard">
+            <li class="">
                 <img src="" alt="">
-                <p>Dashboard</p>
-            </div>
+                <RouterLink 
+                to="/dashboard"
+                class="rounded-lg px-3 py-2 text-gray-600 hover:bg-pink-50 [&.router-link-exact-active]:bg-pink-100 [&.router-link-exact-active]:text-pink-700" >
+                    Dashboard
+                </RouterLink>
+            </li>
 
-            <div class="agenda">
+            <li class="">
                 <img src="" alt="">
                 <p>Agenda</p>
-            </div>
+            </li>
 
-            <div class="doadoras">
+            <li class="">
                 <img src="" alt="">
                 <p>Doadoras</p>
-            </div>            
+            </li>            
 
-            <div class="jornadas">
+            <li class="">
                 <img src="" alt="">
                 <p>jornadas</p>
-            </div>
+            </li>
 
-            <div class="campanhas">
+            <li class="">
                 <img src="" alt="">
                 <p>Campanhas</p>
-            </div>          
+            </li>          
 
-            <div class="instituicao">
+            <li class="">
                 <img src="" alt="">
                 <p>Instituição</p>
-            </div>            
+            </li>            
             
-        </div>
+        </ul>
     </nav>
 </template>
