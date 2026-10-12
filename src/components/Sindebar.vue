@@ -4,7 +4,7 @@
 
 <template>
     <nav 
-    class="w-xs h-screen p-5 bg-white flex flex-col ">
+    class="w-[320px] self-stretch p-5 bg-white flex flex-col border-r-2 border-gray-200">
         <div class="flex items-center gap-2 py-3">
             <img 
             class="h-20 "
@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <hr class="w-[100%] h-[3px] rounded mb-4 border-0 border-t-2 border-gray-200 ">
+        <hr class="-mx-5 my-4 border-0 border-t-2 border-gray-200 ">
 
         <ul class="space-y-2 flex-1">
 
@@ -76,7 +76,7 @@
             
         </ul>
 
-        <hr class="w-[100%] h-[3px] rounded my-6 border-0 border-t-2 border-gray-200 ">
+        <hr class="-mx-5 my-4 border-0 border-t-2 border-gray-200 ">
           <!-- aqui seria puxado pela api fazer depois-->
         <div class="flex flex-row items-center space-x-3">
             <img 
