@@ -4,10 +4,10 @@
 
 <template>
     <nav 
-    class="w-xs h-screen p-5 bg-white flex flex-col justify-between ">
-        <div class="flex flex-row items-center space-x-3">
+    class="w-xs h-screen p-5 bg-white flex flex-col ">
+        <div class="flex items-center gap-2 py-3">
             <img 
-            class="h-20"
+            class="h-20 "
             src="../assets/logoMaterna.svg" 
             alt="Uma mãe segurando um bebe dormindo com chupeta, onde ambos estão com os olhos fechados">
             <div>
@@ -16,42 +16,62 @@
             </div>
         </div>
 
-        <hr class="w-[100%] h-[3px] rounded my-6 border-0 border-t-2 border-gray-200 ">
+        <hr class="w-[100%] h-[3px] rounded mb-4 border-0 border-t-2 border-gray-200 ">
 
-        <ul class="space-y-2">
+        <ul class="space-y-2 flex-1">
 
             <li class="w-full">
                 <img src="" alt="">
                 <RouterLink 
-                to="/dashboard"
-                class="flex items-center space-x-3 w-full rounded-xl px-4 py-3 text-slate-600 hover:bg-pink-50 transition-colors font-medium [&.router-link-exact-active]:bg-[#DE6771] [&.router-link-exact-active]:text-white" >
+                    to="/dashboard"
+                    class="flex items-center space-x-3 w-full rounded-xl px-4 py-3 text-slate-600 hover:bg-pink-50 transition-colors font-medium [&.router-link-exact-active]:bg-[#DE6771] [&.router-link-exact-active]:text-white" >
                     Dashboard
                 </RouterLink>
             </li>
 
             <li class="w-full">
                 <img src="" alt="">
-                <p>Agenda</p>
+                <RouterLink 
+                    to="/agenda"
+                    class="flex items-center space-x-3 w-full rounded-xl px-4 py-3 text-slate-600 hover:bg-pink-50 transition-colors font-medium [&.router-link-exact-active]:bg-[#DE6771] [&.router-link-exact-active]:text-white" >
+                    Agenda
+                </RouterLink>
             </li>
 
             <li class="w-full">
                 <img src="" alt="">
-                <p>Doadoras</p>
+                <RouterLink 
+                    to="/doadoras"
+                    class="flex items-center space-x-3 w-full rounded-xl px-4 py-3 text-slate-600 hover:bg-pink-50 transition-colors font-medium [&.router-link-exact-active]:bg-[#DE6771] [&.router-link-exact-active]:text-white" >
+                    Doadoras
+                </RouterLink>
             </li>            
 
             <li class="w-full">
                 <img src="" alt="">
-                <p>jornadas</p>
+                <RouterLink 
+                    to="/jornadas"
+                    class="flex items-center space-x-3 w-full rounded-xl px-4 py-3 text-slate-600 hover:bg-pink-50 transition-colors font-medium [&.router-link-exact-active]:bg-[#DE6771] [&.router-link-exact-active]:text-white" >
+                    Jornadas
+                </RouterLink>
             </li>
 
             <li class="w-full">
                 <img src="" alt="">
-                <p>Campanhas</p>
+                <RouterLink 
+                    to="/campanhas"
+                    class="flex items-center space-x-3 w-full rounded-xl px-4 py-3 text-slate-600 hover:bg-pink-50 transition-colors font-medium [&.router-link-exact-active]:bg-[#DE6771] [&.router-link-exact-active]:text-white" >
+                    Campanhas
+                </RouterLink>
             </li>          
 
             <li class="w-full">
                 <img src="" alt="">
-                <p>Instituição</p>
+                <RouterLink 
+                    to="/instituicao"
+                    class="flex items-center space-x-3 w-full rounded-xl px-4 py-3 text-slate-600 hover:bg-pink-50 transition-colors font-medium [&.router-link-exact-active]:bg-[#DE6771] [&.router-link-exact-active]:text-white" >
+                    Instituição
+                </RouterLink>
             </li>            
             
         </ul>

@@ -3,6 +3,8 @@ import Sindebar from '@/components/Sindebar.vue';
 import { RouterView } from 'vue-router';
 </script>
 <template>
-    <Sindebar/>
-    <RouterView />
+    <div class="flex">
+        <Sindebar/>
+        <RouterView />
+    </div>
 </template>
