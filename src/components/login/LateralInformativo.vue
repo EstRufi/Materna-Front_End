@@ -12,26 +12,40 @@ defineProps({
 })
 </script>
 <template>
-    <div>
+    <div class="bg-red-300 pl-7 pr-7">
         <!-- header -->
-        <div>
-            <img src="../assets/logoMaterna.svg" alt="logo">
-            <h1></h1>
-            <p></p>
+        <div class="flex flex-row items-center gab-3">
+            <img 
+            src="/public/logoMaterna.svg" 
+            alt="logo" 
+            class="w-16 h-16 object-contain">
+
+            <div>
+                <h1 class="text-2x1 font-bold text-black-600">
+                    Materna
+                </h1>
+                <p class="text-[#ffffff] text-sm">
+                    Painelinstitucional
+                </p>
+            </div>
         </div>
 
         <!-- Informação -->
-        <div>
-            <h2>{{ titulo }}</h2>
-            <p>{{ descricao }}</p>
+        <div class="pl-10 pr-10 mt-60">
+            <h2 class="!text-[40px] text-justify text-[#ffffff] font-bold whitespace-pre-line">
+                {{ titulo }}
+            </h2>
+
+            <p class="text-[#ffffff] whitespace-pre-line">
+                {{ descricao }}</p>
         </div>
     
-        <div>
+        <div class="flex flex-col items-start gap-2">
             <div v-for="texto in informacoes" :key="texto">
                 <div>
-                    <img src="" alt="">
+                    <img src="/src/assets/telaLogin/Seta.svg" alt="Seta">
                 </div>
-                <p>{{ texto }}</p>
+                <p class="text-[#ffffff]">{{ texto }}</p>
             </div>
         </div>
         <br>
