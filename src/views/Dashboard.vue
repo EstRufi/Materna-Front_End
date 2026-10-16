@@ -6,7 +6,7 @@ import Sindebar from '@/components/layoutPrincipal/Sindebar.vue';
 </script>
 
 <template>
-<main class="w-full min-h-screen bg-[#F8FAFC]">
+<main class="w-full min-h-screen bg-[#F8FAFC] p-[25px]">
     <nav>
         <!--Pegar data mes e ano local em nome e o dia da semana-->
         <p>Data local, ver como pegar isso kkkkk</p>
