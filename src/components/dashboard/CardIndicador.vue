@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div class="grid grid-cols-1 min-[560px]:grid-cols-2 xl:grid-cols-4 gap-[24px] md:gap-[16px] w-full">
+    <div class="flex flex-wrap  gap-x-[24px] justify-between gap-y-4 w-full">
         <div class="h-[122px] w-[254px] flex flex-row bg-[#FFFFFF] border-2 border-[#D9D9D9] rounded-lg p-[24px] items-center">
             <img 
             src="@/assets/cardIndicado/agendamento.svg" 
