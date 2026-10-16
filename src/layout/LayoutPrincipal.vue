@@ -1,6 +1,7 @@
 <script setup>
-import Cabecario from '@/components/Cabecario.vue';
-import Sindebar from '@/components/Sindebar.vue';
+
+import Cabecario from '@/components/layoutPrincipal/Cabecario.vue';
+import Sindebar from '@/components/layoutPrincipal/Sindebar.vue';
 import { RouterView } from 'vue-router';
 </script>
 <template>

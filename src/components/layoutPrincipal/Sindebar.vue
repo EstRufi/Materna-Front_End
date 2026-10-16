@@ -8,7 +8,7 @@
         <div class="flex items-center gap-2 py-3">
             <img 
             class="h-20 "
-            src="../assets/logoMaterna.svg" 
+            src="@/assets/sindebar/logoMaterna.svg" 
             alt="Uma mãe segurando um bebe dormindo com chupeta, onde ambos estão com os olhos fechados">
             <div>
                 <h3 class="text-[18px] font-bold text-slate-800 leading-tight">Materna</h3>
@@ -81,7 +81,7 @@
         <div class="flex flex-row items-center space-x-3">
             <img 
             class="h-20"
-            src="../assets/logoMaterna.svg" 
+            src="@/assets/sindebar/logoMaterna.svg" 
             alt="Uma mãe segurando um bebe dormindo com chupeta, onde ambos estão com os olhos fechados">
             <div>
                 <h3 class="text-[18px] font-bold text-slate-800 leading-tight">Materna</h3>
