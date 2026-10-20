@@ -1,11 +1,9 @@
 <script setup>
 import { RouterView } from 'vue-router';
-import Login from './views/Login.vue';
-
+import Formulario from './components/login/Formulario.vue';
 
 </script>
 
 <template>
-    <!--<RouterView/> -->
-    <Login/>
+    <formulario/>
 </template>
