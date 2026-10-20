@@ -1,7 +1,21 @@
 <script setup>
+import AgendamentoSemanal from '@/components/dashboard/AgendamentoSemanal.vue';
 import CardIndicador from '@/components/dashboard/CardIndicador.vue';
 
     const hoje = new Date()
+    const horaAtual = new Date().getHours()
+
+    let saudacao = ''
+
+    if(horaAtual < 12){
+        saudacao = "Bom Dia"
+    }
+    else if(horaAtual <18){
+        saudacao = "Boa Tarde"
+    }
+    else{
+        saudacao = "Boa Noite"
+    }
 
     const diaSemana = hoje.toLocaleDateString('pt-BR',{
         weekday:'long'
@@ -25,11 +39,13 @@ import CardIndicador from '@/components/dashboard/CardIndicador.vue';
         <!--Pegar data mes e ano local em nome e o dia da semana-->
         <p>{{diaSemanaFormatado}},{{ dia }} de {{ mes }} de {{ ano }}</p>
         <!--Pega se é dia tarde ou noite e o nome do banco de leite-->
-        <h2>aaaaaaaaaaaaaa</h2>
+        <h2>{{saudacao}}</h2>
     </nav>
     
     <CardIndicador/>
-    
+    <div>
+        <AgendamentoSemanal/>
+    </div>
 </main>
 </template>
 
