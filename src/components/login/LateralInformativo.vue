@@ -15,14 +15,14 @@ defineProps({
    <div class="relative flex min-h-screen w-full flex-col bg-[#df7880] px-7">
 
         <!-- header -->
-        <div class="absolute top-7 left-10 flex items-center gap-3">
+        <div class="absolute top-4 left-10 flex items-center gap-2">
             <img 
             src="/public/logoMaterna.svg" 
             alt="logo" 
-            class="w-16 h-16 object-contain">
+            class="w-13 h-13 object-contain">
 
             <div>
-                <h1 class="text-2x1 font-bold text-black-600">
+                <h1 class="text-sm font-bold text-black-600">
                     Materna
                 </h1>
                 <p class="text-[#ffffff] text-sm">
@@ -32,7 +32,7 @@ defineProps({
         </div>
 
         <!-- Informação -->
-        <div class="mt-8 mb-16 w-full min-w-0 px-10">
+        <div class="mt-38 mb-7 w-full min-w-0 px-10">
             <h2 class="text-[40px] font-bold leading-tight text-left text-white whitespace-pre-line">
                 {{ titulo }}
             </h2>
@@ -41,16 +41,18 @@ defineProps({
                 {{ descricao }}</p>
         </div>
     
-        <div class="mt-6 flex flex-col items-start gap-3 text-left">
+        <div class="mt-0 w-full pl-10
+        flex flex-col items-start gap-3 ">
             <div 
             v-for="texto in informacoes" 
-            :key="texto"
+            :key="texto" 
             class="flex items-center gap-2">
 
-                <div>
+                <div class="flex h-6 w-6 shrink-0 items-center 
+                justify-center rounded-full bg-white/30">
                     <img src="/src/assets/telaLogin/Seta.svg"
                     alt="Seta" 
-                    class="h-4 w-4 shrink-0 object-contain">
+                    class="h-3 w-3 shrink-0 object-contain">
                     
                 </div>
                  <p class="text-sm leading-5 text-white">
@@ -68,8 +70,8 @@ defineProps({
                 </div>
             </div>
         </div>
-
         <br>
+
        <!-- Footer -->
     <div class="absolute bottom-6 left-10 right-10">
         <div
