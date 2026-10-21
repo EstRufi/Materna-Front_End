@@ -4,7 +4,7 @@
 
 <template>
     <div class="flex flex-wrap  gap-x-[24px] justify-between gap-y-4 w-full">
-        <div class="h-[122px] w-[254px] flex flex-row bg-[#FFFFFF] border-2 border-[#D9D9D9] rounded-lg p-[24px] items-center">
+        <div class="h-[122px] w-[254px] flex flex-row bg-[#FFFFFF] border-2 border-[#D9D9D9] rounded-[16px] p-[24px] items-center">
             <img 
             src="@/assets/cardIndicado/agendamento.svg" 
             alt="Icon de agendamento"
@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class=" h-[122px] w-[254px] flex flex-row bg-[#FFFFFF] border-2 border-[#D9D9D9] rounded-lg p-[24px] items-center">
+        <div class=" h-[122px] w-[254px] flex flex-row bg-[#FFFFFF] border-2 border-[#D9D9D9] rounded-[16px] p-[24px] items-center">
             <img 
             src="@/assets/cardIndicado/confirmados.svg" 
             alt="Icon de confirmados"
@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <div class="h-[122px] w-[254px] flex flex-row bg-[#FFFFFF] border-2 border-[#D9D9D9] rounded-lg p-[24px] items-center">
+        <div class="h-[122px] w-[254px] flex flex-row bg-[#FFFFFF] border-2 border-[#D9D9D9] rounded-[16px] p-[24px] items-center">
             <img 
             src="@/assets/cardIndicado/pendentes.svg" 
             alt="Icon de pendentes"
@@ -36,7 +36,7 @@
                 <p class="text-[12px] text-[#64748B]">Pendentes hoje</p>
             </div>
         </div>
-        <div class="h-[122px] w-[254px] flex flex-row bg-[#FFFFFF] border-2 border-[#D9D9D9] rounded-lg p-[24px] items-center">
+        <div class="h-[122px] w-[254px] flex flex-row bg-[#FFFFFF] border-2 border-[#D9D9D9] rounded-[16px] p-[24px] items-center">
             <img 
             src="@/assets/cardIndicado/cancelados.svg" 
             alt="Icon de Cancelados"
