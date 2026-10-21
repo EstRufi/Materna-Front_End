@@ -12,9 +12,10 @@ defineProps({
 })
 </script>
 <template>
-    <div class="bg-red-300 pl-7 pr-7">
+   <div class="relative flex min-h-screen w-full flex-col bg-[#df7880] px-7">
+
         <!-- header -->
-        <div class="flex flex-row items-center gab-3">
+        <div class="absolute top-7 left-10 flex items-center gap-3">
             <img 
             src="/public/logoMaterna.svg" 
             alt="logo" 
@@ -31,44 +32,60 @@ defineProps({
         </div>
 
         <!-- Informação -->
-        <div class="pl-10 pr-10 mt-60">
-            <h2 class="!text-[40px] text-justify text-[#ffffff] font-bold whitespace-pre-line">
+        <div class="mt-8 mb-16 w-full min-w-0 px-10">
+            <h2 class="text-[40px] font-bold leading-tight text-left text-white whitespace-pre-line">
                 {{ titulo }}
             </h2>
 
-            <p class="text-[#ffffff] whitespace-pre-line">
+            <p class="mt-4 text-sm leading-6 text-white whitespace-pre-line">
                 {{ descricao }}</p>
         </div>
     
-        <div class="flex flex-col items-start gap-2">
-            <div v-for="texto in informacoes" :key="texto">
+        <div class="mt-6 flex flex-col items-start gap-3 text-left">
+            <div 
+            v-for="texto in informacoes" 
+            :key="texto"
+            class="flex items-center gap-2">
+
                 <div>
-                    <img src="/src/assets/telaLogin/Seta.svg" alt="Seta">
+                    <img src="/src/assets/telaLogin/Seta.svg"
+                    alt="Seta" 
+                    class="h-4 w-4 shrink-0 object-contain">
+                    
                 </div>
-                <p class="text-[#ffffff]">{{ texto }}</p>
+                 <p class="text-sm leading-5 text-white">
+                    {{ texto }}</p>
             </div>
         </div>
         <br>
 
         <!-- Barra de progresso -->
-        <div v-if="progresso">
-            <div>
+        <div v-if="progresso" class="mt-8">
+            <div class="h-2 w-full overflow-hidden rounded-full bg-white/40">
+
+            </div class="h-full rounded-full bg-white">
                 <div :style="{width:`${(etapaAtual/quantidadeEtapas)*100}%`}">
                 </div>
             </div>
         </div>
 
         <br>
-        <!--Footer-->
-        <div>
-            <div :class="{
-                'justify-center':dadosFooter.length ===1,
-                'justify-between':dadosFooter.length ===2
-            }">
-                <p v-for="item in dadosFooter" :key="item">
-                    {{ item }}
-                </p>
-            </div>
+       <!-- Footer -->
+    <div class="absolute bottom-6 left-10 right-10">
+        <div
+            class="flex w-full"
+            :class="{
+                'justify-center': dadosFooter?.length === 1,
+                'justify-between': dadosFooter?.length === 2
+            }"
+        >
+            <p
+                v-for="item in dadosFooter"
+                :key="item"
+                class="text-xs text-white"
+            >
+                {{ item }}
+            </p>
         </div>
     </div>
 </template>
