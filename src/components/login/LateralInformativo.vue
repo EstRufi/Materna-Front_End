@@ -12,17 +12,17 @@ defineProps({
 })
 </script>
 <template>
-   <div class="relative flex min-h-screen w-full flex-col bg-[#df7880] px-7">
+   <div class="relative flex min-h-screen flex-1 flex-col bg-[#df7880] px-7">
 
         <!-- header -->
         <div class="absolute top-4 left-10 flex items-center gap-2">
             <img 
             src="/public/logoMaterna.svg" 
             alt="logo" 
-            class="w-13 h-13 object-contain">
+            class="w-16 h-16 object-contain">
 
             <div>
-                <h1 class="text-sm font-bold text-black-600">
+                <h1 class="text-lg font-bold text-[#ffffff] -600">
                     Materna
                 </h1>
                 <p class="text-[#ffffff] text-sm">
@@ -32,12 +32,12 @@ defineProps({
         </div>
 
         <!-- Informação -->
-        <div class="mt-38 mb-7 w-full min-w-0 px-10">
+        <div class="mt-60 mb-7 w-full min-w-0 px-10">
             <h2 class="text-[40px] font-bold leading-tight text-left text-white whitespace-pre-line">
                 {{ titulo }}
             </h2>
 
-            <p class="mt-4 text-sm leading-6 text-white whitespace-pre-line">
+            <p class="mt-4 text-base leading-6 text-white whitespace-pre-line">
                 {{ descricao }}</p>
         </div>
     
@@ -55,7 +55,7 @@ defineProps({
                     class="h-3 w-3 shrink-0 object-contain">
                     
                 </div>
-                 <p class="text-sm leading-5 text-white">
+                 <p class="text-base leading-5 text-white">
                     {{ texto }}</p>
             </div>
         </div>
