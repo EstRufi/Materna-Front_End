@@ -1,6 +1,7 @@
 <script setup>
 import AgendamentoSemanal from '@/components/dashboard/AgendamentoSemanal.vue';
 import CardIndicador from '@/components/dashboard/CardIndicador.vue';
+import DoadorasJornada from '@/components/dashboard/DoadorasJornada.vue';
 
     const hoje = new Date()
     const horaAtual = new Date().getHours()
@@ -43,8 +44,14 @@ import CardIndicador from '@/components/dashboard/CardIndicador.vue';
     </nav>
     
     <CardIndicador/>
-    <div>
+    <div class="flex flex-row items-stretch gap-6 w-full mt-[30px]">
+        <div class="flex-1 min-w-0">
         <AgendamentoSemanal/>
+    </div>
+
+    <div class="flex-1 min-w-0">
+        <DoadorasJornada/>
+    </div>
     </div>
 </main>
 </template>
