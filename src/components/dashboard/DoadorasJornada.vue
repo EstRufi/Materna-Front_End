@@ -19,22 +19,22 @@
 </script>
 
 <template>
-    <div class="max-w-[346px] min-h-[352px] rounded-[16px] bg-white p-[24px] border-2 border-gray-200">
+    <div class=" w-full max-w-[346px]  min-h-[352px] box-border rounded-[16px] bg-white p-[24px] border-2 border-gray-200">
        <h3 class="text-[18px] font-bold mb-[5px]">Doadoras em jornada</h3>
-       <div class="flex items-center">
+       <div class="flex items-center gap-[8px]">
             <p class="text-[30px] font-bold">{{ jornadaDoadoras.length }}</p> 
-            <span class="gap-x-[5px]">Jornadas em andamento</span>
+            <span class="text-[12px] text-[#64748B]">Jornadas em andamento</span>
         </div>
         
 
-        <div v-for="doadoras in jornadaDoadoras">
-            <div class="flex">
+        <div v-for="doadoras in jornadaDoadoras" class="pb-[16px]">
+            <div class="flex justify-between pb-[6px] text-[14px]">
                 <p>{{ doadoras.nome }}</p>
-                <span>{{validarPorcentagem(doadoras.progresso) }}%</span>
+                <span class="text-[#64748B]">{{validarPorcentagem(doadoras.progresso) }}%</span>
             </div>
 
-            <div class="w-full h-[6px] bg-[#E2E8F0] rounded-full">
-                <div class="h-full bg-[#D96572] rounded-full "
+            <div class="w-full h-[6px] bg-[#E2E8F0] rounded-full ">
+                <div class="h-full bg-[#D96572] rounded-full"
                     :style="{width: `${validarPorcentagem(doadoras.progresso)}%`}"></div>
             </div>
         </div>

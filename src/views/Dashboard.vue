@@ -35,7 +35,7 @@ import DoadorasJornada from '@/components/dashboard/DoadorasJornada.vue';
 </script>
 
 <template>
-<main class="w-full min-h-screen bg-[#F8FAFC] p-[30px]">
+<main class="w-full min-h-screen bg-[#F8FAFC] p-[30px] ">
     <nav>
         <!--Pegar data mes e ano local em nome e o dia da semana-->
         <p>{{diaSemanaFormatado}},{{ dia }} de {{ mes }} de {{ ano }}</p>
@@ -44,14 +44,14 @@ import DoadorasJornada from '@/components/dashboard/DoadorasJornada.vue';
     </nav>
     
     <CardIndicador/>
-    <div class="flex flex-row items-stretch gap-6 w-full mt-[30px]">
-        <div class="flex-1 min-w-0">
+    <div class="flex justify-between flex-row items-stretch gap-6 w-full mt-[30px]">
+        <div class="w-full max-w-[720px] min-w-0">
         <AgendamentoSemanal/>
     </div>
 
-    <div class="flex-1 min-w-0">
-        <DoadorasJornada/>
-    </div>
+        <div class="w-full max-w-[346px] min-w-0 flex">
+            <DoadorasJornada/>
+        </div>
     </div>
 </main>
 </template>
