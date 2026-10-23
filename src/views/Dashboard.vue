@@ -1,4 +1,5 @@
 <script setup>
+import AgendaHoje from '@/components/dashboard/AgendaHoje.vue';
 import AgendamentoSemanal from '@/components/dashboard/AgendamentoSemanal.vue';
 import CardIndicador from '@/components/dashboard/CardIndicador.vue';
 import DoadorasJornada from '@/components/dashboard/DoadorasJornada.vue';
@@ -47,11 +48,15 @@ import DoadorasJornada from '@/components/dashboard/DoadorasJornada.vue';
     <div class="flex justify-between flex-row items-stretch gap-6 w-full mt-[30px]">
         <div class="w-full max-w-[720px] min-w-0">
         <AgendamentoSemanal/>
-    </div>
+        </div>
 
         <div class="w-full max-w-[346px] min-w-0 flex">
             <DoadorasJornada/>
         </div>
+
+    </div>
+    <div>
+        <AgendaHoje/>
     </div>
 </main>
 </template>
