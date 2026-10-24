@@ -1,4 +1,5 @@
 import LayoutPrincipal from '@/layout/LayoutPrincipal.vue'
+import Campanha from '@/views/Campanha.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import Login from '@/views/Login.vue'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -18,6 +19,13 @@ const router = createRouter({
       component: Dashboard,
       meta:{
         titulo: "Dashboard"
+      }
+    },
+        {
+      path: 'campanha',
+      component: Campanha,
+      meta:{
+        titulo: "Campanha"
       }
     },
   

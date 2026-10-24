@@ -26,7 +26,7 @@
                     to="/dashboard"
                     class="group flex items-center space-x-3 w-full rounded-xl px-4 py-3 text-slate-600 hover:bg-materna transition-colors font-medium [&.router-link-exact-active]:bg-[#DE6771] [&.router-link-exact-active]:text-white" >
                     <img 
-                        class="w-[30px] h-[25px] pr-[12px] group-[.router-link-exact-active]:brightness-0 group-[.router-link-exact-active]:invert"
+                        class="w-[30px] h-[25px] pr-[12px] brightness-0 opacity-60 group-[.router-link-exact-active]:brightness-0 group-[.router-link-exact-active]:invert"
                         src="@/assets/sindebar/dashborard.svg" 
                         alt="um icon com 4 quadados meio aredondados">
                     Dashboard
@@ -71,7 +71,7 @@
 
             <li class="w-full">
                 <RouterLink 
-                    to="/campanhas"
+                    to="/campanha"
                     class="group flex items-center space-x-3 w-full rounded-xl px-4 py-3 text-slate-600 hover:bg-pink-50 transition-colors font-medium [&.router-link-exact-active]:bg-[#DE6771] [&.router-link-exact-active]:text-white" >
                     <img 
                         class="w-[30px] h-[25px] pr-[12px] group-[.router-link-exact-active]:brightness-0 group-[.router-link-exact-active]:invert"
