@@ -2,6 +2,9 @@
 
 @theme {
     --font-sans: "Plus Jakarta Sans", sans-serif;
+
+    --color-texto-claro: #64748B;
+    --color-materna: #DE6B72;
   }
   
   body {

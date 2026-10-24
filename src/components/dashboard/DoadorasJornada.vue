@@ -23,14 +23,14 @@
        <h3 class="text-[18px] font-bold mb-[5px]">Doadoras em jornada</h3>
        <div class="flex items-center gap-[8px]">
             <p class="text-[30px] font-bold">{{ jornadaDoadoras.length }}</p> 
-            <span class="text-[12px] text-[#64748B]">Jornadas em andamento</span>
+            <span class="text-[12px] text-texto-claro">Jornadas em andamento</span>
         </div>
         
 
         <div v-for="doadoras in jornadaDoadoras" class="pb-[16px]">
             <div class="flex justify-between pb-[6px] text-[14px]">
                 <p>{{ doadoras.nome }}</p>
-                <span class="text-[#64748B]">{{validarPorcentagem(doadoras.progresso) }}%</span>
+                <span class="text-texto-claro">{{validarPorcentagem(doadoras.progresso) }}%</span>
             </div>
 
             <div class="w-full h-[6px] bg-[#E2E8F0] rounded-full ">
@@ -40,7 +40,7 @@
         </div>
         <RouterLink
             to=""
-            class="text-[#D96572] hover:underline">
+            class="text-materna hover:underline">
                 Ver todas ↗
         </RouterLink>
     </div>

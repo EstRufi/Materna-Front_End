@@ -44,7 +44,7 @@ const corPeloPercentual = computed(() => {
     else if(percentualDaSemana.value >0)
         return 'text-[#57BA6A]'
     else if(percentualDaSemana.value <0)
-        return 'text-[#DE6B72]'
+        return 'text-materna'
     else
         return 'text-gray-400'
 })
@@ -68,7 +68,7 @@ const maiorQuantidade = Math.max(...agendamento.map(item => item.quantidade))
         <div class="h-[220px] flex flex-row gap-[8px]">
             <div v-for="itemAgendamento in agendamento" :key="itemAgendamento.dia"
             class=" flex-1 h-full flex flex-col items-center justify-end">
-                <div class="w-full max-w-[90px] bg-[#D96572] rounded-tl-[2px] rounded-tr-[2px]" 
+                <div class="w-full max-w-[90px] bg-materna rounded-tl-[2px] rounded-tr-[2px]" 
                 :style="{
                 height: `${(itemAgendamento.quantidade / maiorQuantidade) * 100}%`
                 }">
@@ -84,7 +84,7 @@ const maiorQuantidade = Math.max(...agendamento.map(item => item.quantidade))
                 :key="itemAgendamento.dia"
                 class="flex-1 text-center"
             >
-                <span class="text-[#64748B]">{{ itemAgendamento.dia }}</span>
+                <span class="text-texto-claro">{{ itemAgendamento.dia }}</span>
             </div>
         </div>
     </div>

@@ -17,6 +17,14 @@ import { computed } from 'vue'
             nome: "Sofia Michele",
             tipo: "Orientação inicial",
             status: "Pendente"
+        },
+        {
+            id: 2,
+            data: "2026-10-24",
+            horario: "11:00:00",
+            nome: "Sof",
+            tipo: "Orientação inicial",
+            status: "Cancelado"
         }
     ]
 
@@ -47,45 +55,72 @@ import { computed } from 'vue'
             }).replace('.', '').toUpperCase()
         }
     }
+
+    
+    function classesStatus(status) {
+        const cores = {
+            Confirmado: 'bg-[#F0FDF4] text-[#78DE6B] border-1 border-[#78DE6B]',
+            Pendente: 'bg-[#FFF7ED] text-[#C2410C] border-1 border-[#FED7AA]',
+            Cancelado: 'bg-red-50 text-red-600 border border-red-300'
+        }
+
+        return cores[status] || 'bg-gray-50 text-gray-600 border-gray-300'
+    }
+
+    function corBolinha(status) {
+        const cores = {
+            Confirmado: 'bg-[#78DE6B]',
+            Pendente: 'bg-[#F97316]',
+            Cancelado: 'bg-red-500'
+        }
+        return cores[status] || 'bg-gray-500'
+    }
 </script>
  <template>
-    <footer class="w-full  bg-white border-2 border-gray-200">
-        <div>
-            <h2>Agenda de hoje</h2>
+    <footer class="w-full rounded-[16px] bg-white border-2 border-gray-200">
+        <div class="p-[20px]">
+            <h2 class="text-[18px] font-bold">Agenda de hoje</h2>
             <RouterLink
                 to=""
-                class="">
+                class="text-[#D96572] hover:underline">
                     Abrir agenda ↗
             </RouterLink>
         </div>
+        <hr class="border-1 border-gray-100 ">
         <div>
             <div 
                 v-for="item in agendaDehoje" 
                 :key="item.id"
-                class="">
+                class="flex p-[16px]  border-y border-gray-100">
 
-                <div>
-                    <span>
+                <div class="flex flex-col justify-center items-center w-[48px] h-[48px] rounded-[16px] bg-[#F1F5F9] mr-[16px] ">
+                    <span class="text-[14px] font-bold">
                         {{ formatarData(item.data).dia }}
                     </span>
-                    <span>
+                    <span class="text-[10px] text-[#64748B] font-bold">
                         {{ formatarData(item.data).mes }}
                     </span>
                 </div>
 
-                <div>
-                    <div>
-                        <div>
+                <div class="flex w-full items-center justify-between">
+                    <div class="">
+                        <div class="flex text-[16px] font-bold ">
                             <p>{{ item.horario.slice(0, 5) }}</p>
-                            <p>{{ item.nome }}</p>
+                            <p class="pl-[12px]">{{ item.nome }}</p>
                         </div>
-                        <p>{{ item.tipo }}</p>
+                        <p class="text-texto-claro text-[14px]">{{ item.tipo }}</p>
                     </div>
-                    <span>
+                    <span 
+                    class="flex items-center justify-center gap-[6px] w-full max-w-[103px] py-[4px] px-[10px] rounded-full"
+                    :class="classesStatus(item.status)" >
+                        <div 
+                        class="w-[6px] h-[6px] rounded-full shrink-0"
+                        :class="corBolinha(item.status)"></div>
                         {{ item.status }}
                     </span>
                 </div>
             </div>
+            
         </div>
     </footer>
  </template>

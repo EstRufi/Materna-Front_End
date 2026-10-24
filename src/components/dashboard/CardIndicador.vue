@@ -11,7 +11,7 @@
             class="h-[20px] pr-[16px]">
             <div>
                 <h3 class="font-bold text-[24px] ">6</h3>
-                <p class="text-[12px] text-[#64748B]">Agendamentos hoje</p>
+                <p class="text-[12px] text-texto-claro">Agendamentos hoje</p>
             </div>
         </div>
 
@@ -22,7 +22,7 @@
             class="h-[20px] pr-[16px]">
             <div>
                 <h3 class="font-bold text-[24px]">6</h3>
-                <p class="text-[12px] text-[#64748B]">Confirmados hoje</p>
+                <p class="text-[12px] text-texto-claro">Confirmados hoje</p>
             </div>
         </div>
 
@@ -33,7 +33,7 @@
             class="h-[20px] pr-[16px]">
             <div>
                 <h3 class="font-bold text-[24px]">6</h3>
-                <p class="text-[12px] text-[#64748B]">Pendentes hoje</p>
+                <p class="text-[12px] text-texto-claro">Pendentes hoje</p>
             </div>
         </div>
         <div class="h-[122px] w-[254px] flex flex-row bg-[#FFFFFF] border-2 border-[#D9D9D9] rounded-[16px] p-[24px] items-center">
@@ -43,7 +43,7 @@
             class="h-[20px] pr-[16px]">
             <div>
                 <h3 class="font-bold text-[24px]">6</h3>
-                <p class="text-[12px] text-[#64748B]">Cancelados</p>
+                <p class="text-[12px] text-texto-claro">Cancelados</p>
             </div>
         </div>
     </div> 

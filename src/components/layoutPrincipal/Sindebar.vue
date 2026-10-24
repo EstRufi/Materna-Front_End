@@ -25,7 +25,7 @@
                 <img src="" alt="">
                 <RouterLink 
                     to="/dashboard"
-                    class="flex items-center space-x-3 w-full rounded-xl px-4 py-3 text-slate-600 hover:bg-pink-50 transition-colors font-medium [&.router-link-exact-active]:bg-[#DE6771] [&.router-link-exact-active]:text-white" >
+                    class="flex items-center space-x-3 w-full rounded-xl px-4 py-3 text-slate-600 hover:bg-materna transition-colors font-medium [&.router-link-exact-active]:bg-[#DE6771] [&.router-link-exact-active]:text-white" >
                     Dashboard
                 </RouterLink>
             </li>

@@ -39,7 +39,7 @@ import DoadorasJornada from '@/components/dashboard/DoadorasJornada.vue';
 <main class="w-full min-h-screen bg-[#F8FAFC] p-[30px] ">
     <nav>
         <!--Pegar data mes e ano local em nome e o dia da semana-->
-        <p>{{diaSemanaFormatado}},{{ dia }} de {{ mes }} de {{ ano }}</p>
+        <p class="text-texto-claro text-[14px]">{{diaSemanaFormatado}},{{ dia }} de {{ mes }} de {{ ano }}</p>
         <!--Pega se é dia tarde ou noite e o nome do banco de leite-->
         <h2>{{saudacao}}</h2>
     </nav>
@@ -55,7 +55,7 @@ import DoadorasJornada from '@/components/dashboard/DoadorasJornada.vue';
         </div>
 
     </div>
-    <div>
+    <div class="mt-[30px]">
         <AgendaHoje/>
     </div>
 </main>
