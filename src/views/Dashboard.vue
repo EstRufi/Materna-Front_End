@@ -37,7 +37,7 @@ import DoadorasJornada from '@/components/dashboard/DoadorasJornada.vue';
 
 <template>
 <main class="w-full min-h-screen bg-[#F8FAFC] p-[30px] ">
-    <nav>
+    <nav class="mb-[30px]">
         <!--Pegar data mes e ano local em nome e o dia da semana-->
         <p class="text-texto-claro text-[14px]">{{diaSemanaFormatado}},{{ dia }} de {{ mes }} de {{ ano }}</p>
         <!--Pega se é dia tarde ou noite e o nome do banco de leite-->
