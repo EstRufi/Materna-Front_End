@@ -6,3 +6,16 @@ export async function listarCampanha(){
 
     return resposta.response.campanha
 }
+
+export async function cadastrarCampanha(dados){
+
+    const resposta = await requisicaoApi('campanha',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dados),
+    })
+
+    return resposta
+}
