@@ -31,7 +31,7 @@
         
         <div class="p-[20px]">
             <header class="flex justify-between mb-[12px]">
-                <h2 class="text-[16px] font-bold">{{ campanha.titulo }}</h2>
+                <h2 class="text-[16px] font-bold truncate" :title="campanha.titulo">{{ campanha.titulo }}</h2>
 
                <span
                 class="h-[26px] flex items-center justify-center gap-[6px] py-[4px] px-[10px] rounded-full"
@@ -50,11 +50,11 @@
                 </span>
             </header>
 
-            <p class="text-[14px] text-texto-claro mb-[20px]">{{ campanha.descricao }}</p>
+            <p class="text-[14px] text-texto-claro mb-[20px] truncate" :title="campanha.descricao">{{ campanha.descricao }}</p>
         </div>
         <hr class="mx-[20px] border-1 border-gray-100 ">
         <div class="p-[20px]">
-            <div class="flex gap-[8px] text-texto-claro text-[13px] mb-[10px]"> 
+            <div class="flex gap-[8px] text-texto-claro text-[13px] mb-[30px]"> 
                 <img src="@/assets/sindebar/agenda.svg" alt="">
 
                 <time :datetime="campanha.data_inicio">

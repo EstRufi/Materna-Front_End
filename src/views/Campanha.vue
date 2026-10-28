@@ -4,7 +4,7 @@ import CardCampanha from '@/components/campanha/CardCampanha.vue';
 const campanha = [
     {   
         id: 1,
-        titulo: 'Semana do Leite Humano',
+        titulo: 'Esta frase foi criada exatamente com cem caracteres para o teu teste de contagem.',
         descricao: 'Ações de incentivo à doação.',
         foto: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREKOSQbuJ5Hzh0ekE0TljB7kmeX5xIJHhhS0m7HWh-LQ&s=10',
         data_inicio: '2026-11-01',
