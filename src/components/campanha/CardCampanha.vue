@@ -18,7 +18,10 @@
     })
 
     function formatarData(data) {
-        const [ano, mes, dia] = data.split('-')
+        if (!data) return ''
+        const dataSemHorario = data.split('T')[0]
+
+        const [ano, mes, dia] = dataSemHorario.split('-')
         return `${dia}/${mes}/${ano}`
     }
 </script>
