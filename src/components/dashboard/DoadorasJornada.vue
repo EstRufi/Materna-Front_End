@@ -19,7 +19,7 @@
 </script>
 
 <template>
-    <div class=" w-full max-w-[346px]  min-h-[352px] box-border rounded-[16px] bg-white p-[24px] border-2 border-gray-200">
+    <div class=" w-full max-w-[350px] flex flex-col justify-around min-h-[352px] box-border rounded-[16px] bg-white p-[24px] border-2 border-gray-200">
        <h3 class="text-[18px] font-bold mb-[5px]">Doadoras em jornada</h3>
        <div class="flex items-center gap-[8px]">
             <p class="text-[30px] font-bold">{{ jornadaDoadoras.length }}</p> 
