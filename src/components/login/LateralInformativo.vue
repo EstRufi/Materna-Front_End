@@ -32,16 +32,16 @@ defineProps({
         </div>
 
         <!-- Informação -->
-        <div class="mt-100 mb-10 w-full min-w-0 px-30 ">
-            <h2 class="text-[60px] font-bold leading-tight text-left text-white whitespace-pre-line mb-10">
+        <div class="mt-70 mb-10 w-full min-w-0 px-10 ">
+            <h2 class="text-[40px] font-bold leading-tight text-left text-white whitespace-pre-line mb-6">
                 {{ titulo }}
             </h2>
 
-            <p class="mt-4 text-[20px] leading-6 text-white whitespace-pre-line">
+            <p class="mt-4 text-[18px] leading-6 text-white whitespace-pre-line">
                 {{ descricao }}</p>
         </div>
     
-        <div class="mt-0 w-full pl-30
+        <div class="mt-0 w-full pl-10
         flex flex-col items-start gap-3 ">
             <div 
             v-for="texto in informacoes" 
@@ -55,8 +55,9 @@ defineProps({
                     class="h-3 w-3 shrink-0 object-contain">
                     
                 </div>
-                 <p class="text-[20px] leading-5 text-white">
-                    {{ texto }}</p>
+                 <p class="text-lg leading-5 text-white">
+                    {{ texto }}
+                </p>
             </div>
         </div>
         <br>
