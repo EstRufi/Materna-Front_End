@@ -33,7 +33,8 @@ defineProps({
 
         <!-- Informação -->
         <div class="mt-70 mb-10 w-full min-w-0 px-10 ">
-            <h2 class="text-[40px] font-bold leading-tight text-left text-white whitespace-pre-line mb-6">
+            <h2 class="text-[40px] font-bold leading-tight text-left 
+            text-white whitespace-pre-line mb-6">
                 {{ titulo }}
             </h2>
 
