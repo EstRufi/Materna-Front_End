@@ -27,7 +27,7 @@
 </script>
 <!-- COMO QUE VOU COLOCAR A REGIÃO SE NÃO TEM NA CAMPANHA-->
 <template>
-    <article class="w-[346px] h-[383px] flex flex-col bg-[#FFFFFF] border-3 border-[#D9D9D9] rounded-[16px]">
+    <article class="w-[346px] h-[383px] flex flex-col bg-[#FFFFFF] border-2 border-borda rounded-[16px]">
         <div class="h-[128px] w-full flex items-center justify-center rounded-t-xl">
             <img class="h-full w-full object-cover rounded-t-xl" :src="campanha.foto" alt="">
         </div>

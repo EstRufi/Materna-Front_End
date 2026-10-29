@@ -10,13 +10,13 @@ import DoadorasJornada from '@/components/dashboard/DoadorasJornada.vue';
     let saudacao = ''
 
     if(horaAtual < 12){
-        saudacao = "Bom Dia"
+        saudacao = "Bom Dia,"
     }
     else if(horaAtual <18){
-        saudacao = "Boa Tarde"
+        saudacao = "Boa Tarde,"
     }
     else{
-        saudacao = "Boa Noite"
+        saudacao = "Boa Noite,"
     }
 
     const diaSemana = hoje.toLocaleDateString('pt-BR',{
@@ -41,7 +41,7 @@ import DoadorasJornada from '@/components/dashboard/DoadorasJornada.vue';
         <!--Pegar data mes e ano local em nome e o dia da semana-->
         <p class="text-texto-claro text-[14px]">{{diaSemanaFormatado}},{{ dia }} de {{ mes }} de {{ ano }}</p>
         <!--Pega se é dia tarde ou noite e o nome do banco de leite-->
-        <h2>{{saudacao}}</h2>
+        <h2>{{saudacao}} Banco de Leite</h2>
     </nav>
     
     <CardIndicador/>
