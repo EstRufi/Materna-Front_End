@@ -45,10 +45,11 @@ onMounted(async () => {
 
 <template>
     <main class="bg-[#F8FAFC] p-[30px] w-full min-h-screen">
-        <nav class="flex justify-between gap-[10px]">
+        <nav class="flex justify-between gap-[10px]"
+            v-if="!mostrarCadastroCampanha">
             <span class="text-[16px] text-texto-claro">Divulgue campanhas de incentivo à doação para as doadoras no aplicativo.</span>
             <button 
-            v-if="!mostrarCadastroCampanha"
+            
             @click="mostrarCadastroCampanha = true"
             class="group bg-materna px-[16px] py-[8px] flex justify-center items-center rounded-[8px] gap-[8px] hover:bg-pink-50 hover:text-slate-600 transition-colors">
                 <img class="h-[16px] w-[14px] transition-all group-hover:brightness-0 group-hover:opacity-60" src="@/assets/campanha/+.svg" alt="Icon de +">
@@ -62,9 +63,7 @@ onMounted(async () => {
         enter-active-class="transition-all duration-300 ease-out"
         enter-from-class="opacity-0 -translate-y-2"
         enter-to-class="opacity-100 translate-y-0"
-        leave-active-class="transition-all duration-150 ease-in"
-        leave-from-class="opacity-100 translate-y-0"
-        leave-to-class="opacity-0 -translate-y-2">
+        >
 
             <CadastroCampanha
                 v-if="mostrarCadastroCampanha"
