@@ -15,12 +15,17 @@ import LateralCadastro from '@/components/cadastroInstitucional/LateralCadastro.
             :informacoes="[
                 'Gestão simplificada e automatizada de coletas',
                 'Canal direto e seguro com mães doadoras',
-                'Relatórios em conformidade com normas sanitárias',
+                `Relatórios em conformidade com normas 
+                sanitárias`,
                 'Suporte dedicado para equipes e técnicos'
             ]"
                 :progresso="true"
+                :etapaAtual="1"
+                :quantidadeEtapas="4"
 
-                dados-footer="Ambiente Seguro Institucional",
+                :dados-footer="['Ambiente Seguro Institucional',
+                'Redes BLH Brasil'
+            ]"
         />
     
         <div class="flex-1 min-w-0">

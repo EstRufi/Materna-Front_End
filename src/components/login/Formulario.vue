@@ -29,9 +29,8 @@ function fazerLogin(){
     <div class="w-full min-h-screen flex flex-col 
      px-3 gap-3 text-left pr-10 mt-60 px-60">
 
-        
         <!-- Header -->
-         <div class="mb-7 w-full max-w-[360px]">
+        <div class="mb-7 w-full max-w-[360px]">
             <div class="flex h-8 w-38 rounded-full flex items-center px-4"
                 style="background-color: #F5E6E9;">
 
@@ -73,7 +72,7 @@ function fazerLogin(){
         <!-- Email -->
         <div class="w-90 max-w-[520px] space-y-4">
             <div class="flex flex-col gap-1">
-                <label class="text-[14px] text gray-700">
+                <label class="text-[14px] text-gray-700">
                     E-mail
                 </label>
 

@@ -4,6 +4,7 @@ import { RouterView } from 'vue-router';
 //import Login from './views/Login.vue';
 import LateralCadastro from './components/cadastroInstitucional/LateralCadastro.vue';
 import CadastroInstitucional from './views/CadastroInstitucional.vue';
+import CriacaoConta from './components/cadastroInstitucional/CriacaoConta.vue';
 </script>
 
 <template>
