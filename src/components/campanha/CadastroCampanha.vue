@@ -69,7 +69,26 @@ import { ref } from 'vue';
                 </div>
             </div>
 
-            <div class="min-h-[311px] bg-black w-full max-w-[276px]">aa</div>
+            <div class="min-h-[311px] w-full max-w-[276px]">
+                <div class="w-[257px] h-[232px] bg-[#FDF4F4]/60 px-[20px] py-[33px] flex flex-col gap-[12px] justify-center items-center rounded-[16px] border-2 border-dashed border-[#FCA5A5]">
+                    <div class=" w-[56px] h-[56px] bg-[#FBE9E9] flex justify-center rounded-full">
+                        <img class="w-[28px]"
+                        style="filter: brightness(0) saturate(100%) invert(53%) sepia(19%) saturate(1300%) hue-rotate(315deg) brightness(90%) contrast(90%);"
+                        src="@/assets/sindebar/campanha.svg" alt="icon de auto-falante">
+                    </div>
+                    <button 
+                    class="w-full max-w-[213px] h-[32px] bg-[#E68784] text-[12px] text-white px-[16px] py-[8px] rounded-[12px]"
+                    >Adicionar Imagem</button>
+                </div>
+                <div class="flex justify-between mt-5">
+                    <button
+                    class="w-[87px] h-[36px] px-[16px] py-[8px] bg-[#DE6B72]/10 text-[#374151] text-[14px] rounded-[6px]"
+                    @click="emit('fechar')">Cancelar</button>
+                    <button
+                    class="h-[36px] px-[16px] py-[8px] bg-materna text-white text-[14px] rounded-[6px]"
+                    >Publicar campanha</button>
+                </div>
+            </div>
         </section>
     </article>
 </template>
