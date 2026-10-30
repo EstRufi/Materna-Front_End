@@ -22,7 +22,7 @@ import { ref } from 'vue';
 </script>
 
 <template>
-    <article class="p-[20px] w-full mim-w-[1086px] h-full min-h-[401px] bg-white border-2 border-borda rounded-[12px]">
+    <article class="p-[20px] w-full mim-w-[1086px] min-h-[401px] bg-white border-2 border-borda rounded-[12px]">
         <header class="flex justify-between mb-[24px]">
             <h1 class="text-[16px] font-bold">Nova campanha</h1>
             <button
@@ -35,7 +35,7 @@ import { ref } from 'vue';
         </header>
 
         <section class="flex gap-2 justify-between flex-wrap">
-            <div class="w-full max-w-[767px] flexflex-col gap-3">
+            <div class="w-full max-w-[767px] flex flex-col gap-3">
                 
                     <label class="text-[14px]">Titulo</label>
                     <textarea 
