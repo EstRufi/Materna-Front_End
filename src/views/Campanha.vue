@@ -77,7 +77,8 @@ onMounted(async () => {
             <CardCampanha 
             v-for="itensCampanha in campanha"
             :key="itensCampanha.id"
-            :campanha="itensCampanha"/>
+            :campanha="itensCampanha"
+            @editar="mostrarCadastroCampanha = true"/>
         </div>
     </main>
 </template>

@@ -9,6 +9,7 @@
 //   "id_instituicao": 1,
 //   "id_funcionario": 1
 // }
+ const emit = defineEmits(['editar'])
 
     defineProps({
         campanha:{
@@ -73,6 +74,7 @@
 
             <footer class="flex justify-between ">
                 <button
+                @click="emit('editar')"
                     class="p-2 flex items-center justify-center gap-2 w-[87px] h-[36px] rounded-lg bg-materna text-white text-[14px] font-medium hover:bg-pink-50 hover:text-slate-600 transition-colors">
                     <img
                         class="w-[20px] h-[20px] transition-all group-hover:brightness-0 group-hover:opacity-60"
