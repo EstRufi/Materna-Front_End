@@ -1,3 +1,4 @@
+import { enviarImagemCloudinary } from '@/services/cloudinaryService'
 import { ref } from 'vue'
 
 export function urlDaImagem() {
@@ -22,12 +23,19 @@ export function urlDaImagem() {
         receberImagem(imagem)
     }
 
+    async function enviarImagem() {
+        const foto = await enviarImagemCloudinary(arquivoImagem.value)
+    
+        return foto
+    }
+
     return {
         campoArquivo,
         arquivoImagem,
         previewImagem,
         abrirSeletorImagem,
         receberImagem,
-        soltarImagem
+        soltarImagem,
+        enviarImagem
     }
 }

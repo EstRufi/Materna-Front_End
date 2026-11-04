@@ -1,6 +1,7 @@
 <script setup>
 import { reactive, ref } from 'vue';
 import {urlDaImagem} from '@/composable/urlDaImagem.js'
+import { cadastrarCampanha } from '@/services/campanhaService';
 
     const emit = defineEmits(['fechar'])
 
@@ -24,7 +25,8 @@ import {urlDaImagem} from '@/composable/urlDaImagem.js'
         previewImagem,
         abrirSeletorImagem,
         receberImagem,
-        soltarImagem
+        soltarImagem,
+        enviarImagem
     } = urlDaImagem()
 
     const formulario = reactive({
@@ -33,6 +35,40 @@ import {urlDaImagem} from '@/composable/urlDaImagem.js'
         dataInicio:'',
         dataFim:''
     })
+
+    async function publicarCampanha() {
+    try {
+        const foto = await enviarImagem()
+
+        const hoje = new Date()
+        const dataHoje = [
+            hoje.getFullYear(),
+            String(hoje.getMonth() + 1).padStart(2, '0'),
+            String(hoje.getDate()).padStart(2, '0')
+        ].join('-')
+
+        const dadosCampanha = {
+            titulo: formulario.titulo,
+            descricao: formulario.descricao,
+            foto: foto,
+            data_inicio: formulario.dataInicio,
+            data_fim: formulario.dataFim,
+            is_ativo: dataHoje >= formulario.dataInicio &&
+                      dataHoje <= formulario.dataFim,
+            id_instituicao: 1, // ID temporário para teste
+            id_funcionario: 1  // ID temporário para teste
+        }
+
+        const resposta = await cadastrarCampanha(dadosCampanha)
+
+        console.log('Campanha cadastrada:', resposta)
+
+        window.location.reload()
+
+    } catch (erro) {
+        console.error('Erro ao publicar campanha:', erro)
+    }
+}
 </script>
 
 <template>
@@ -142,6 +178,7 @@ import {urlDaImagem} from '@/composable/urlDaImagem.js'
                     class="w-[87px] h-[36px] px-[16px] py-[8px] bg-[#DE6B72]/10 text-[#374151] text-[14px] rounded-[6px]"
                     @click="emit('fechar')">Cancelar</button>
                     <button
+                    @click="publicarCampanha"
                     class="h-[36px] px-[16px] py-[8px] bg-materna text-white text-[14px] rounded-[6px]"
                     >Publicar campanha</button>
                 </div>
