@@ -3,7 +3,7 @@ import { computed } from 'vue'
 
 // Aqui pode mudar pela API
 const totalSemanaAtual = 3
-const totalSemanaAnterior = 110
+const totalSemanaAnterior = 0
 
 const dadosValidos = computed(() => {
   return (

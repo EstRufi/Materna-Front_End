@@ -1,6 +1,6 @@
 <script setup>
     const jornadaDoadoras =[
-        {nome:"Maria Silva",progresso: 4},
+        {nome:"Maria Silva",progresso: 40},
         {nome:"Socoro Silva",progresso: 50},
         {nome:"Gson Silva",progresso: 10},
         {nome:"juaninha Silva",progresso: 20}
@@ -39,7 +39,7 @@
             </div>
         </div>
         <RouterLink
-            to=""
+            to="doadora"
             class="text-materna hover:underline">
                 Ver todas ↗
         </RouterLink>

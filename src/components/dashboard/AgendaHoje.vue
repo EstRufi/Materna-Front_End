@@ -4,7 +4,7 @@ import { computed } from 'vue'
     const agenda =[
         {
             id: 1,
-            data: "2026-10-23",
+            data: "2026-11-04",
             horario: "10:00:00",
             nome: "Maria Silva",
             tipo: "Doação de leite humano",
@@ -81,7 +81,7 @@ import { computed } from 'vue'
         <div class="p-[20px]">
             <h2 class="text-[18px] font-bold">Agenda de hoje</h2>
             <RouterLink
-                to=""
+                to="agenda"
                 class="text-[#D96572] hover:underline">
                     Abrir agenda ↗
             </RouterLink>
@@ -111,7 +111,7 @@ import { computed } from 'vue'
                         <p class="text-texto-claro text-[14px]">{{ item.tipo }}</p>
                     </div>
                     <span 
-                    class="flex items-center justify-center gap-[6px] w-full max-w-[103px] py-[4px] px-[10px] rounded-full"
+                    class="flex items-center justify-center gap-[6px] w-full max-w-[120px] py-[4px] px-[10px] rounded-full"
                     :class="classesStatus(item.status)" >
                         <div 
                         class="w-[6px] h-[6px] rounded-full shrink-0"
