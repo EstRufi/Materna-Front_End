@@ -17,6 +17,13 @@ import { cadastrarCampanha } from '@/services/campanhaService';
 
         campoD.style.height = '77px'
         campoD.style.height = `${campoD.scrollHeight}px`
+
+        const alturaMaxima = 250
+
+        campoD.style.height = `${Math.min(campoD.scrollHeight, alturaMaxima)}px`
+
+        campoD.style.overflowY =
+            campoD.scrollHeight > alturaMaxima ? 'auto' : 'hidden'
     }
 
     const {
@@ -111,12 +118,18 @@ import { cadastrarCampanha } from '@/services/campanhaService';
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div class="flex flex-col gap-1 min-w-0">
                         <label class="text-[14px]">Inicio</label>
-                        <input type="date" v-model="formulario.dataInicio" class="w-full min-w-0 text-texto-claro focus:outline-none px-[12px] py-[10px] rounded-[6px] border border-[#D1D5DB] focus:border-[#D1D5DB]">
+                        <input 
+                        type="date"
+                        min="0001-01-01"
+                        max="9999-12-31" 
+                        v-model="formulario.dataInicio" 
+                        class="w-full min-w-0 text-texto-claro focus:outline-none px-[12px] py-[10px] rounded-[6px] border border-[#D1D5DB] focus:border-[#D1D5DB]">
                     </div>
 
                     <div class="flex flex-col gap-1 min-w-0">
                         <label class="text-[14px]">Término</label>
-                        <input type="date"  v-model="formulario.dataFim" class="w-full min-w-0 text-texto-claro  focus:outline-none px-[12px] py-[10px] rounded-[6px] border border-[#D1D5DB] focus:border-[#D1D5DB]">
+                        <input 
+                        type="date"  v-model="formulario.dataFim" class="w-full min-w-0 text-texto-claro  focus:outline-none px-[12px] py-[10px] rounded-[6px] border border-[#D1D5DB] focus:border-[#D1D5DB]">
                     </div>
                 </div>
             </div>

@@ -26,7 +26,7 @@
         return `${dia}/${mes}/${ano}`
     }
 </script>
-<!-- COMO QUE VOU COLOCAR A REGIÃO SE NÃO TEM NA CAMPANHA-->
+
 <template>
     <article class=" w-full max-w-[346px] h-[383px] flex flex-col bg-[#FFFFFF] border-2 border-borda rounded-[16px]">
         <div class="h-[128px] w-full flex items-center justify-center rounded-t-xl">

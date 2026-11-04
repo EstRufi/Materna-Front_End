@@ -4,6 +4,10 @@ export async function listarCampanha(){
 
     const resposta = await requisicaoApi('campanha')
 
+    if (!resposta) {
+        return []
+    }
+
     return resposta.response.campanha
 }
 

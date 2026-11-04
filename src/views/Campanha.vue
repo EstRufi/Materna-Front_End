@@ -27,18 +27,15 @@ import { onMounted, ref } from 'vue';
 // ]
 
 const campanha = ref([])
-const carregando = ref(true)
-const errou = ref('')
+const errou = ref('Não foi possíivel carregar as campanhas, por favor aguarde. (ligue a API)')
 const mostrarCadastroCampanha = ref(false)
 
 onMounted(async () => {
     try {
         campanha.value = await listarCampanha()
     } catch (error) {
-        errou.value = "Não foi possíivel carregar as campanhas, por favor aguarde. (ligue a API)"
+        console.log(errou)
         console.error(error)
-    } finally{
-        carregando.value = false    
     }
 })
 </script>
@@ -71,9 +68,7 @@ onMounted(async () => {
             />
         </Transition>
 
-        <p class="text-[200px]" v-if="carregando">Carregando campanhas...</p>
-        <p class="text-[30px]" v-else-if="errou">{{ errou }}</p>
-        <div v-else class="flex flex-wrap gap-[24px] mt-[30px]">
+        <div class="flex flex-wrap gap-[25px] mt-[30px]">
             <CardCampanha 
             v-for="itensCampanha in campanha"
             :key="itensCampanha.id"

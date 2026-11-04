@@ -9,14 +9,18 @@ export async function requisicaoApi (endPoint, options = {}){
             }
         })
         
+
+        
+        if (resposta.status ===204)
+            return null
+        else if(resposta.status === 404) 
+            return null
+        
+
         if(!resposta.ok){
             throw new Error(`Erro na requisição: ${resposta.status}`)
         }
         
-        if (resposta.status ===204){
-            return null
-        }
-
         return resposta.json()
     } catch (error) {
         console.error('Erro na requisição da API:', error)
