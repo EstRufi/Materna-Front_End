@@ -91,7 +91,7 @@ function fazerLogin(){
                 </label>
 
                 <input 
-                type="senha"
+                type="password"
                 placeholder="..........."
                 class="h-[40px] w-120 rounded-md border border-gray-300 
                 bg-white px-3 text-[18px] text-gray-700 mb-0
