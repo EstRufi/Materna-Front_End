@@ -11,6 +11,5 @@ import CadastroInstitucional02 from './views/CadastroInstitucional02.vue';
 </script>
 
 <template>
-    <CadastroInstitucional02/>
-     <!-- <Login/> -->
+    <RouterView/>
 </template>

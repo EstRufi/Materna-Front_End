@@ -34,7 +34,8 @@ const filtroSelecionado = ref('Todas')
                 </button>
             </section>
         </header>
-
-        <CadDoadora/>
+        <div class="mt-[30px]">
+            <CadDoadora/>
+        </div>
     </main>
 </template>
