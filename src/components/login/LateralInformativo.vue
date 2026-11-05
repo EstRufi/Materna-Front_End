@@ -17,7 +17,7 @@ defineProps({
         <!-- header -->
         <div class="absolute top-4 left-10 flex items-center gap-2">
             <img 
-            src="/public/logoMaterna.svg" 
+            src="@/assets/logoMaterna.svg" 
             alt="logo" 
             class="w-16 h-16 object-contain">
 
