@@ -5,13 +5,13 @@ import { RouterView } from 'vue-router'
 </script>
 
 <template>
-    <div class="flex min-w-0  h-screen">
+    <div class="flex h-dvh min-w-0 ">
         <Sindebar />
 
         <div class="flex-1 min-w-0 min-h-0 flex flex-col">
             <Cabecario />
 
-            <div class="flex-1 min-w-0" >
+            <div class="flex-1 min-w-0 min-h-0 overflow-y-auto">
                 <RouterView />
             </div>
         </div>

@@ -41,7 +41,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <main class="bg-[#F8FAFC] p-[30px] w-full min-h-screen">
+    <main class="bg-[#F8FAFC] p-[30px] w-full min-h-full">
         <nav class="flex justify-between gap-[10px]"
             v-if="!mostrarCadastroCampanha">
             <span class="text-[16px] text-texto-claro">Divulgue campanhas de incentivo à doação para as doadoras no aplicativo.</span>

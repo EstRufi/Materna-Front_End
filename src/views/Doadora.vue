@@ -16,7 +16,7 @@ const filtroSelecionado = ref('Todas')
 </script>
 
 <template>
-    <main class="bg-[#F8FAFC] p-[30px] w-full min-h-screen">
+    <main class="bg-[#F8FAFC] p-[30px] w-full min-h-full">
         <header class="flex justify-center">
             <section class="flex-wrap bg-white flex justify-between px-[4px] items-center w-full max-w-[524px] min-w-0 min-h-[43px] border border-borda rounded-[22px] ">
                 <button

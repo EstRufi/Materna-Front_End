@@ -5,7 +5,7 @@
 
 <template>
     <nav 
-    class="w-[320px] h-screen shrink-0 p-5 bg-white flex flex-col border-r-2 border-gray-200">
+    class="w-[320px] p-5 bg-white flex flex-col border-r-2 border-gray-200">
         <div class="flex items-center gap-2 py-3">
             <img 
             class="h-20 "
