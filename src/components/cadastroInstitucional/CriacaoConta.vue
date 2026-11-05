@@ -13,39 +13,25 @@ const etapa = [
 ]
 
 </script>
-<template>
-    <div class="mb-7 w-full text-left px-20">
-
-        <div class="w-full flex items-center justify-between">
-
-            <!-- Etapas -->
-            <div class="h-8 w-28 rounded-lg flex mt-29"
-            style="background-color:#F5E6E9;">
-            
-            <span class="font-normal rounded-full text-xs 
-                text-[13px] items-center px-4 mt-2" 
-                style="color: #DE6B72;">
-                ETAPA 1 DE 4
-                </span>
-
-            <!-- Dados -->
-            </div>
-            <span class="text-[14px] text-[#94A3B8] mt-9">
-                Dados da Instituição
+<template>x
+    <div class="mb-7 w-full text-left px-100">
+        <div class="h-8 w-30 rounded-lg flex mt-50"
+        style="background-color:#F5E6E9;">
+        
+        <span class="font-normal rounded-full text-xs 
+        text-[14px] items-center px-4 mt-2" 
+            style="color: #DE6B72;">
+            ETAPA 1 DE 4
             </span>
-
         </div>
 
-
-        <h1 class="text-[30px] font-bold text-black text- mt-3">
+        <h1 class="text-[37px] font-bold text-black text-left">
             Criar conta institucional
         </h1>
-        
-        <p class="text-sm text-gray-600 text-[17px] mb-10">
+        <p class="text-sm text-gray-600 text-[20px] mb-13">
             Crie sua senha de acesso seguro 
             para o painel institucional.
         </p>
-
     </div>
 
         <!--Indica de etapas-->
@@ -79,7 +65,7 @@ const etapa = [
 
                 </div>
 
-                <p class="mt-2 whitespace-nowrap text-[12px] text-[#DE6B72] font-bold mb-4">
+                <p class="mt-2 whitespace-nowrap text-[12px] text-[#DE6B72] font-bold mb-14">
                     {{ etapa }}
                 </p>
 
@@ -87,111 +73,97 @@ const etapa = [
         </div>
 
             <!--Informacoes-->
-        <div class="items-center px-20 mb-4">
+        <div class="items-center px-30 mb-8">
             <h1 class="text-[18px] font-bold text-black">
                 1. Informações Institucionais
             </h1>
-            <p class="text-[14px] text-[#64748B]">
+            <p class="text-[16px] text-[#64748B]">
                 Insira a razão social e dados corporativos da entidade de saúde.
             </p>
         </div>
 
             <!--Formulário/ Nome-->
-            <div class="w-full min-w-[520px] text-left px-20 mb-4">
-                <div class="flex flex-col gap-1">
+            <div class="w-full min-w-[520px] text-left px-30 mb-6">
+                <div class="flex flex-col gap-2">
 
-                    <label class="text-[17px] font-medium text-gray-700">
+                    <label class="text-[18px] text-gray-700">
                         Nome da instituição / Razão Social
                     </label>
 
                     <input 
                     type="text"
                     placeholder="Ex: Banco de Leite Humano Santa Clara"
-                    class="h-[47px] w-190 rounded-md border border-gray-300 
-                    bg-white px-3 text-[14px] text-gray-700
+                    class="h-[47px] w-250 rounded-md border border-gray-300 
+                    bg-white px-3 text-[17px] text-gray-700
                     outline-none border-gray-300 focus:border-[#D1D5DB]">
                 </div>
             </div>
 
             <!-- Formulário/CNPJ -->
-            <div class="w-full space-y-4 text-left px-20 mb-4">
-                <div class="flex flex-col gap-1">
-                    <label class="text-[17px] font-medium text-gray-700">
+            <div class="w-full space-y-4 text-left px-30 mb-6">
+                <div class="flex flex-col gap-2">
+                    <label class="text-[18px] text-gray-700">
                         CNPJ
                     </label>
 
                     <input 
                     type="text"
                     placeholder="00.000.000/0001-00"
-                    class="h-[47px] w-190 rounded-md border border-gray-300 
-                    bg-white px-3 text-[14px] text-gray-700
+                    class="h-[47px] w-250 rounded-md border border-gray-300 
+                    bg-white px-3 text-[17px] text-gray-700
                     outline-none border-gray-300 focus:border-[#D1D5DB]">
                 </div>
             </div>
 
               <!--Formulário/E-mail-->
-            <div class="w-full space-y-4 text-left px-20 mb-4">
-                <div class="flex flex-col gap-1">
-                    <label class="text-[17px] font-medium text-gray-700">
+            <div class="w-full space-y-4 text-left px-30 mb-6">
+                <div class="flex flex-col gap-2">
+                    <label class="text-[18px] text-gray-700">
                         E-mail institucional oficial
                     </label>
 
                     <input 
                     type="text"
                     placeholder="contato@bancodeleite.org.br"
-                    class="h-[47px] w-190 rounded-md border border-gray-300 
-                    bg-white px-3 text-[14px] text-gray-700
+                    class="h-[47px] w-250 rounded-md border border-gray-300 
+                    bg-white px-3 text-[17px] text-gray-700
                     outline-none border-gray-300 focus:border-[#D1D5DB]">
                 </div>
             </div>
 
             <!-- Formulário/Telefone -->
-            <div class="w-full whitespace-nowrap space-y-4 px-20 mb-4">
-                <div class="flex flex-col gap-1">
-                    <label class="text-[17px] font-medium text-gray-700">
+            <div class="w-full whitespace-nowrap space-y-4 px-30 mb-6">
+                <div class="flex flex-col gap-2">
+                    <label class="text-[18px] text-gray-700">
                         Telefone fixo / Recepção E-mail institucional oficial
                     </label>
 
                     <input 
                     type="text"
                     placeholder="(11) 3214-5678"
-                    class="h-[47px] w-190 rounded-md border border-gray-300 
-                    bg-white px-3 text-[14px] text-gray-700
+                    class="h-[47px] w-250 rounded-md border border-gray-300 
+                    bg-white px-3 text-[17px] text-gray-700
                     outline-none border-gray-300 focus:border-[#D1D5DB]">
                 </div>
             </div>
 
-        <div class="w-full px-20 mt-8">
-            <div class="h-px w-190 bg-gray-100 mb-7 "></div>
+        <div class="w-full px-40 mt-20">
+            <div class="h-px w-260 bg-black/20 mb-16 "></div>
         </div>
 
             <!-- Botão -->
-             <div class="text-left px-170 flex-col">
-                <button class="relative w-40 h-[49px] rounded-md 
-                bg-[#DE6B72] justify-center flex items-center 
-                text-sm font-medium text-white hover:opacity-30 transition">
-
-                <span class="text-white text-[18px] top-1/2 -translate-y-1/2 mt-6 gap-4">
-                    Avançar
-                </span>
-                
-                <img 
-                src="/src/assets/cadastro/Seta2.svg" 
-                alt="Seta2" 
-                class="w-4 h-4 object-contain shrink-0 object-contain gap-3">
-                
+             <div class="text-left px-240 flex-col mt-6">
+                <button class="w-40 h-[47px] rounded-md bg-[#DE6B72] 
+                text-sm font-medium text-white hover:opacity-90 transition">
+                Avançar
                 </button>
-            </div>
 
-            <div class="w-full flex items- justify-center gap-1 mt-6">
-                <p class="whitespace-nowrap text-xs text-black/60 text-[17px]">
+                 <div class="w-full flex items-center justify-end">
+                <p class="whitespace-nowrap text-xs text-[#D1D5DB] mt-2 text-[16px]">
                     Já possui uma conta institucional? 
                 </p>
 
-                <a href="#" class="text-[16px] text-[#DE6B72] 
-                            font-semibold hover:underline">
-                    Entrar
-                </a>
+            </div>
 
             </div>
             
