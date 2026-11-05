@@ -7,10 +7,10 @@ import CadastroInstitucional from './views/CadastroInstitucional.vue';
 import CriacaoConta from './components/cadastroInstitucional/CriacaoConta.vue';
 import Login from './views/Login.vue';
 import CadastroInstitucional02 from './views/CadastroInstitucional02.vue';
+import CadastroInstitucional03 from './views/CadastroInstitucional03.vue';
 
 </script>
 
 <template>
-    <CadastroInstitucional02/>
-     <!-- <Login/> -->
+    <CadastroInstitucional03/>
 </template>

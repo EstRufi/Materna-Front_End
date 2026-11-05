@@ -13,25 +13,39 @@ const etapa = [
 ]
 
 </script>
-<template>x
-    <div class="mb-7 w-full text-left px-100">
-        <div class="h-8 w-30 rounded-lg flex mt-50"
-        style="background-color:#F5E6E9;">
-        
-        <span class="font-normal rounded-full text-xs 
-        text-[14px] items-center px-4 mt-2" 
-            style="color: #DE6B72;">
-            ETAPA 1 DE 4
+<template>
+    <<div class="mb-7 w-full text-left px-34">
+
+<div class="w-full flex items-center justify-between">
+
+    <!-- Etapas -->
+    <div class="h-8 w-28 rounded-lg flex mt-29"
+    style="background-color:#F5E6E9;">
+    
+    <span class="font-normal rounded-full text-xs 
+        text-[13px] items-center px-4 mt-2" 
+        style="color: #DE6B72;">
+        ETAPA 1 DE 4
+        </span>
+
+    <!-- Dados -->
+    </div>
+            <span class="text-[14px] text-[#94A3B8] mt-9">
+                Dados da Instituição
             </span>
+
         </div>
 
-        <h1 class="text-[37px] font-bold text-black text-left">
+
+        <h1 class="text-[30px] font-bold text-black text- mt-3">
             Criar conta institucional
         </h1>
-        <p class="text-sm text-gray-600 text-[20px] mb-13">
-            Crie sua senha de acesso seguro 
-            para o painel institucional.
+
+        <p class="text-sm text-gray-600 text-[17px] mb-10">
+            Preencha os dados do responsável legal ou técnico pela unidade.
         </p>
+
+
     </div>
 
         <!--Indica de etapas-->
@@ -147,23 +161,43 @@ const etapa = [
                 </div>
             </div>
 
-        <div class="w-full px-40 mt-20">
-            <div class="h-px w-260 bg-black/20 mb-16 "></div>
+        <div class="w-full px-36 mt-8">
+            <div class="h-px w-240 bg-gray-100 mb-7 "></div>
         </div>
 
-            <!-- Botão -->
-             <div class="text-left px-240 flex-col mt-6">
-                <button class="w-40 h-[47px] rounded-md bg-[#DE6B72] 
-                text-sm font-medium text-white hover:opacity-90 transition">
-                Avançar
+           <!-- Botão -->
+            <div class="text-left px-240 flex-col ">
+                <button class="relative w-40 h-[49px] rounded-md 
+                bg-[#DE6B72] justify-center flex items-center 
+                text-sm font-medium text-white hover:opacity-30 transition">
+
+                <span class="text-white text-[18px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4">
+                    Avançar
+                </span>
+                
+                <img 
+                src="/src/assets/cadastro/Seta2.svg" 
+                alt="Seta2" 
+                class="w-4 h-4 object-contain shrink-0 object-contain gap-3">
+                
                 </button>
 
-                 <div class="w-full flex items-center justify-end">
-                <p class="whitespace-nowrap text-xs text-[#D1D5DB] mt-2 text-[16px]">
+            </div>
+
+             <div class="w-full px-36 mt-8">
+                <div class="h-px w-240 bg-gray-100 mb-7 "></div>
+            </div>
+
+
+            <div class="w-full flex items- justify-center gap-1 mt-6">
+                <p class="whitespace-nowrap text-xs text-black/60 text-[17px]">
                     Já possui uma conta institucional? 
                 </p>
 
-            </div>
+                <a href="#" class="text-[16px] text-[#DE6B72] 
+                            font-semibold hover:underline">
+                    Entrar
+                </a>
 
             </div>
             
