@@ -12,7 +12,7 @@ defineProps({
 })
 </script>
 <template>
-     <div class="relative flex min-h-screen flex-1 flex-col bg-[#df7880] px-7">
+     <div class="relative flex min-h-screen  w-[700px] flex-col bg-[#df7880] px-7">
 
         <!--header-->
         <div class="absolute top-4 left-10 flex items-center gap-2 mt-8 px-5">
@@ -33,12 +33,12 @@ defineProps({
 
         <!--Informação-->
         <div class="mt-40 mb-8 w-full min-w-0 px-10">
-            <h2 class="text-[40px] font-bold leading-10 text left
+            <h2 class="text-[38px] font-bold leading-10 text left
             text-white whitespace-pre-line mb-5">
                 {{ titulo }}
             </h2>
 
-            <p class="mt-1 text-[18px] text-white whitespace-pre-line">
+            <p class="mt-1 text-[17px] text-white whitespace-pre-line">
                 {{ descricao }}
             </p>
         </div> 
@@ -66,20 +66,20 @@ defineProps({
         </div>
 
         <!-- Barra de progresso-->
-        <div class="w-full px-10 mt-40">
-            <div class="h-px w-170 bg-white/20 mb-8"></div>
-            <div class="h-2 w-170 rounded-full bg-black/20 ">
+        <div class="w-full px-4 mt-40">
+            <div class="h-px w-140 bg-white/20 mb-8"></div>
+            <div class="h-2 w-140 rounded-full bg-black/20 ">
                 <div class="h-2 w-[25%] rounded-full bg-white">
                 </div>
             </div>
         </div>
 
-        <div class="w-full px-10 mt-40">
-            <div class="h-px w-170 bg-white/20 mb-16 "></div>
+        <div class="w-full px-4 mt-40">
+            <div class="h-px w-140 bg-white/20 mb-16 "></div>
         </div>
 
         <!-- Footer -->
-        <div class="absolute bottom-6 left-6 right-3">
+        <div class="absolute bottom-6 left-6 right-14">
             <div class="flex w-full justify-between items-center" 
             :class="{
                 'justify-center': dadosFooter?.length === 1,
