@@ -4,6 +4,7 @@ import CardJornada from '@/components/jornada/CardJornada.vue';
 import { ref } from 'vue';
 
     const mostrarCadastroJornada = ref(false)
+    
 </script>
 
 <template>
