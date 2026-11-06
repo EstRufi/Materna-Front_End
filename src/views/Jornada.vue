@@ -1,5 +1,6 @@
 <script setup>
 import CadastroJornada from '@/components/jornada/CadastroJornada.vue';
+import CardJornada from '@/components/jornada/CardJornada.vue';
 import { ref } from 'vue';
 
     const mostrarCadastroJornada = ref(false)
@@ -31,5 +32,6 @@ import { ref } from 'vue';
             />
         </Transition>
 
+        <CardJornada/>
     </main>
 </template>
