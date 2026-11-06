@@ -2,6 +2,8 @@
 import { reactive, ref } from 'vue';
 import {urlDaImagem} from '@/composable/urlDaImagem.js'
 import { cadastrarCampanha } from '@/services/campanhaService';
+import { validarDataFinal, validarDataInicio, validarDescrição, validarTiulo } from '@/validations/campanhaValidation';
+import { validarImagem } from '@/validations/imagemValidation';
 
     const emit = defineEmits(['fechar'])
 
@@ -36,6 +38,29 @@ import { cadastrarCampanha } from '@/services/campanhaService';
         enviarImagem
     } = urlDaImagem()
 
+    const erros = reactive({
+        titulo: '',
+        descricao: '',
+        dataInicio: '',
+        dataFinal: '',
+        imagem: ''
+    })
+
+    const erroGeral1 = ref('')
+     const erroGeral2 = ref('')
+
+    function  validarFormulario(){
+        erros.titulo =      validarTiulo(formulario)
+        erros.descricao =   validarDescrição(formulario)
+        erros.dataInicio=   validarDataInicio(formulario)
+        erros.dataFinal=    validarDataFinal(formulario)
+        erros.imagem=       validarImagem(arquivoImagem.value)
+
+        const possuiErros = Object.values(erros).some(erro => erro !== '')
+
+        return !possuiErros
+    }
+
     const formulario = reactive({
         titulo:'',
         descricao: '',
@@ -44,43 +69,66 @@ import { cadastrarCampanha } from '@/services/campanhaService';
     })
 
     async function publicarCampanha() {
-    try {
-        const foto = await enviarImagem()
+        try {
+            erroGeral1.value = ''
+            erroGeral2.value = ''
 
-        const hoje = new Date()
-        const dataHoje = [
-            hoje.getFullYear(),
-            String(hoje.getMonth() + 1).padStart(2, '0'),
-            String(hoje.getDate()).padStart(2, '0')
-        ].join('-')
+            if(!validarFormulario()) {
+                erroGeral1.value = 'Não foi possível publicar a campanha.'
+                erroGeral2.value = 'Por favor, revise e preencha corretamente os campos sinalizados abaixo.'
+                return
+            }
+            else{
+                const foto = await enviarImagem()
 
-        const dadosCampanha = {
-            titulo: formulario.titulo,
-            descricao: formulario.descricao,
-            foto: foto,
-            data_inicio: formulario.dataInicio,
-            data_fim: formulario.dataFim,
-            is_ativo: dataHoje >= formulario.dataInicio &&
-                      dataHoje <= formulario.dataFim,
-            id_instituicao: 1, // ID temporário para teste
-            id_funcionario: 1  // ID temporário para teste
+                const hoje = new Date()
+                const dataHoje = [
+                    hoje.getFullYear(),
+                    String(hoje.getMonth() + 1).padStart(2, '0'),
+                    String(hoje.getDate()).padStart(2, '0')
+                ].join('-')
+
+                const dadosCampanha = {
+                    titulo: formulario.titulo,
+                    descricao: formulario.descricao,
+                    foto: foto,
+                    data_inicio: formulario.dataInicio,
+                    data_fim: formulario.dataFim,
+                    is_ativo: dataHoje >= formulario.dataInicio &&
+                            dataHoje <= formulario.dataFim,
+                    id_instituicao: 1, // ID temporário para teste
+                    id_funcionario: 1  // ID temporário para teste
+                }
+
+                const resposta = await cadastrarCampanha(dadosCampanha)
+
+                console.log('Campanha cadastrada:', resposta)
+
+                window.location.reload()
+            }    
+        } catch (erro) {
+            console.error('Erro ao publicar campanha:', erro)
+
+            //veja oq acha se é bom ou não
+            erroGeral1.value = 'Ocorreu um erro ao publicar a campanha.'
+            erroGeral2.value = 'Verifique sua conexão e tente novamente.'
         }
-
-        const resposta = await cadastrarCampanha(dadosCampanha)
-
-        console.log('Campanha cadastrada:', resposta)
-
-        window.location.reload()
-
-    } catch (erro) {
-        console.error('Erro ao publicar campanha:', erro)
     }
-}
 </script>
 
 <template>
     <article class="p-[20px] w-full mim-w-[1086px] min-h-[401px] bg-white border-2 border-borda rounded-[12px]">
         <header class="flex justify-between mb-[24px]">
+            <div v-if="erroGeral1 || erroGeral2" class="mb-4 p-3 rounded-md bg-red-50">
+                <p v-if="erroGeral1" class="text-red-600 text-sm font-semibold">
+                    {{ erroGeral1 }}
+                </p>
+
+                <p v-if="erroGeral2" class="text-red-600 text-sm">
+                    {{ erroGeral2 }}
+                </p>
+            </div>
+
             <h1 class="text-[16px] font-bold">Nova campanha</h1>
             <button
             type="button"
@@ -95,6 +143,9 @@ import { cadastrarCampanha } from '@/services/campanhaService';
             <div class="w-full min-w-0 flex flex-col gap-3">
                 
                 <div class="flex flex-col gap-1">
+                    <p v-if="erros.titulo" class="text-red-500 text-xs">
+                        {{ erros.titulo }}
+                    </p>
                     <label class="text-[14px]">Titulo</label>
                     <textarea 
                     ref="campoTitulo"
