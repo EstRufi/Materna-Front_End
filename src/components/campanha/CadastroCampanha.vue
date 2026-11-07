@@ -143,7 +143,7 @@ import { validarImagem } from '@/validations/imagemValidation';
             <div class="w-full min-w-0 flex flex-col gap-3">
                 
                 <div class="flex flex-col gap-1">
-                    <p v-if="erros.titulo" class="text-red-500 text-xs">
+                    <p v-if="erros.titulo" class="text-red-500 text-xl">
                         {{ erros.titulo }}
                     </p>
                     <label class="text-[14px]">Titulo</label>
