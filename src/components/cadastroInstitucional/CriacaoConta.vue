@@ -37,7 +37,7 @@ const etapa = [
         </div>
 
 
-        <h1 class="text-[28px] font-bold text-black text- mt-2">
+        <h1 class="text-[2rem] font-bold text-black text- mt-2">
             Criar conta institucional
         </h1>
 
