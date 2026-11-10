@@ -117,14 +117,18 @@ import { validarImagem } from '@/validations/imagemValidation';
 </script>
 
 <template>
+    <!-- Arrumar imagem aqui -->
     <article class="p-[20px] w-full mim-w-[1086px] min-h-[401px] bg-white border-2 border-borda rounded-[12px]">
         <header class="flex justify-between mb-[24px]">
-            <div v-if="erroGeral1 || erroGeral2" class="mb-4 p-3 rounded-md bg-red-50">
-                <p v-if="erroGeral1" class="text-red-600 text-sm font-semibold">
-                    {{ erroGeral1 }}
-                </p>
+            <div v-if="erroGeral1 || erroGeral2" class="flex flex-col mb-4 p-3 rounded-[12px] border-2 border-[#FECACA] bg-[#FEF2F2]/80">
+                <div class="flex ">
+                    <img src="@/assets/campanha/erro.svg" alt="">
+                    <p v-if="erroGeral1" class="text-[#991B1B] text-[12px] font-bold">
+                        {{ erroGeral1 }}
+                    </p>
+                </div>
 
-                <p v-if="erroGeral2" class="text-red-600 text-sm">
+                <p v-if="erroGeral2" class="text-[#DC2626] text-[12px]">
                     {{ erroGeral2 }}
                 </p>
             </div>
@@ -148,9 +152,12 @@ import { validarImagem } from '@/validations/imagemValidation';
                     ref="campoTitulo"
                     v-model="formulario.titulo"
                     @input="textareaAlturaAjustada"
-                    placeholder="Semana do Leite Humano" class="leading-[20px] w-full h-[38px] border border-[#D1D5DB] focus:border-[#D1D5DB] focus:outline-none px-[12px] py-[10px] rounded-[6px] resize-none overflow-hidden ">
+                    placeholder="Semana do Leite Humano" 
+                    class="leading-[20px] w-full h-[38px] border  focus:border-[#D1D5DB] focus:outline-none px-[12px] py-[10px] rounded-[6px] resize-none overflow-hidden "
+                    :class="erros.titulo ? 'border-[#F87171]' : 'border-[#D1D5DB]'">
+        
                     </textarea>
-                    <p v-if="erros.titulo" class="text-red-500 text-xl">
+                    <p v-if="erros.titulo" class="text-[#DC2626] text-[12px]">
                         {{ erros.titulo }}
                     </p>
                 </div>
@@ -162,9 +169,10 @@ import { validarImagem } from '@/validations/imagemValidation';
                     ref="campoDescricao"
                     v-model="formulario.descricao"
                     @input="textareaAlturaAjustada"
+                    :class="erros.descricao ? 'border-[#F87171]' : 'border-[#D1D5DB]'"
                     placeholder="Sobre a campanha" class="leading-[20px] w-full h-[77px] border border-[#D1D5DB] focus:border-[#D1D5DB] focus:outline-none px-[12px] py-[10px] rounded-[6px] resize-none overflow-hidden ">
                     </textarea>
-                    <p v-if="erros.descricao" class="text-red-500 text-xl">
+                    <p v-if="erros.descricao" class="text-[#DC2626] text-[12px]">
                         {{ erros.descricao }}
                     </p>
                 </div>
@@ -175,8 +183,9 @@ import { validarImagem } from '@/validations/imagemValidation';
                         <input 
                         type="date"
                         v-model="formulario.dataInicio" 
+                        :class="erros.dataInicio ? 'border-[#F87171]' : 'border-[#D1D5DB]'"
                         class="w-full min-w-0 text-texto-claro focus:outline-none px-[12px] py-[10px] rounded-[6px] border border-[#D1D5DB] focus:border-[#D1D5DB]">
-                        <p v-if="erros.dataInicio" class="text-red-500 text-xl">
+                        <p v-if="erros.dataInicio" class="text-[#DC2626] text-[12px]">
                         {{ erros.dataInicio }}
                     </p>
                     </div>
@@ -184,8 +193,11 @@ import { validarImagem } from '@/validations/imagemValidation';
                     <div class="flex flex-col gap-1 min-w-0">
                         <label class="text-[14px]">Término</label>
                         <input 
-                        type="date"  v-model="formulario.dataFim" class="w-full min-w-0 text-texto-claro  focus:outline-none px-[12px] py-[10px] rounded-[6px] border border-[#D1D5DB] focus:border-[#D1D5DB]">
-                        <p v-if="erros.dataFinal" class="text-red-500 text-xl">
+                        type="date"  
+                        v-model="formulario.dataFim" 
+                        :class="erros.dataFinal ? 'border-[#F87171]' : 'border-[#D1D5DB]'"
+                        class="w-full min-w-0 text-texto-claro  focus:outline-none px-[12px] py-[10px] rounded-[6px] border border-[#D1D5DB] focus:border-[#D1D5DB]">
+                        <p v-if="erros.dataFinal" class="text-[#DC2626] text-[12px]">
                         {{ erros.dataFinal }}
                         </p>
                     </div>
@@ -242,7 +254,7 @@ import { validarImagem } from '@/validations/imagemValidation';
                             Trocar imagem
                         </button>
                     </div>
-                        <p v-if="erros.imagem" class="text-red-500 text-xl">
+                        <p v-if="erros.imagem" class="text-[#DC2626] text-[12px]">
                         {{ erros.imagem }}
                         </p>
                 </div>
