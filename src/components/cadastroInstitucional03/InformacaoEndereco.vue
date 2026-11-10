@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 
 const processo = ref(true)
-const etapaAtual = ref(2)
+const etapaAtual = ref(3)
 
 const etapa = [
     'Instituicao',
@@ -229,20 +229,20 @@ function replicarHorario() {
                         <input 
                         type="text"
                         placeholder="SP"
-                        class="h-[47px] w-40 rounded-md border items-center border-gray-300 
+                        class="h-[47px] w-40 rounded-md border text-center border-gray-300 
                         bg-white px-3 text-[14px] text-gray-700
                         outline-none border-gray-300 focus:border-[#D1D5DB]">
                     </div>
                 </div>
             </div>
 
-        <div class="w-full px-36 mt-7">
-            <div class="h-px w-190 bg-gray-200 mb-7 "></div>
+        <div class="w-full px-36 mt-3 mb-3">
+            <div class="h-px w-190 bg-gray-200 "></div>
         </div>
 
         <!--Coleta-->
-        <div class="w-full px-36 mb-8">
-            <h2 class="text-[14px] font-bold text-black-300">
+        <div class="w-full px-36 mb-4">
+            <h2 class="text-[14px] font-semibold text-black-300">
                 Coleta em domicílio
             </h2>
 
@@ -251,7 +251,7 @@ function replicarHorario() {
             </p>
         </div>
 
-        <div class="flex  w-fit items-start justify-between  grid grid-cols-2 gap-5 px-36 ">
+        <div class="flex  w-fit items-start justify-between grid grid-cols-2 gap-5 px-36 ">
 
                 <!-- Coleta em casa -->
                 <div
@@ -262,14 +262,14 @@ function replicarHorario() {
                     class="relative h-[80px] rounded-xl border-2 p-2 cursor-pointer w-90">
 
                     <!-- Título e botão -->
-                    <div class="flex items-start justify-between gap-3 mb-3">
+                    <div class="flex items-start justify-between gap-3">
 
-                        <h2 class="text-[18px] font-semibold text-gray-800">
-                            
+                        <h2 class="text-[12px] font-semibold text-gray-800 px-1 mt-2 mb-1">
+                            Realiza coleta em casa / domicílio
                         </h2>
 
                         <div
-                            class="shrink-0 h-7 w-7 rounded-md border-2 flex items-center justify-center"
+                            class="shrink-0 h-6 w-6 rounded-md border-2 flex items-center justify-center"
                             :class="tipoColeta === 'domicilio'
                                 ? 'bg-[#DE6B72] border-[#DE6B72]'
                                 : 'bg-white border-gray-300'">
@@ -277,12 +277,13 @@ function replicarHorario() {
                             <img 
                             src="/src/assets/InformacaoEndereco/Correto.svg" 
                             alt="Correto" 
-                            class="w-4 h-3 object-contain">
+                            class="w-4 h-4 object-contain">
                         </div>
                     </div>
 
-                    <p class="text-[15px] text-gray-600 leading-6">
-                      
+                    <p class="text-[11px] text-gray-600 leading-3 mb-3 px-1">
+                    A equipe da instituição busca o leite humano na
+                    residência da doadora.
                     </p>
 
                 </div>
@@ -296,14 +297,14 @@ function replicarHorario() {
                     class="relative h-[80px] rounded-2xl border-2 p-5 cursor-pointer w-90">
 
                     <!-- Título e botão -->
-                    <div class="flex items-start justify-between gap-3 mb-3">
+                    <div class="flex items-start justify-between gap-3">
 
-                        <h2 class="text-[18px] font-semibold text-gray-800">
-                            
+                        <h2 class="text-[12px] font-semibold text-gray-800">
+                            Coleta no banco de leite 
                         </h2>
 
                         <div
-                            class="shrink-0 h-7 w-7 rounded-md border-2 flex items-center justify-center"
+                            class="shrink-0 h-6 w-6 rounded-md border-2 flex items-center justify-center"
                             :class="tipoColeta === 'banco'
                                 ? 'bg-[#DE6B72] border-[#DE6B72]'
                                 : 'bg-white border-gray-300'">
@@ -311,42 +312,42 @@ function replicarHorario() {
                             <img 
                             src="/src/assets/InformacaoEndereco/Correto.svg" 
                             alt="Correto" 
-                            class="w-4 h-3 object-contain">
+                            class="w-4 h-4 object-contain">
                         </div>
                     </div>
 
-                    <p class="text-[15px] text-gray-600 leading-6">
-                        
+                    <p class="text-[11px] text-gray-600 leading-3">
+                        Recebimento de doações apenas
+                    presencialmente na unidade física.
                     </p>
-
                 </div>
-
             </div>
 
-        <div class="w-full px-36 mt-7">
-            <div class="h-px w-190 bg-gray-200 mb-7 "></div>
+        <div class="w-full mt-7 px-36">
+            <div class="h-px w-190 bg-gray-200"></div>
         </div>
+        
 
             <!-- Horários de funcionamento -->
-            <div class="w-260 mt-8 px-36">
+            <div class="w-260 mt-3 px-36">
 
                 <!-- Cabeçalho -->
-                <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-between mb-2">
 
-                    <h2 class="text-[18px] font-bold tracking-wide text-gray-700">
+                    <h2 class="text-[12px] font-bold tracking-wide text-gray-700">
                         HORÁRIO DE FUNCIONAMENTO POR DIA
                     </h2>
 
                     <button
                         type="button"
                         @click="replicarHorario"
-                        class="text-[16px] font-medium text-[#DE6B72] hover:underline">
+                        class="text-[12px] font-medium text-[#DE6B72] hover:underline">
                         Replicar horário de segunda para dias úteis
                     </button>
 
                 </div>
 
-                <p class="text-[16px] text-gray-500 mb-4">
+                <p class="text-[12px] text-gray-500 mb-4">
                     Defina os dias e intervalos em que a unidade estará aberta
                     para triagem e coleta de leite humano.
                 </p>
@@ -367,7 +368,7 @@ function replicarHorario() {
                                 type="button"
                                 @click="dia.ativo = !dia.ativo"
                                 :aria-pressed="dia.ativo"
-                                class="h-7 w-7 shrink-0 rounded-md border-2
+                                class="h-6 w-6 shrink-0 rounded-md border-2
                                 flex items-center justify-center"
                                 :class="dia.ativo
                                     ? 'bg-[#DE6B72] border-[#DE6B72]'
@@ -376,11 +377,11 @@ function replicarHorario() {
                                <img 
                                 src="/src/assets/InformacaoEndereco/Correto.svg" 
                                 alt="Correto" 
-                                class="w-4 h-3 object-contain">
+                                class="h-6 w-6 object-contain">
 
                             </button>
 
-                            <span class="text-[16px] font-semibold text-gray-700">
+                            <span class="text-[12px] font-semibold text-gray-700">
                                 {{ dia.nome }}
                             </span>
 
@@ -393,7 +394,7 @@ function replicarHorario() {
                             <span
                                 v-if="!dia.ativo"
                                 class="rounded-md bg-gray-100 px-3 py-2
-                                text-[14px] text-gray-500">
+                                text-[11px] text-gray-500">
                                 Fechado
                             </span>
 
@@ -408,12 +409,12 @@ function replicarHorario() {
                                 type="time"
                                 v-model="dia.inicio"
                                 :disabled="!dia.ativo"
-                                class="h-[45px] w-[145px] rounded-lg border
-                                border-gray-200 px-3 text-[15px] text-gray-700
+                                class="h-[45px] w-[120px] rounded-lg border
+                                border-gray-200 px-3 text-[11px] text-gray-700
                                 shadow-sm outline-none focus:border-[#DE6B72]
                                 disabled:bg-gray-50 disabled:text-gray-300">
 
-                            <span class="text-[14px] text-gray-400">
+                            <span class="text-[12px] text-gray-400">
                                 às
                             </span>
 
@@ -422,8 +423,8 @@ function replicarHorario() {
                                 type="time"
                                 v-model="dia.fim"
                                 :disabled="!dia.ativo"
-                                class="h-[45px] w-[145px] rounded-lg border
-                                border-gray-200 px-3 text-[15px] text-gray-700
+                                class="h-[45px] w-[120px] rounded-lg border
+                                border-gray-200 px-3 text-[11px] text-gray-700
                                 shadow-sm outline-none focus:border-[#DE6B72]
                                 disabled:bg-gray-50 disabled:text-gray-300">
                         </div>
@@ -431,6 +432,7 @@ function replicarHorario() {
                 </div>
             </div>
 
+            <!--Linha-->
             <div class="w-full px-36 mt-7">
                 <div class="h-px w-190 bg-gray-200 mb-7 "></div>
             </div>

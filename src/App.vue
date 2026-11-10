@@ -6,9 +6,10 @@ import CriacaoConta from './components/cadastroInstitucional/CriacaoConta.vue';
 import Login from './views/Login.vue';
 import CadastroInstitucional02 from './views/CadastroInstitucional02.vue';
 import CadastroInstitucional03 from './views/CadastroInstitucional03.vue';
+import Credenciais from './views/Credenciais.vue';
 
 </script>
 
 <template>
-    <CadastroInstitucional03/>
+    <Credenciais/>
 </template>
