@@ -4,28 +4,6 @@ import CardCampanha from '@/components/campanha/CardCampanha.vue';
 import { listarCampanha } from '@/services/campanhaService';
 import { onMounted, ref } from 'vue';
 
-// const campanha = [
-//     {   
-//         id: 1,
-//         titulo: 'Esta frase foi criada exatamente com cem caracteres para o teu teste de contagem.',
-//         descricao: 'Ações de incentivo à doação.',
-//         foto: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREKOSQbuJ5Hzh0ekE0TljB7kmeX5xIJHhhS0m7HWh-LQ&s=10',
-//         data_inicio: '2026-11-01',
-//         data_fim: '2026-11-30',
-//         is_ativo: false
-//     },
-//     {
-//         id: 2,
-//         titulo: 'sabe do Leite Humano',
-//         descricao: 'Incentivo à doação.',
-//         foto: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREKOSQbuJ5Hzh0ekE0TljB7kmeX5xIJHhhS0m7HWh-LQ&s=10',
-//         data_inicio: '2026-11-01',
-//         data_fim: '2026-11-30',
-//         is_ativo: true
-//     },
-
-// ]
-
 const campanha = ref([])
 const errou = ref('Não foi possíivel carregar as campanhas, por favor aguarde. (ligue a API)')
 const mostrarCadastroCampanha = ref(false)
@@ -45,15 +23,13 @@ onMounted(async () => {
         <nav class="flex justify-between gap-[10px]"
             v-if="!mostrarCadastroCampanha">
             <span class="text-[16px] text-texto-claro">Divulgue campanhas de incentivo à doação para as doadoras no aplicativo.</span>
-            <button 
             
+            <button 
             @click="mostrarCadastroCampanha = true"
             class="group bg-materna px-[16px] py-[8px] flex justify-center items-center rounded-[8px] gap-[8px] hover:bg-pink-50 hover:text-slate-600 transition-colors">
                 <img class="h-[16px] w-[14px] transition-all group-hover:brightness-0 group-hover:opacity-60" src="@/assets/campanha/+.svg" alt="Icon de +">
                 <p class="text-white group-hover:text-slate-600 font-medium text-[14px]">Nova campanha</p>
             </button>
-
-
         </nav>
 
         <Transition 

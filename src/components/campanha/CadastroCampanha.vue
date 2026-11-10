@@ -21,7 +21,6 @@ import { validarImagem } from '@/validations/imagemValidation';
         campoD.style.height = `${campoD.scrollHeight}px`
 
         const alturaMaxima = 250
-
         campoD.style.height = `${Math.min(campoD.scrollHeight, alturaMaxima)}px`
 
         campoD.style.overflowY =
@@ -109,7 +108,6 @@ import { validarImagem } from '@/validations/imagemValidation';
         } catch (erro) {
             console.error('Erro ao publicar campanha:', erro)
 
-            //veja oq acha se é bom ou não
             erroGeral1.value = 'Ocorreu um erro ao publicar a campanha.'
             erroGeral2.value = 'Verifique sua conexão e tente novamente.'
         }
@@ -117,21 +115,8 @@ import { validarImagem } from '@/validations/imagemValidation';
 </script>
 
 <template>
-    <!-- Arrumar imagem aqui -->
-    <article class="p-[20px] w-full mim-w-[1086px] min-h-[401px] bg-white border-2 border-borda rounded-[12px]">
-        <header class="flex justify-between mb-[24px]">
-            <div v-if="erroGeral1 || erroGeral2" class="flex flex-col mb-4 p-3 rounded-[12px] border-2 border-[#FECACA] bg-[#FEF2F2]/80">
-                <div class="flex ">
-                    <img src="@/assets/campanha/erro.svg" alt="">
-                    <p v-if="erroGeral1" class="text-[#991B1B] text-[12px] font-bold">
-                        {{ erroGeral1 }}
-                    </p>
-                </div>
-
-                <p v-if="erroGeral2" class="text-[#DC2626] text-[12px]">
-                    {{ erroGeral2 }}
-                </p>
-            </div>
+    <article class="p-[20px] w-full mim-w-0 min-h-[401px] bg-white border-2 border-borda rounded-[12px]">
+        <header class="flex items-center justify-between mb-[15px]">
 
             <h1 class="text-[16px] font-bold">Nova campanha</h1>
             <button
@@ -140,9 +125,23 @@ import { validarImagem } from '@/validations/imagemValidation';
             aria-label="Fechar cadastro">
                 <img src="@/assets/campanha/X.svg" alt="Icon de X">
             </button>
-            
         </header>
+        
+        <div v-if="erroGeral1 || erroGeral2" class="mb-5 flex flex-col p-[14px] rounded-[12px] border-2 border-[#FECACA] bg-[#FEF2F2]/80">
+            <div class="flex gap-[12px] ">
+                <img class="w-[20px]" src="@/assets/campanha/erro.svg" alt="">
+                <div>
+                    <p v-if="erroGeral1" class="text-[#991B1B] text-[12px] font-bold">
+                        {{ erroGeral1 }}
+                    </p>
 
+                    <p v-if="erroGeral2" class="text-[#DC2626] text-[12px]">
+                        {{ erroGeral2 }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        
         <section class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_276px] gap-4">
             <div class="w-full min-w-0 flex flex-col gap-3">
                 
@@ -153,6 +152,7 @@ import { validarImagem } from '@/validations/imagemValidation';
                     v-model="formulario.titulo"
                     @input="textareaAlturaAjustada"
                     placeholder="Semana do Leite Humano" 
+                    maxlength="100px"
                     class="leading-[20px] w-full h-[38px] border  focus:border-[#D1D5DB] focus:outline-none px-[12px] py-[10px] rounded-[6px] resize-none overflow-hidden "
                     :class="erros.titulo ? 'border-[#F87171]' : 'border-[#D1D5DB]'">
         
