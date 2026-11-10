@@ -61,5 +61,24 @@ import { ref } from 'vue'
                 <span class="text-[12px] text-[#64748B]">Adicione a primeira etapa abaixo.</span>
             </div>
         </nav>
+        <main class="w-full min-w-0 mim-h-[661px] bg-[#F8FAFC]/50 border border-[#E2E8F0] p-[20px] mt-[16px] rounded-[12px]">
+            <p class="text-[14px] font-semibold">Adicionar etapa</p>
+            <div class="flex flex-row  gap-4">
+                <div class="flex flex-col w-full">
+                    <span class="text-[12px] font-medium">Título</span>
+                    <input 
+                    type="text"
+                    placeholder="Ex: Conheça a doação"
+                    maxlength="100"
+                    class="w-full max-w-[1200px]">
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-[12px] font-medium">Tipo</span>
+                    <div class="bg-blue-300 w-[316px] h-[100px]">
+                        <p>Opcional</p>
+                    </div>
+                </div>
+            </div>
+        </main>
     </article>
 </template>
