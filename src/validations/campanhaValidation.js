@@ -32,16 +32,16 @@ export function validarDataInicio(formulario){
 
 export function validarDataFinal(formulario){
 
-    if(!formulario.dataFinal)
+    if(!formulario.dataFim)
         return 'A data de término da campanha é obrigatória.'
     else if(!formulario.dataInicio)
         return 'Preencha a data de início antes de informar a data de término.'
-    else if(formulario.dataFinal < formulario.dataInicio)
+    else if(formulario.dataFim < formulario.dataInicio)
         return 'A data de término não pode ser anterior à data de início.'
 
     const anoAtual = new Date().getFullYear()
     const anoMaximo = anoAtual + 2
-    const ano = new Date(formulario.dataFinal).getFullYear()
+    const ano = new Date(formulario.dataFim).getFullYear()
 
     if(ano > anoMaximo)
         return 'A data de término não pode ultrapassar dois anos a partir do ano atual.'

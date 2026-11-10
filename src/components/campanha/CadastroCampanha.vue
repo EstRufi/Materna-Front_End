@@ -87,7 +87,7 @@ import { validarImagem } from '@/validations/imagemValidation';
                     String(hoje.getMonth() + 1).padStart(2, '0'),
                     String(hoje.getDate()).padStart(2, '0')
                 ].join('-')
-
+                
                 const dadosCampanha = {
                     titulo: formulario.titulo,
                     descricao: formulario.descricao,
@@ -143,9 +143,6 @@ import { validarImagem } from '@/validations/imagemValidation';
             <div class="w-full min-w-0 flex flex-col gap-3">
                 
                 <div class="flex flex-col gap-1">
-                    <p v-if="erros.titulo" class="text-red-500 text-xl">
-                        {{ erros.titulo }}
-                    </p>
                     <label class="text-[14px]">Titulo</label>
                     <textarea 
                     ref="campoTitulo"
@@ -153,6 +150,9 @@ import { validarImagem } from '@/validations/imagemValidation';
                     @input="textareaAlturaAjustada"
                     placeholder="Semana do Leite Humano" class="leading-[20px] w-full h-[38px] border border-[#D1D5DB] focus:border-[#D1D5DB] focus:outline-none px-[12px] py-[10px] rounded-[6px] resize-none overflow-hidden ">
                     </textarea>
+                    <p v-if="erros.titulo" class="text-red-500 text-xl">
+                        {{ erros.titulo }}
+                    </p>
                 </div>
                     
                 
@@ -164,6 +164,9 @@ import { validarImagem } from '@/validations/imagemValidation';
                     @input="textareaAlturaAjustada"
                     placeholder="Sobre a campanha" class="leading-[20px] w-full h-[77px] border border-[#D1D5DB] focus:border-[#D1D5DB] focus:outline-none px-[12px] py-[10px] rounded-[6px] resize-none overflow-hidden ">
                     </textarea>
+                    <p v-if="erros.descricao" class="text-red-500 text-xl">
+                        {{ erros.descricao }}
+                    </p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -171,16 +174,20 @@ import { validarImagem } from '@/validations/imagemValidation';
                         <label class="text-[14px]">Inicio</label>
                         <input 
                         type="date"
-                        min="0001-01-01"
-                        max="9999-12-31" 
                         v-model="formulario.dataInicio" 
                         class="w-full min-w-0 text-texto-claro focus:outline-none px-[12px] py-[10px] rounded-[6px] border border-[#D1D5DB] focus:border-[#D1D5DB]">
+                        <p v-if="erros.dataInicio" class="text-red-500 text-xl">
+                        {{ erros.dataInicio }}
+                    </p>
                     </div>
 
                     <div class="flex flex-col gap-1 min-w-0">
                         <label class="text-[14px]">Término</label>
                         <input 
                         type="date"  v-model="formulario.dataFim" class="w-full min-w-0 text-texto-claro  focus:outline-none px-[12px] py-[10px] rounded-[6px] border border-[#D1D5DB] focus:border-[#D1D5DB]">
+                        <p v-if="erros.dataFinal" class="text-red-500 text-xl">
+                        {{ erros.dataFinal }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -235,6 +242,9 @@ import { validarImagem } from '@/validations/imagemValidation';
                             Trocar imagem
                         </button>
                     </div>
+                        <p v-if="erros.imagem" class="text-red-500 text-xl">
+                        {{ erros.imagem }}
+                        </p>
                 </div>
 
                 <div class="flex-wrap gap-2 flex justify-between mt-5">
