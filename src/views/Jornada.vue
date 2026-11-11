@@ -1,10 +1,19 @@
 <script setup>
 import CadastroJornada from '@/components/jornada/CadastroJornada.vue';
 import CardJornada from '@/components/jornada/CardJornada.vue';
-import { ref } from 'vue';
+import { listarJornada } from '@/services/jornadaService';
+import { onMounted, ref } from 'vue';
 
 const mostrarCadastroJornada = ref(false)
-    
+
+const jornada = ref([])
+        onMounted(async () => {
+            try {
+                jornada.value = await listarJornada(1)
+            } catch (error) {
+                console.error(error)
+            }
+        })
 </script>
 
 <template>
@@ -29,7 +38,13 @@ const mostrarCadastroJornada = ref(false)
             v-if="mostrarCadastroJornada"
             @fechar="mostrarCadastroJornada = false"/>
         </Transition>
-
-        <CardJornada/>
+        
+        <div class="flex flex-wrap gap-[25px] mt-[30px]">
+            <CardJornada
+            v-for="itensJornada in jornada"
+            :key="itensJornada.id"
+            :jornada="itensJornada"/>
+        </div>
+        
     </main>
 </template>

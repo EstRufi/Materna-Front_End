@@ -2,16 +2,7 @@
 import { listarJornada } from '@/services/jornadaService';
 import { onMounted, ref } from 'vue';
 
-    const jornada = ref([])
-    onMounted(async () => {
-        try {
-            jornada.value = await listarJornada(1)
-        } catch (error) {
-            console.error(error)
-        }
-    })
-
-    defineProps({
+    const props = defineProps({
         jornada:{
             type: Object,
             required:true
@@ -21,11 +12,10 @@ import { onMounted, ref } from 'vue';
 
 <template>
     <article 
-    v-for="jornadaTotal in jornada"
     class="w-full max-w-[524px] h-[502px] flex flex-col bg-[#FFFFFF] border-2 border-borda rounded-[12px] p-[24px]">
         <nav class="flex flex-row justify-between mb-[16px] bg-blac">
             <div>
-                <h2 class="text-[18px] font-bold">{{ jornadaTotal.nome }}B</h2>
+                <h2 class="text-[18px] font-bold">{{ jornada.nome }}B</h2>
                 <span class="text-[14px] font-regular">{{  }}AA</span>
             </div>
             <div >
