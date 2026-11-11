@@ -39,7 +39,7 @@ const jornada = ref([])
             @fechar="mostrarCadastroJornada = false"/>
         </Transition>
         
-        <div class="flex flex-wrap gap-[25px] mt-[30px]">
+        <div class="flex flex-wrap gap-[25px] justify-center mt-[30px]">
             <CardJornada
             v-for="itensJornada in jornada"
             :key="itensJornada.id"
