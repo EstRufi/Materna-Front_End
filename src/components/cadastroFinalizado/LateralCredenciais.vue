@@ -70,7 +70,7 @@ defineProps({
         <div class="w-full px-10 mt-40">
             <div class="h-px w-170 bg-white/20 mb-8"></div>
             <div class="h-2 w-170 rounded-full bg-black/20 ">
-                <div class="h-2 w-[25%] rounded-full bg-white">
+                <div class="h-2 w-[100%] rounded-full bg-white">
                 </div>
             </div>
         </div>

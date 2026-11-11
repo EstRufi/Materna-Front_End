@@ -131,13 +131,13 @@ function replicarHorario() {
                         <input 
                         type="text"
                         placeholder="01310-100"
-                        class="h-[47px] w-90 rounded-md border border-gray-300 
+                        class="h-[47px] w-110 rounded-md border border-gray-300 
                         bg-white px-3 text-[12px] text-gray-700
                         outline-none border-gray-300 focus:border-[#D1D5DB] ">
                     </div>
                 </div>
 
-                    <div class="flex-1 min-w-0 mb-6">
+                    <div class="flex-1 min-w-0 mb-6 px-110">
                         <div class="flex flex-col ">
                             <label class="text-[12px] font-medium text-gray-700">
                                 Logradouro
@@ -146,7 +146,7 @@ function replicarHorario() {
                             <input 
                             type="text"
                             placeholder="Ex: Av. Paulista"
-                            class="h-[47px] w-90 rounded-md border border-gray-300 
+                            class="h-[47px] w-110 rounded-md border border-gray-300 
                             bg-white px-3 text-[14px] text-gray-700
                             outline-none border-gray-300 focus:border-[#D1D5DB] mt-1">
                         </div>
@@ -165,14 +165,15 @@ function replicarHorario() {
                             <input 
                             type="text"
                             placeholder="1000"
-                            class="h-[47px] w-90 rounded-md border border-gray-300 
+                            class="h-[47px] w-110 rounded-md border border-gray-300 
                             bg-white px-3 text-[14px] text-gray-700
                             outline-none border-gray-300 focus:border-[#D1D5DB]">
                         </div>
                     </div>
                 
                 <div class="w-full whitespace-nowrap space-y-4 mb-4">
-                    <div class="flex flex-col">
+
+                    <div class="flex flex-col px-22 mt-1">
                         <label class="text-[12px] font-medium text-gray-700">
                             Complemento
                         </label>
@@ -180,7 +181,7 @@ function replicarHorario() {
                         <input 
                         type="text"
                         placeholder="Ex: Bloco B, 3º andar"
-                        class="h-[47px] w-90 rounded-md border border-gray-300 
+                        class="h-[47px] w-110 rounded-md border border-gray-300 
                         bg-white px-3 text-[14px] text-gray-700
                         outline-none border-gray-300 focus:border-[#D1D5DB]">
                     </div>
@@ -199,14 +200,14 @@ function replicarHorario() {
                         <input 
                         type="text"
                         placeholder="Bela Vista"
-                        class="h-[47px] w-70 rounded-md border border-gray-300 
+                        class="h-[47px] w-90 rounded-md border border-gray-300 
                         bg-white px-3 text-[14px] text-gray-700
                         outline-none border-gray-300 focus:border-[#D1D5DB]">
                     </div>
                 </div>
 
                 <div class="w-full whitespace-nowrap space-y-4 mb-4">
-                    <div class="flex flex-col gap-1">
+                    <div class="flex flex-col gap-1 mt-1">
                         <label class="text-[12px] font-medium text-gray-700">
                         Cidade
                         </label>
@@ -214,14 +215,14 @@ function replicarHorario() {
                         <input 
                         type="text"
                         placeholder="São Paulo"
-                        class="h-[47px] w-70 rounded-md border border-gray-300 
+                        class="h-[47px] w-90 rounded-md border border-gray-300 
                         bg-white px-3 text-[14px] text-gray-700
                         outline-none border-gray-300 focus:border-[#D1D5DB]">
                     </div>
                 </div>
 
                 <div class="w-full whitespace-nowrap space-y-4 mb-4">
-                    <div class="flex flex-col gap-1">
+                    <div class="flex flex-col gap-1 mt-1">
                         <label class="text-[12px] font-medium text-gray-700">
                         UF
                         </label>
@@ -229,7 +230,7 @@ function replicarHorario() {
                         <input 
                         type="text"
                         placeholder="SP"
-                        class="h-[47px] w-40 rounded-md border text-center border-gray-300 
+                        class="h-[47px] w-43 rounded-md border text-center border-gray-300 
                         bg-white px-3 text-[14px] text-gray-700
                         outline-none border-gray-300 focus:border-[#D1D5DB]">
                     </div>
@@ -237,7 +238,7 @@ function replicarHorario() {
             </div>
 
         <div class="w-full px-36 mt-3 mb-3">
-            <div class="h-px w-190 bg-gray-200 "></div>
+            <div class="h-px w-230 bg-gray-200 "></div>
         </div>
 
         <!--Coleta-->
@@ -251,7 +252,7 @@ function replicarHorario() {
             </p>
         </div>
 
-        <div class="flex  w-fit items-start justify-between grid grid-cols-2 gap-5 px-36 ">
+        <div class="flex w-full items-start justify-between grid grid-cols-2 gap-50 px-36">
 
                 <!-- Coleta em casa -->
                 <div
@@ -329,7 +330,7 @@ function replicarHorario() {
         
 
             <!-- Horários de funcionamento -->
-            <div class="w-260 mt-3 px-36">
+            <div class="w-300 mt-3 px-36">
 
                 <!-- Cabeçalho -->
                 <div class="flex items-center justify-between mb-2">
@@ -434,7 +435,7 @@ function replicarHorario() {
 
             <!--Linha-->
             <div class="w-full px-36 mt-7">
-                <div class="h-px w-190 bg-gray-200 mb-7 "></div>
+                <div class="h-px w-230 bg-gray-200 mb-7 "></div>
             </div>
 
            <!-- Botões -->
@@ -458,7 +459,7 @@ function replicarHorario() {
                     </button>
                 </div>
 
-            <div class="justify-between px-36">
+            <div class="justify-between px-34">
                 <button class="w-38 h-[48px] rounded-md 
                 bg-[#DE6B72] justify-center flex items-center 
                 text-sm font-medium text-white hover:opacity-30 transition gap-3">
@@ -477,9 +478,8 @@ function replicarHorario() {
 
             </div>
 
-
             <div class="w-full px-36 mt-7">
-                <div class="h-px w-160 bg-gray-100 mb-3 "></div>
+                <div class="h-px w-190 bg-gray-100 mb-3 "></div>
             </div>
 
 
