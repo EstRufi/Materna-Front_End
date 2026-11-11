@@ -23,3 +23,23 @@ export async function cadastrarCampanha(dados){
 
     return resposta
 }
+
+export async function atualizarCampanha(id,dados) {
+    const resposta = await requisicaoApi(`campanha/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dados),
+    })
+
+    return resposta
+}
+
+export async function deletarCampanha(id) {
+    const resposta = await requisicaoApi(`campanha/${id}`, {
+        method: 'DELETE'
+    })
+
+    return resposta
+}

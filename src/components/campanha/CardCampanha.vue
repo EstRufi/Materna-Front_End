@@ -1,17 +1,7 @@
 <script  setup>
-// {
-//   "titulo": "Campanha de Doação de Leite Materno",
-//   "descricao": "Participe da nossa campanha para arrecadar frascos e incentivar a doação de leite humano.",
-//   "foto": "https://exemplo.com/foto-campanha.jpg",
-//   "data_inicio": "2026-11-01",
-//   "data_fim": "2026-11-30",
-//   "is_ativo": true,
-//   "id_instituicao": 1,
-//   "id_funcionario": 1
-// }
- const emit = defineEmits(['editar'])
+const emit = defineEmits(['editar','deletar'])
 
-    defineProps({
+    const props = defineProps({
         campanha:{
             type: Object,
             required:true
@@ -74,7 +64,7 @@
 
             <footer class="flex justify-between ">
                 <button
-                @click="emit('editar')"
+                @click="emit('editar',props.campanha)"
                     class="p-2 flex items-center justify-center gap-2 w-[87px] h-[36px] rounded-lg bg-materna text-white text-[14px] font-medium hover:bg-pink-50 hover:text-slate-600 transition-colors">
                     <img
                         class="w-[20px] h-[20px] transition-all group-hover:brightness-0 group-hover:opacity-60"
@@ -84,6 +74,7 @@
                 </button>
 
                 <button
+                    @click="emit('deletar',campanha.id)"
                     class="group p-2 flex items-center justify-center gap-2 w-[87px] h-[36px] rounded-lg bg-materna text-white text-[14px] font-medium hover:bg-pink-50 hover:text-slate-600 transition-colors">
                     <img
                         class="w-[20px] h-[20px] transition-all group-hover:brightness-0 group-hover:opacity-60"

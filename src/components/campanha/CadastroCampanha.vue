@@ -1,11 +1,18 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import {urlDaImagem} from '@/composable/urlDaImagem.js'
-import { cadastrarCampanha } from '@/services/campanhaService';
+import { cadastrarCampanha, atualizarCampanha } from '@/services/campanhaService';
 import { validarDataFinal, validarDataInicio, validarDescrição, validarTiulo } from '@/validations/campanhaValidation';
 import { validarImagem } from '@/validations/imagemValidation';
 
     const emit = defineEmits(['fechar'])
+
+    const props = defineProps({
+        campanhaEdicao: {
+            type: Object,
+            default: null
+        }
+    })
 
     const campoTitulo = ref(null)
     const campoDescricao = ref(null)
@@ -53,7 +60,11 @@ import { validarImagem } from '@/validations/imagemValidation';
         erros.descricao =   validarDescrição(formulario)
         erros.dataInicio=   validarDataInicio(formulario)
         erros.dataFinal=    validarDataFinal(formulario)
-        erros.imagem=       validarImagem(arquivoImagem.value)
+        erros.imagem=       arquivoImagem.value
+            ? validarImagem(arquivoImagem.value)
+            : props.campanhaEdicao?.foto
+                ? ''
+                : validarImagem(null)
 
         const possuiErros = Object.values(erros).some(erro => erro !== '')
 
@@ -66,6 +77,16 @@ import { validarImagem } from '@/validations/imagemValidation';
         dataInicio:'',
         dataFim:''
     })
+    watch(() => props.campanhaEdicao, (campanha) => {
+        if (campanha) {
+            formulario.titulo = campanha.titulo
+            formulario.descricao = campanha.descricao
+            formulario.dataInicio = campanha.data_inicio.split('T')[0]
+            formulario.dataFim = campanha.data_fim.split('T')[0]
+
+            previewImagem.value = campanha.foto
+        }
+    }, { immediate: true })
 
     async function publicarCampanha() {
         try {
@@ -78,7 +99,9 @@ import { validarImagem } from '@/validations/imagemValidation';
                 return
             }
             else{
-                const foto = await enviarImagem()
+                const foto = await arquivoImagem.value
+                    ? await enviarImagem()
+                    : props.campanhaEdicao?.foto
 
                 const hoje = new Date()
                 const dataHoje = [
@@ -95,13 +118,25 @@ import { validarImagem } from '@/validations/imagemValidation';
                     data_fim: formulario.dataFim,
                     is_ativo: dataHoje >= formulario.dataInicio &&
                             dataHoje <= formulario.dataFim,
-                    id_instituicao: 1, // ID temporário para teste
-                    id_funcionario: 1  // ID temporário para teste
+                    id_instituicao: props.campanhaEdicao?.id_instituicao ?? 1, // ID temporário para teste
+                    id_funcionario: props.campanhaEdicao?.id_funcionario ?? 1  // ID temporário para teste
                 }
 
-                const resposta = await cadastrarCampanha(dadosCampanha)
+                let resposta
 
-                console.log('Campanha cadastrada:', resposta)
+                if (props.campanhaEdicao) {
+                    resposta = await atualizarCampanha(
+                        props.campanhaEdicao.id,
+                        dadosCampanha
+                    )
+
+                    console.log('Campanha atualizada:', resposta)
+
+                } else {
+                    resposta = await cadastrarCampanha(dadosCampanha)
+
+                    console.log('Campanha cadastrada:', resposta)
+                }
 
                 window.location.reload()
             }    
@@ -118,7 +153,9 @@ import { validarImagem } from '@/validations/imagemValidation';
     <article class="p-[20px] w-full mim-w-0 min-h-[401px] bg-white border-2 border-borda rounded-[12px]">
         <header class="flex items-center justify-between mb-[15px]">
 
-            <h1 class="text-[16px] font-bold">Nova campanha</h1>
+            <h1 class="text-[16px] font-bold">
+                {{ props.campanhaEdicao ? 'Editar campanha' : 'Nova campanha' }}
+            </h1>
             <button
             type="button"
             @click="emit('fechar')"
@@ -266,7 +303,7 @@ import { validarImagem } from '@/validations/imagemValidation';
                     <button
                     @click="publicarCampanha"
                     class="h-[36px] px-[16px] py-[8px] bg-materna text-white text-[14px] rounded-[6px]"
-                    >Publicar campanha</button>
+                    >{{ props.campanhaEdicao ? 'Salvar alterações' : 'Publicar campanha' }}</button>
                 </div>
             </div>
         </section>
