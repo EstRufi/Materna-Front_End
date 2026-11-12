@@ -6,6 +6,8 @@ const email = ref('')
 const senha = ref('')
 const erro = ref('')
 
+const recuperarSenha = ref(false)
+
 function fazerLogin(){
     erro.value = ''
 

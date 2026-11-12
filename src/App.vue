@@ -7,9 +7,10 @@ import Login from './views/Login.vue';
 import CadastroInstitucional02 from './views/CadastroInstitucional02.vue';
 import CadastroInstitucional03 from './views/CadastroInstitucional03.vue';
 import Credenciais from './views/Credenciais.vue';
+import Formulario from './components/login/Formulario.vue';
 
 </script>
 
 <template>
-    <Credenciais/>
+    <Login/>
 </template>

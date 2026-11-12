@@ -11,6 +11,7 @@ const etapa = [
     'Local&Horário',
     'Acesso'
 ]
+const termodDeUso = ref(false)
 
 </script>
 <template>
@@ -98,9 +99,9 @@ const etapa = [
 
             <!--Formulário/ E-mail-->
             <div class="w-full min-w-[520px] text-left px-36 mb-3">
-                <div class="flex flex-col gap-2 font-semibold">
-
-                    <label class="text-[14px] text-gray-700">
+                <div class="flex flex-col gap-2 ">
+                   
+                    <label class="text-[14px] text-gray-700 font-semibold">
                        E-mail de Acesso
                     </label>
 
@@ -110,7 +111,8 @@ const etapa = [
                     class="h-[40px] w-160 rounded-md border border-gray-300 
                     bg-white px-3 text-[14px] text-gray-700
                     outline-none border-gray-300 focus:border-[#D1D5DB]">
-                </div>
+                    </div>
+        
             </div>
 
             <!-- Formulário/Senha -->
@@ -123,7 +125,7 @@ const etapa = [
                         </label>
 
                         <input 
-                        type="text"
+                        type="password"
                         placeholder="Mínimo 8 caracteres"
                         class="h-[40px] w-76 rounded-md border border-gray-300 
                         bg-white px-3 text-[14px] text-gray-700
@@ -139,7 +141,7 @@ const etapa = [
                         </label>
 
                         <input 
-                        type="text"
+                        type="password"
                         placeholder="Repita a senha"
                         class="h-[40px] w-76 rounded-md border border-gray-300 
                         bg-white px-3 text-[14px] text-gray-700
@@ -149,7 +151,7 @@ const etapa = [
             </div>
 
         <!-- Requisitos -->
-        <div class="w-160 rounded-xl border border-[#E2E8F0]/80 bg-[#E2E8F0]/10 p-3 mb-4 mt-4">
+        <div class="ml-36 w-160 rounded-xl border border-[#E2E8F0]/80 bg-[#E2E8F0]/10 p-3 mb-4 mt-4 ">
 
             <p class="text-[#334155] text-[12px] font-bold mb-2">
                 Requisitos de segurança:
@@ -196,59 +198,93 @@ const etapa = [
 
         <!--Resumo-->
 
-        <div class="w-160 rounded-xl border border-[#DE6B72]/20 bg-[#DE6B72]/10 p-3 mb-4">
+        <div class="ml-36 items-start w-160 rounded-xl border border-[#DE6B72]/20 bg-[#DE6B72]/10 p-3 mb-4 ">
+            <div class="flex items-start ga-1 ">
+                <div class="h-8 w-8 rounded-md bg-[#DE6B72]/20">
+                    <img 
+                            src="/src/assets/credenciais/logoResumo.svg" 
+                            alt="Correto" 
+                            class="h-5 w-5 object-contain flex ml-1.5 mt-1">
+                            </div>
 
-            <h1  class="text-[12px] text-[#DE6B72] font-bold">
-            Resumo da Instituição
-            </h1>
+                    <h1  class="text-[12px] text-[#DE6B72] font-bold px-4">
+                    Resumo da Instituição
+                </h1>
+            </div>
 
-            <p class="text-[11px] text[#334155]">
-                Banco de Leite Humano Santa Clara • CNPJ 00.000.000/0001-00 • Resp: Dra. Mariana
+            <p class="text-[11px] text[#334155] px-12">
+                Banco de Leite Humano Santa Clara • CNPJ 00.000.000/0001-00 • Resp: Dra. Mariana <br>
                 Silva
             </p>
 
         </div>
 
+        <!--Termos de Uso-->
+        <label class="flex gap-3 items-start cursor-pointer px-36 mt-5 mb-6">
 
-           <!-- Botões -->
-           <div class=" flex w-full justify-between items-center">
+            <input 
+            type="checkbox"
+            v-model="termodDeUso"
+            class="mt-1 h-4 w-4 shrink-0 cursor-pointer accent-[#DE6B72] rounded-mx mt-2">
+            
 
-        <div class="justify-between px-36">
-            <button class="w-34 h-[48px] rounded-md 
-            bg-[#FFFFFF] justify-center flex items-center 
-            text-sm font-medium text-white hover:opacity-30 transition 
-            border border-gray-300 gap-3 ">
+            <span class="text-[14px] leading-[1.5] text-[#475569] mt-1 font-medium">
+                Concordo com os
 
-            <img 
-            src="/src/assets/InformacoesResponsavel/voltar.svg" 
-            alt="voltar" 
-            class="w-4 h-4 object-contain">
+                <a 
+                href="#" 
+                class="text-[14px] text-[#DE6B72] underline underline-offset-4">
+                    Termos de Uso 
+                </a>
+                e autorizo o tratamento de dados conforme a <br>
 
-            <span class="text-black text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4">
-                Voltar
+                <a 
+                href="" 
+                class="text-[14px] text-[#DE6B72] underline underline-offset-4">
+                    Política de Privacidade e LGPD
+                </a>
+
             </span>
+        </label>
+       
+           <!-- Botões -->
+            <div class=" flex w-full justify-between items-center">
+                <div class="justify-between px-36">
+                    <button class="w-34 h-[48px] rounded-md 
+                    bg-[#FFFFFF] justify-center flex items-center 
+                    text-sm font-medium text-white hover:opacity-30 transition 
+                    border border-gray-300 gap-3 ">
 
-            </button>
-        </div>
+                    <img 
+                    src="/src/assets/InformacoesResponsavel/voltar.svg" 
+                    alt="voltar" 
+                    class="w-4 h-4 object-contain">
 
-            <div class="justify-between px-34">
-                <button class="w-48 h-[48px] rounded-md 
-                bg-[#DE6B72] justify-center flex items-center 
-                text-sm text-white hover:opacity-30 transition gap-3">
+                    <span class="text-black text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4">
+                        Voltar
+                    </span>
 
-                <span class="text-white text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4">
-                    Finalizar cadastro
-                </span>
+                    </button>
+                </div>
 
-                <img 
-                src="/src/assets/cadastro/Seta2.svg" 
-                alt="Seta2" 
-                class="w-4 h-3 object-contain">
+                    <div class="justify-between px-34">
+                        <button class="w-48 h-[48px] rounded-md 
+                        bg-[#DE6B72] justify-center flex items-center 
+                        text-sm text-white hover:opacity-30 transition gap-3">
 
-                </button>
+                        <span class="text-white text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4">
+                            Finalizar cadastro
+                        </span>
+
+                        <img 
+                        src="/src/assets/cadastro/Seta2.svg" 
+                        alt="Seta2" 
+                        class="w-4 h-3 object-contain">
+
+                        </button>
+                    </div>
+
             </div>
-
-        </div>
 
         <div class="w-full px-36 mt-7">
             <div class="h-px w-190 bg-gray-100 mb-3 "></div>
