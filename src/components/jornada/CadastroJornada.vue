@@ -27,10 +27,26 @@ import { ref } from 'vue'
         campoDE.style.overflowY =
             campoDE.scrollHeight > alturaMaximaE ? 'auto' : 'hidden'
     }
+
+    const campoArquivo = ref(null)
+    const arquivoSelecionado = ref(null)
+
+    function abrirSeletorArquivo(){
+        campoArquivo.value.click()
+    }
+
+    function selecionarArquivo(event){
+        arquivoSelecionado.value = event.target.files[0]
+    }
+
+    function removerArquivo() {
+    arquivoSelecionado.value = null
+    campoArquivo.value.value = ''
+}
 </script>
 
 <template>
-    <article class="w-full mim-w-0 max-h-[1073px] bg-white border-2 border-borda rounded-[12px] p-[24px]" >
+    <article class="w-full mim-w-0 min-h-0 bg-white border-2 border-borda rounded-[12px] p-[24px]" >
         <header class="flex items-center justify-between mb-[16px]">
             <h1 class="text-[16px] font-bold">Nova jornada</h1>
             <button
@@ -99,16 +115,85 @@ import { ref } from 'vue'
                 class="leading-[35px] w-full h-[150px] text-texto-claro border border-borda focus:border-[#D1D5DB] focus:outline-none px-[14px] py-[10px] rounded-[8px] resize-none overflow-hidden"></textarea>
                 
             </div>
-            <div class="w-full max-w-[981px] h-[65px] bg-white border border-borda flex ">
-                <img 
-                class="w-[20px] brightness-0 saturate-100 invert-[49%] sepia-[31%] saturate-[1300%] hue-rotate-[310deg] brightness-[90%] contrast-[85%]"
-                
-                src="@/assets/sindebar/agenda.svg" alt="Icon de Calendario">
-                <div>
-                    <span>Etapa Agendável</span>
-                    <p>Permite que a doadora agende a data para esta etapa</p>
+
+            <div class="w-full min-w-0 min-h-[65px] bg-white border border-borda flex items-center justify-between p-[12px] rounded-[8px]">
+                <div class="flex gap-[8px]">
+                    <img 
+                    class="w-[20px] "
+                    src="@/assets/jornada/calendarioRosa.svg" alt="Icon de Calendario">
+                    <div class="flex flex-col">
+                        <span class="text-[12px] font-semibold">Etapa Agendável</span>
+                        <p class="text-[12px] text-[#94A3B8]">Permite que a doadora agende a data para esta etapa</p>
+                    </div>
                 </div>
+                
                 <div>bolinha</div>
+            </div>
+
+            <div class="w-full min-w-0 min-h-[65px] bg-white border border-borda flex items-center justify-between p-[12px] rounded-[8px]">
+                <div class="flex gap-[8px]">
+                    <img 
+                    class="w-[20px] "
+                    src="@/assets/jornada/calendarioRosa.svg" alt="Icon de Calendario">
+                    <div class="flex flex-col">
+                        <span class="text-[12px] font-semibold">Precisa de aprovação</span>
+                        <p class="text-[12px] text-[#94A3B8]">Permite que o banco recusar uma etapa concluida</p>
+                    </div>
+                </div>
+                
+                <div>bolinha</div>
+            </div>
+
+            <div class="flex flex-col">
+                <div class="flex flex-row items-end flex-wrap">
+                    <span class="text-[12px] font-medium">Arquivo / Material da Instituição (PDF)</span>
+                    <p class="text-[11px] text-[#94a3b8]">- Material complementar para leitura da doadora</p>
+                </div>
+
+                <div class="w-full min-w-0 min-h-[56px] flex-wrap p-[10px] gap-2 bg-white border-2 border-dashed border-[#E2E8F0] flex flex-row rounded-[8px] justify-between">
+                    <div class="flex flex-col">
+                        <span 
+                        class="text-[12px] font-medium"
+                        v-if="arquivoSelecionado">
+                            {{ arquivoSelecionado.name }}
+                        </span>
+                        <span
+                        class="text-[10px] text-[#94A3B8]"
+                        v-if="arquivoSelecionado">
+                            {{arquivoSelecionado.name.split('.').pop().toUpperCase()}} 
+                            • 
+                            {{ (arquivoSelecionado.size / (1024**2)).toFixed(2)}} MB 
+                            • Anexado
+                        </span>
+                    </div>
+
+                    <div class="flex flex-row items-center gap-[10px]">
+                        <input
+                        ref="campoArquivo" 
+                        type="file"
+                        accept=".pdf,.doc,.docx,.xls,.xlsx"
+                        class="hidden"
+                        @change="selecionarArquivo">
+
+                        <button
+                        class="text-[12px] text-materna flex flex-row"
+                        type="button"
+                        @click="abrirSeletorArquivo">
+                            <img class="w-[14px]" src="@/assets/jornada/baixar.svg" alt="">
+                            Adicionar
+                        </button>
+
+                        <button
+                        type="button"
+                        class="flex flex-row text-[12px] text-[#94A3B8]"
+                        @click="removerArquivo">
+                            <img class="w-[14px]" src="@/assets/jornada/lixo.svg" alt="">
+                            Remover
+                        </button>
+                    </div>
+                </div> 
+
+                <hr class="my-4 border-0 border-t-2 border-gray-200 ">
             </div>
         </main>
     </article>
