@@ -99,6 +99,14 @@ import { ref } from 'vue'
                 class="leading-[35px] w-full h-[150px] text-texto-claro border border-borda focus:border-[#D1D5DB] focus:outline-none px-[14px] py-[10px] rounded-[8px] resize-none overflow-hidden"></textarea>
                 
             </div>
+            <div class="w-full max-w-[981px] h-[65px] bg-white border border-borda flex ">
+                <img src="" alt="">
+                <div>
+                    <span>Etapa Agendável</span>
+                    <p>Permite que a doadora agende a data para esta etapa</p>
+                </div>
+                <div>bolinha</div>
+            </div>
         </main>
     </article>
 </template>
