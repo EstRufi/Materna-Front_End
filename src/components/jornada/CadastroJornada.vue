@@ -4,19 +4,28 @@ import { ref } from 'vue'
     const emit = defineEmits(['fechar'])
 
     const campoDescricao = ref(null)
-    const campoTitulo = ref(null)
+    const campoDescricaoEtapa = ref(null)
+
     function textareaAlturaAjustada() {
         const campoD = campoDescricao.value
-        const campoT = campoTitulo.value
+        const campoDE = campoDescricaoEtapa.value
         const alturaMaxima = 150
+        const alturaMaximaE = 350
 
-        campoT.style.height = '38px'
         campoD.style.height = '38px'
+        campoDE.style.height = '100px'
+
         const altura = Math.min(campoD.scrollHeight, alturaMaxima)
+        const alturaDE = Math.min(campoDE.scrollHeight, alturaMaximaE)
+
         campoD.style.height = `${altura}px`
+        campoDE.style.height = `${alturaDE}px`
 
         campoD.style.overflowY =
             campoD.scrollHeight > alturaMaxima ? 'auto' : 'hidden'
+
+        campoDE.style.overflowY =
+            campoDE.scrollHeight > alturaMaximaE ? 'auto' : 'hidden'
     }
 </script>
 
@@ -38,7 +47,7 @@ import { ref } from 'vue'
             <div class="w-full grid grid-cols-[repeat(auto-fit,minmax(min(100%,280px),1fr))] gap-2">
                 <div class="flex flex-col">
                     <span>Nome da jornada</span>
-                    <input 
+                    <input
                     type="text"
                     maxlength="50"
                     placeholder="Ex: Jornada padrão da doadora"
@@ -61,23 +70,34 @@ import { ref } from 'vue'
                 <span class="text-[12px] text-[#64748B]">Adicione a primeira etapa abaixo.</span>
             </div>
         </nav>
-        <main class="w-full min-w-0 mim-h-[661px] bg-[#F8FAFC]/50 border border-[#E2E8F0] p-[20px] mt-[16px] rounded-[12px]">
+        <main class="w-full flex flex-col min-w-0 mim-h-[661px] bg-[#F8FAFC]/50 border border-[#E2E8F0] p-[20px] mt-[16px] gap-[16px] rounded-[12px]">
             <p class="text-[14px] font-semibold">Adicionar etapa</p>
-            <div class="flex flex-row  gap-4">
-                <div class="flex flex-col w-full">
+            <div class="flex flex-row flex-wrap gap-4">
+                <div class="flex flex-col w-full max-w-[648px]">
                     <span class="text-[12px] font-medium">Título</span>
                     <input 
                     type="text"
                     placeholder="Ex: Conheça a doação"
                     maxlength="100"
-                    class="w-full max-w-[1200px]">
+                    class="w-full focus:outline-none bg-white border-2 border-[#E2E8F0] max-w-[1200px] h-[34px] px-[12px] py-[8px] rounded-[6px]">
                 </div>
-                <div class="flex flex-col">
+                <div class="flex flex-1 flex-col">
                     <span class="text-[12px] font-medium">Tipo</span>
-                    <div class="bg-blue-300 w-[316px] h-[100px]">
+                    <div class="bg-white border-2 border-[#E2E8F0] text-[12px] font-medium px-[12px] py-[8px] flex items-center  rounded-[6px] w-full h-[34px]">
                         <p>Opcional</p>
                     </div>
                 </div>
+            </div>
+
+            <div class="flex flex-col gap-[4px]">
+                <span class="text-[12px] font-medium">Descrição</span>
+                <textarea 
+                ref="campoDescricaoEtapa"
+                @input="textareaAlturaAjustada"
+                type="text"
+                placeholder="Breve resumo do objetivo"
+                class="leading-[35px] w-full h-[150px] text-texto-claro border border-borda focus:border-[#D1D5DB] focus:outline-none px-[14px] py-[10px] rounded-[8px] resize-none overflow-hidden"></textarea>
+                
             </div>
         </main>
     </article>
