@@ -100,7 +100,10 @@ import { ref } from 'vue'
                 
             </div>
             <div class="w-full max-w-[981px] h-[65px] bg-white border border-borda flex ">
-                <img src="@/" alt="">
+                <img 
+                class="w-[20px] brightness-0 saturate-100 invert-[49%] sepia-[31%] saturate-[1300%] hue-rotate-[310deg] brightness-[90%] contrast-[85%]"
+                
+                src="@/assets/sindebar/agenda.svg" alt="Icon de Calendario">
                 <div>
                     <span>Etapa Agendável</span>
                     <p>Permite que a doadora agende a data para esta etapa</p>
