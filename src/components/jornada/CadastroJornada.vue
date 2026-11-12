@@ -100,7 +100,7 @@ import { ref } from 'vue'
                 
             </div>
             <div class="w-full max-w-[981px] h-[65px] bg-white border border-borda flex ">
-                <img src="" alt="">
+                <img src="@/" alt="">
                 <div>
                     <span>Etapa Agendável</span>
                     <p>Permite que a doadora agende a data para esta etapa</p>
