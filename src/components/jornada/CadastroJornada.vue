@@ -40,12 +40,49 @@ import { ref } from 'vue'
     }
 
     function removerArquivo() {
-    arquivoSelecionado.value = null
-    campoArquivo.value.value = ''
+        arquivoSelecionado.value = null
+        campoArquivo.value.value = ''
+    }
+
+    const etapas = ref([
+        {
+            id: 1,
+            titulo: '',
+            tipo: 'Opcional',
+            descricao: '',
+            agendavel: false,
+            precisaAprovacao: false,
+            arquivo: null
+        }
+    ])
+
+    function adicionarEtapa() {
+        if (etapas.value.length >= 5) {
+            return
+        }
+
+        etapas.value.push({
+            id: Date.now(),
+            titulo: '',
+            tipo: 'Opcional',
+            descricao: '',
+            agendavel: false,
+            precisaAprovacao: false,
+            arquivo: null
+        })
+    }
+
+    function removerEtapa() {
+    if (etapas.value.length <= 1) {
+        return
+    }
+
+    etapas.value.pop()
 }
 </script>
 
 <template>
+    <!-- Fazer o checkaut :D -->
     <article class="w-full mim-w-0 min-h-0 bg-white border-2 border-borda rounded-[12px] p-[24px]" >
         <header class="flex items-center justify-between mb-[16px]">
             <h1 class="text-[16px] font-bold">Nova jornada</h1>
@@ -82,16 +119,20 @@ import { ref } from 'vue'
             </div>
 
             <div class="w-full flex bg-[#F0F9FF]/20 flex-col items-center justify-center gap-1 border border-dashed border-[#7DD3FC] rounded-[8px] py-[20px] px-[16px] mt-[16px]">
-                <p class="text-[#94A3B8] text-[12px] font-medium">Etapas ({{ 0 }})</p>
+                <p class="text-[#94A3B8] text-[12px] font-medium">Etapas ({{ etapas.length}})</p>
                 <span class="text-[12px] text-[#64748B]">Adicione a primeira etapa abaixo.</span>
             </div>
         </nav>
-        <main class="w-full flex flex-col min-w-0 mim-h-[661px] bg-[#F8FAFC]/50 border border-[#E2E8F0] p-[20px] mt-[16px] gap-[16px] rounded-[12px]">
+        <main 
+        v-for="(etapa,index) in etapas"
+        :key="etapa.id"
+        class="w-full flex flex-col min-w-0 mim-h-[661px] bg-[#F8FAFC]/50 border border-[#E2E8F0] p-[20px] mt-[16px] gap-[16px] rounded-[12px]">
             <p class="text-[14px] font-semibold">Adicionar etapa</p>
             <div class="flex flex-row flex-wrap gap-4">
                 <div class="flex flex-col w-full max-w-[648px]">
                     <span class="text-[12px] font-medium">Título</span>
-                    <input 
+                    <input
+                    v-model="etapa.titulo" 
                     type="text"
                     placeholder="Ex: Conheça a doação"
                     maxlength="100"
@@ -107,7 +148,8 @@ import { ref } from 'vue'
 
             <div class="flex flex-col gap-[4px]">
                 <span class="text-[12px] font-medium">Descrição</span>
-                <textarea 
+                <textarea
+                v-model="etapa.descricao"  
                 ref="campoDescricaoEtapa"
                 @input="textareaAlturaAjustada"
                 type="text"
@@ -146,19 +188,19 @@ import { ref } from 'vue'
 
             <div class="flex flex-col">
                 <div class="flex flex-row items-end flex-wrap">
-                    <span class="text-[12px] font-medium">Arquivo / Material da Instituição (PDF)</span>
-                    <p class="text-[11px] text-[#94a3b8]">- Material complementar para leitura da doadora</p>
+                    <span class="text-[14px] font-medium">Arquivo / Material da Instituição (PDF)</span>
+                    <p class="text-[13px] text-[#94a3b8]">- Material complementar para leitura da doadora</p>
                 </div>
 
                 <div class="w-full min-w-0 min-h-[56px] flex-wrap p-[10px] gap-2 bg-white border-2 border-dashed border-[#E2E8F0] flex flex-row rounded-[8px] justify-between">
                     <div class="flex flex-col">
                         <span 
-                        class="text-[12px] font-medium"
+                        class="text-[13px] font-medium"
                         v-if="arquivoSelecionado">
                             {{ arquivoSelecionado.name }}
                         </span>
                         <span
-                        class="text-[10px] text-[#94A3B8]"
+                        class="text-[11px] text-[#94A3B8]"
                         v-if="arquivoSelecionado">
                             {{arquivoSelecionado.name.split('.').pop().toUpperCase()}} 
                             • 
@@ -167,7 +209,7 @@ import { ref } from 'vue'
                         </span>
                     </div>
 
-                    <div class="flex flex-row items-center gap-[10px]">
+                    <div class="flex flex-row items-center gap-[15px]">
                         <input
                         ref="campoArquivo" 
                         type="file"
@@ -176,24 +218,44 @@ import { ref } from 'vue'
                         @change="selecionarArquivo">
 
                         <button
-                        class="text-[12px] text-materna flex flex-row"
+                        class="text-[14px] text-materna flex flex-row gap-2"
                         type="button"
                         @click="abrirSeletorArquivo">
-                            <img class="w-[14px]" src="@/assets/jornada/baixar.svg" alt="">
+                            <img class="w-[16px]" src="@/assets/jornada/baixar.svg" alt="Icon indicando dowloand">
                             Adicionar
                         </button>
 
                         <button
                         type="button"
-                        class="flex flex-row text-[12px] text-[#94A3B8]"
+                        class="flex flex-row text-[14px] text-[#94A3B8] gap-2"
                         @click="removerArquivo">
-                            <img class="w-[14px]" src="@/assets/jornada/lixo.svg" alt="">
+                            <img class="w-[16px]" src="@/assets/jornada/lixo.svg" alt="Icon que representa remover algo">
                             Remover
                         </button>
                     </div>
                 </div> 
 
                 <hr class="my-4 border-0 border-t-2 border-gray-200 ">
+
+                <div 
+                v-if="index === etapas.length - 1"
+                class="flex flex-row w-full flex-wrap justify-end gap-[10px]">
+                    <button
+                    type="button"
+                    @click="removerEtapa" 
+                    class="w-full max-w-[150px] h-[32px] bg-materna/10 rounded-[8px] flex justify-center items-center gap-[6px] px-[16px] py-[8px] text-[12px]">
+                        <img class="w-[15px]" src="@/assets/jornada/remover.svg" alt="Icon de menos para revover etapa">
+                        Remover etapa
+                    </button>
+
+                    <button
+                    type="button"
+                    @click="adicionarEtapa" 
+                    class="w-full max-w-[150px] h-[32px] bg-materna rounded-[8px] flex justify-center items-center gap-[6px] px-[16px] py-[8px] text-[12px] font-semibold text-white">
+                        <img class="w-[16px]" src="@/assets/jornada/+.svg" alt="Icon de mais para adicionar etapa">
+                        Adicionar etapa
+                    </button>
+                </div>
             </div>
         </main>
     </article>
