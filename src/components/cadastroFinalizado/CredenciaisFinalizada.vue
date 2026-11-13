@@ -197,22 +197,21 @@ const termodDeUso = ref(false)
         </div>
 
         <!--Resumo-->
-
-        <div class="ml-36 items-start w-160 rounded-xl border border-[#DE6B72]/20 bg-[#DE6B72]/10 p-3 mb-4 ">
-            <div class="flex items-start ga-1 ">
-                <div class="h-8 w-8 rounded-md bg-[#DE6B72]/20">
+        <div class="ml-36 items-start w-160 rounded-xl border border-[#DE6B72]/20 bg-[#DE6B72]/10 p-2 mb-4">
+            <div class="flex items-center gap-1">
+                <div class="relative left-1 top-3 h-8 w-8 rounded-md bg-[#DE6B72]/20">
                     <img 
                             src="/src/assets/credenciais/logoResumo.svg" 
                             alt="Correto" 
                             class="h-5 w-5 object-contain flex ml-1.5 mt-1">
                             </div>
 
-                    <h1  class="text-[12px] text-[#DE6B72] font-bold px-4">
+                    <h1  class="text-[12px] text-[#DE6B72] font-bold px-4 mt-2">
                     Resumo da Instituição
                 </h1>
             </div>
 
-            <p class="text-[11px] text[#334155] px-12">
+            <p class="text-[11px] text[#334155] ml-13 mt-0">
                 Banco de Leite Humano Santa Clara • CNPJ 00.000.000/0001-00 • Resp: Dra. Mariana <br>
                 Silva
             </p>
@@ -246,9 +245,13 @@ const termodDeUso = ref(false)
 
             </span>
         </label>
+
+        <div class="w-full px-36 mt-7">
+            <div class="h-px w-160 bg-gray-100 mb-3 "></div>
+        </div>
        
            <!-- Botões -->
-            <div class=" flex w-full justify-between items-center">
+            <div class=" flex w-full justify-between items-center mt-7">
                 <div class="justify-between px-36">
                     <button class="w-34 h-[48px] rounded-md 
                     bg-[#FFFFFF] justify-center flex items-center 
@@ -286,10 +289,9 @@ const termodDeUso = ref(false)
 
             </div>
 
-        <div class="w-full px-36 mt-7">
-            <div class="h-px w-190 bg-gray-100 mb-3 "></div>
-            </div>
-
+        <div class="w-full px-36 mt-17">
+            <div class="h-px w-160 bg-gray-100 mb-3 "></div>
+        </div>
 
             <div class="w-full flex items- justify-center gap-1 mt-4">
             <p class="whitespace-nowrap text-xs text-black/60 text-[14px]">

@@ -70,7 +70,7 @@ function replicarHorario() {
             </div>
 
                 <!--Indica de etapas-->
-                <div v-if="processo" class="mb-8 flex w-full max-w-[960px] px-14">
+                <div v-if="processo" class="ml-24 mb-8 flex w-full max-w-[960px] px-46">
 
                     <div
                         v-for="(etapa, index) in ['Instituição', 'Responsável', 'Local e Horário', 'Acesso']"
@@ -238,7 +238,7 @@ function replicarHorario() {
             </div>
 
         <div class="w-full px-36 mt-3 mb-3">
-            <div class="h-px w-230 bg-gray-200 "></div>
+            <div class="h-px w-226 bg-gray-200 "></div>
         </div>
 
         <!--Coleta-->
@@ -252,7 +252,7 @@ function replicarHorario() {
             </p>
         </div>
 
-        <div class="flex w-full items-start justify-between grid grid-cols-2 gap-50 px-36">
+        <div class="flex w-full items-start justify-between grid grid-cols-2 gap-5 px-36">
 
                 <!-- Coleta em casa -->
                 <div
@@ -260,7 +260,7 @@ function replicarHorario() {
                     :class="tipoColeta === 'domicilio'
                         ? 'border-[#DE6B72] bg-[#FBF0F1]'
                         : 'border-gray-200 bg-white'"
-                    class="relative h-[80px] rounded-xl border-2 p-2 cursor-pointer w-90">
+                    class="relative h-[80px] rounded-xl border-2 p-2 cursor-pointer w-110">
 
                     <!-- Título e botão -->
                     <div class="flex items-start justify-between gap-3">
@@ -295,10 +295,10 @@ function replicarHorario() {
                     :class="tipoColeta === 'banco'
                         ? 'border-[#DE6B72] bg-[#FBF0F1]'
                         : 'border-gray-200 bg-white'"
-                    class="relative h-[80px] rounded-2xl border-2 p-5 cursor-pointer w-90">
+                    class="relative h-[80px] rounded-2xl border-2 p-5 cursor-pointer w-110">
 
                     <!-- Título e botão -->
-                    <div class="flex items-start justify-between gap-3">
+                    <div class="relative left--1 top--3 flex items-start justify-between gap-3">
 
                         <h2 class="text-[12px] font-semibold text-gray-800">
                             Coleta no banco de leite 
