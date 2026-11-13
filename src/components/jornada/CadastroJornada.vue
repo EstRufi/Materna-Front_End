@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 
     const emit = defineEmits(['fechar'])
 
@@ -28,20 +28,25 @@ import { ref } from 'vue'
             campoDE.scrollHeight > alturaMaximaE ? 'auto' : 'hidden'
     }
 
-    const campoArquivo = ref(null)
-    const arquivoSelecionado = ref(null)
+    const camposArquivo = {}
+    const etapasElementos = {}
 
-    function abrirSeletorArquivo(){
-        campoArquivo.value.click()
+    function abrirSeletorArquivo(id) {
+        camposArquivo[id]?.click()
     }
 
-    function selecionarArquivo(event){
-        arquivoSelecionado.value = event.target.files[0]
+    function selecionarArquivo(event, etapa) {
+        const arquivo = event.target.files[0]
+
+        if (!arquivo) return
+
+        etapa.arquivo = arquivo
+
+        event.target.value = ''
     }
 
-    function removerArquivo() {
-        arquivoSelecionado.value = null
-        campoArquivo.value.value = ''
+    function removerArquivo(etapa) {
+        etapa.arquivo = null
     }
 
     const etapas = ref([
@@ -56,12 +61,12 @@ import { ref } from 'vue'
         }
     ])
 
-    function adicionarEtapa() {
+    async function adicionarEtapa() {
         if (etapas.value.length >= 5) {
             return
         }
 
-        etapas.value.push({
+        const novaEtapa = {
             id: Date.now(),
             titulo: '',
             tipo: 'Opcional',
@@ -69,6 +74,15 @@ import { ref } from 'vue'
             agendavel: false,
             precisaAprovacao: false,
             arquivo: null
+        }
+
+        etapas.value.push(novaEtapa)
+
+        await nextTick()
+
+        etapasElementos[novaEtapa.id]?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
         })
     }
 
@@ -126,6 +140,7 @@ import { ref } from 'vue'
         <main 
         v-for="(etapa,index) in etapas"
         :key="etapa.id"
+        :ref="el => etapasElementos[etapa.id] = el"
         class="w-full flex flex-col min-w-0 mim-h-[661px] bg-[#F8FAFC]/50 border border-[#E2E8F0] p-[20px] mt-[16px] gap-[16px] rounded-[12px]">
             <p class="text-[14px] font-semibold">Adicionar etapa</p>
             <div class="flex flex-row flex-wrap gap-4">
@@ -169,7 +184,23 @@ import { ref } from 'vue'
                     </div>
                 </div>
                 
-                <div>bolinha</div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input
+                    type="checkbox"
+                    v-model="etapa.agendavel"
+                    class="sr-only peer">
+
+                    <div class="w-[40px] h-[22px] bg-[#E2E8F0] rounded-full
+                    peer-checked:bg-materna
+                    transition-colors duration-300
+                    after:content-['']
+                    after:absolute after:top-[3px] after:left-[3px]
+                    after:bg-white after:rounded-full
+                    after:h-[16px] after:w-[16px]
+                    after:transition-transform after:duration-300
+                    peer-checked:after:translate-x-[18px]">
+                    </div>
+                </label>
             </div>
 
             <div class="w-full min-w-0 min-h-[65px] bg-white border border-borda flex items-center justify-between p-[12px] rounded-[8px]">
@@ -183,7 +214,23 @@ import { ref } from 'vue'
                     </div>
                 </div>
                 
-                <div>bolinha</div>
+               <label class="relative inline-flex items-center cursor-pointer">
+                    <input
+                    type="checkbox"
+                    v-model="etapa.precisaAprovacao"
+                    class="sr-only peer">
+
+                    <div class="w-[40px] h-[22px] bg-[#E2E8F0] rounded-full
+                    peer-checked:bg-materna
+                    transition-colors duration-300
+                     after:content-['']
+                    after:absolute after:top-[3px] after:left-[3px]
+                    after:bg-white after:rounded-full
+                    after:h-[16px] after:w-[16px]
+                    after:transition-transform after:duration-300
+                    peer-checked:after:translate-x-[18px]">
+                    </div>
+            </label>
             </div>
 
             <div class="flex flex-col">
@@ -196,39 +243,40 @@ import { ref } from 'vue'
                     <div class="flex flex-col">
                         <span 
                         class="text-[13px] font-medium"
-                        v-if="arquivoSelecionado">
-                            {{ arquivoSelecionado.name }}
+                        v-if="etapa.arquivo">
+                            {{ etapa.arquivo.name }}
                         </span>
                         <span
                         class="text-[11px] text-[#94A3B8]"
-                        v-if="arquivoSelecionado">
-                            {{arquivoSelecionado.name.split('.').pop().toUpperCase()}} 
+                        v-if="etapa.arquivo">
+                            {{etapa.arquivo.name.split('.').pop().toUpperCase()}} 
                             • 
-                            {{ (arquivoSelecionado.size / (1024**2)).toFixed(2)}} MB 
+                            {{ (etapa.arquivo.size / (1024**2)).toFixed(2)}} MB 
                             • Anexado
                         </span>
                     </div>
 
                     <div class="flex flex-row items-center gap-[15px]">
                         <input
-                        ref="campoArquivo" 
+                        :ref="el => camposArquivo[etapa.id] = el"
                         type="file"
                         accept=".pdf,.doc,.docx,.xls,.xlsx"
                         class="hidden"
-                        @change="selecionarArquivo">
+                        @change="selecionarArquivo($event, etapa)">
 
                         <button
                         class="text-[14px] text-materna flex flex-row gap-2"
                         type="button"
-                        @click="abrirSeletorArquivo">
+                        @click="abrirSeletorArquivo(etapa.id)">
                             <img class="w-[16px]" src="@/assets/jornada/baixar.svg" alt="Icon indicando dowloand">
                             Adicionar
                         </button>
 
                         <button
+                        v-if="etapa.arquivo"
                         type="button"
                         class="flex flex-row text-[14px] text-[#94A3B8] gap-2"
-                        @click="removerArquivo">
+                        @click="removerArquivo(etapa)">
                             <img class="w-[16px]" src="@/assets/jornada/lixo.svg" alt="Icon que representa remover algo">
                             Remover
                         </button>
