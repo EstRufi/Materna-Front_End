@@ -58,6 +58,7 @@ import { nextTick, ref } from 'vue'
             descricao: '',
             agendavel: false,
             precisaAprovacao: false,
+            solicitaArquivo: false,
             arquivo: null
         }
     ])
@@ -74,6 +75,7 @@ import { nextTick, ref } from 'vue'
             descricao: '',
             agendavel: false,
             precisaAprovacao: false,
+            solicitaArquivo: false,
             arquivo: null
         }
 
@@ -249,7 +251,37 @@ import { nextTick, ref } from 'vue'
                     after:transition-transform after:duration-300
                     peer-checked:after:translate-x-[18px]">
                     </div>
-            </label>
+                </label>
+            </div>
+
+            <div class="w-full min-w-0 min-h-[65px] bg-white border border-borda flex items-center justify-between p-[12px] rounded-[8px]">
+                <div class="flex gap-[8px]">
+                    <img 
+                    class="w-[20px] "
+                    src="@/assets/jornada/calendarioRosa.svg" alt="Icon de Calendario">
+                    <div class="flex flex-col">
+                        <span class="text-[12px] font-semibold">Etapa com envio de arquivo</span>
+                        <p class="text-[12px] text-[#94A3B8]">Permite que a doadora envie um arquivo para esta etapa.</p>
+                    </div>
+                </div>
+                
+               <label class="relative inline-flex items-center cursor-pointer">
+                    <input
+                    type="checkbox"
+                    v-model="etapa.solicitaArquivo"
+                    class="sr-only peer">
+
+                    <div class="w-[40px] h-[22px] bg-[#E2E8F0] rounded-full
+                    peer-checked:bg-materna
+                    transition-colors duration-300
+                     after:content-['']
+                    after:absolute after:top-[3px] after:left-[3px]
+                    after:bg-white after:rounded-full
+                    after:h-[16px] after:w-[16px]
+                    after:transition-transform after:duration-300
+                    peer-checked:after:translate-x-[18px]">
+                    </div>
+                </label>
             </div>
 
             <div class="flex flex-col">

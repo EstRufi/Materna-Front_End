@@ -17,3 +17,13 @@ export async function listarJornada(idInstituicao) {
 
     return instituicao?.jornadas ?? []
 }
+
+export async function cadastrarJornada(dados) {
+    return await requisicaoApi('jornada', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dados)
+    })
+}
