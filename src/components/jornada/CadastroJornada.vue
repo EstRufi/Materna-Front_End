@@ -96,7 +96,6 @@ import { nextTick, ref } from 'vue'
 </script>
 
 <template>
-    <!-- Fazer o checkaut :D -->
     <article class="w-full mim-w-0 min-h-0 bg-white border-2 border-borda rounded-[12px] p-[24px]" >
         <header class="flex items-center justify-between mb-[16px]">
             <h1 class="text-[16px] font-bold">Nova jornada</h1>
@@ -151,7 +150,7 @@ import { nextTick, ref } from 'vue'
                     type="text"
                     placeholder="Ex: Conheça a doação"
                     maxlength="100"
-                    class="w-full focus:outline-none bg-white border-2 border-[#E2E8F0] max-w-[1200px] h-[34px] px-[12px] py-[8px] rounded-[6px]">
+                    class="w-full focus:outline-none bg-white border border-[#E2E8F0] max-w-[1200px] h-[34px] px-[12px] py-[8px] rounded-[6px]">
                 </div>
                 <div class="flex flex-1 flex-col">
                     <span class="text-[12px] font-medium">Tipo</span>
@@ -161,7 +160,7 @@ import { nextTick, ref } from 'vue'
                 </div>
             </div>
 
-            <div class="flex flex-col gap-[4px]">
+            <div class="flex flex-col gap-[4px] bg-white">
                 <span class="text-[12px] font-medium">Descrição</span>
                 <textarea
                 v-model="etapa.descricao"  
@@ -283,7 +282,9 @@ import { nextTick, ref } from 'vue'
                     </div>
                 </div> 
 
-                <hr class="my-4 border-0 border-t-2 border-gray-200 ">
+                <hr 
+                v-if="index === etapas.length - 1"
+                class="my-4 border-0 border-t-2 border-gray-200 ">
 
                 <div 
                 v-if="index === etapas.length - 1"
@@ -306,5 +307,52 @@ import { nextTick, ref } from 'vue'
                 </div>
             </div>
         </main>
+
+        <section class=" flex flex-col w-full min-w-0 min-h-[121px] mt-[16px] mb-[16px] bg-[#F8FAFC]/50 border border-[#E2E8F0] p-[20px] gap-[12px] rounded-[12px]">
+            <div class="flex gap-3 items-center">
+                <h4 class="text-[12px] font-semibold">Adicionar etapa</h4>
+                <span
+                class="bg-[#FFFBEB] px-2 py-2 text-[#B45309] text-[10px] flex gap-2 border border-[#FDE68A] rounded-full ">
+                    <img 
+                    class="w-[14px]"
+                    style="filter: invert(67%) sepia(91%) saturate(1000%) hue-rotate(2deg) brightness(101%) contrast(96%);"
+                    src="@/assets/jornada/cadeado.svg" alt="Icon de cadeado">
+                    Etapa obrigatória e fixa do fluxo institucional (não editável)
+                </span>
+            </div>
+                
+            <dl class="grid grid-cols-2 mt-[] gap-2">
+                <div class="flex flex-col gap-1">
+                    <dt class="text-[11px] text-[#64748B] font-medium">
+                        Título
+                    </dt>
+
+                    <dd class="flex items-center justify-between rounded-[6px] bg-[#E2E8F0]/60 border border-[#E2E8F0] px-3 py-2 text-[12px] text-[#475569] font-medium">
+                        <span>Coleta</span>
+                        <img src="@/assets/jornada/cadeado.svg" alt="Icon de cadeado" class="w-[14px]">
+                    </dd>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <dt class="text-[11px] text-[#64748B] font-medium">
+                        Tipo
+                    </dt>
+                    <dd class="rounded-[6px]  bg-[#E2E8F0]/60 border border-[#E2E8F0] px-3 py-2 text-[12px] text-[#475569] font-medium">
+                        Obrigatório
+                    </dd>
+                </div>
+            </dl>
+        </section>
+
+        <hr class="my-4 border-0 border-t-2 border-borda ">
+
+        <footer class="flex-wrap gap-2 flex justify-end mt-5">
+            <button
+            class="w-[87px] h-[36px] px-[16px] py-[8px] bg-[#DE6B72]/10 text-[#374151] text-[14px] rounded-[6px]"
+            @click="emit('fechar')">Cancelar</button>
+            <button
+            class="h-[36px] px-[16px] py-[8px] bg-materna text-white text-[14px] rounded-[6px]"
+            >Salvar jornada</button>
+        </footer>
     </article>
 </template>
