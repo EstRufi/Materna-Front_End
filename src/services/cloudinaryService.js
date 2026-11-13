@@ -32,3 +32,34 @@ export async function enviarImagemCloudinary(arquivo) {
 
     return dados.secure_url
 }
+
+export async function enviarDocumentoCloudinary(documento) {
+    if (!CLOUD_NAME || !UPLOAD_PRESET) {
+        throw new Error('As configurações do Cloudinary não foram encontradas.')
+    }
+
+    if (!documento) {
+        throw new Error('Nenhum documento foi selecionado.')
+    }
+
+    const formulario = new FormData()
+
+    formulario.append('file', documento)
+    formulario.append('upload_preset', UPLOAD_PRESET)
+
+    const resposta = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/raw/upload`,
+        {
+            method: 'POST',
+            body: formulario
+        }
+    )
+
+    if (!resposta.ok) {
+        throw new Error('Não foi possível enviar o documento para o Cloudinary.')
+    }
+
+    const dados = await resposta.json()
+
+    return dados.secure_url
+}
