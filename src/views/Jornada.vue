@@ -7,13 +7,14 @@ import { onMounted, ref } from 'vue';
 const mostrarCadastroJornada = ref(false)
 
 const jornada = ref([])
-        onMounted(async () => {
-            try {
-                jornada.value = await listarJornada(1)
-            } catch (error) {
-                console.error(error)
-            }
-        })
+    onMounted(async () => {
+        try {
+            jornada.value = await listarJornada(1)
+        } catch (error) {
+            console.error(error)
+        }
+    })
+
 </script>
 
 <template>

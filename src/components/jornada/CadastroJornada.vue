@@ -1,5 +1,6 @@
 <script setup>
 import { urlDocumento } from '@/composable/urlDocumento';
+import { cadastrarJornada } from '@/services/jornadaService';
 import { nextTick, ref } from 'vue'
 
     const emit = defineEmits(['fechar'])
@@ -9,24 +10,28 @@ import { nextTick, ref } from 'vue'
 
     function textareaAlturaAjustada() {
         const campoD = campoDescricao.value
-        const campoDE = campoDescricaoEtapa.value
+        const camposDE = campoDescricaoEtapa.value
         const alturaMaxima = 150
         const alturaMaximaE = 350
 
         campoD.style.height = '38px'
-        campoDE.style.height = '100px'
 
         const altura = Math.min(campoD.scrollHeight, alturaMaxima)
-        const alturaDE = Math.min(campoDE.scrollHeight, alturaMaximaE)
-
         campoD.style.height = `${altura}px`
-        campoDE.style.height = `${alturaDE}px`
 
         campoD.style.overflowY =
             campoD.scrollHeight > alturaMaxima ? 'auto' : 'hidden'
 
-        campoDE.style.overflowY =
-            campoDE.scrollHeight > alturaMaximaE ? 'auto' : 'hidden'
+        camposDE.forEach(campo => {
+            campo.style.height = '100px'
+
+            const alturaDE = Math.min(campo.scrollHeight, alturaMaximaE)
+
+            campo.style.height = `${alturaDE}px`
+
+            campo.style.overflowY =
+                campo.scrollHeight > alturaMaximaE ? 'auto' : 'hidden'
+        })
     }
 
     const camposArquivo = {}
@@ -100,21 +105,62 @@ import { nextTick, ref } from 'vue'
     const { enviarDocumento } = urlDocumento()
 
     async function salvarJornada() {
+        const etapaColeta = {
+            titulo: 'Coleta',
+            descricao: 'Dados da Coleta obrigatório',
+            ordem: 1,
+            documento: null,
+            is_repetivel: 1,
+            is_agendavel: 0,
+            is_obrigatorio: 1,
+            is_solicita_arquivo: 0,
+            is_precisa_aprovacao: 1
+        }
+
         const etapasComDocumento = await Promise.all(
-            etapas.value.map(async (etapa) => {
+            etapas.value.map(async (etapa, index) => {
+                const url = etapa.arquivo
+                    ? await enviarDocumento(etapa.arquivo)
+                    : null
 
-            const url = etapa.arquivo
-                ? await enviarDocumento(etapa.arquivo)
-                : null
-
-            return {
-                ...etapa,
-                documento: url
-            }
+                return {
+                    titulo: etapa.titulo,
+                    descricao: etapa.descricao,
+                    ordem: index + 2,
+                    documento: url,
+                    is_repetivel: 1,
+                    is_agendavel: etapa.agendavel ? 1 : 0,
+                    is_obrigatorio: 0,
+                    is_solicita_arquivo: etapa.solicitaArquivo ? 1 : 0,
+                    is_precisa_aprovacao: etapa.precisaAprovacao ? 1 : 0
+                }
             })
         )
-        console.log(etapasComDocumento)
+        
+        const todasAsEtapas = [
+            etapaColeta,
+            ...etapasComDocumento
+        ]
+
+        const dadosJornada = {
+            is_ativo: true,
+            nome: formularioApi.value.nome,
+            descricao: formularioApi.value.descricao,
+            id_instituicao: 1,
+            etapas: todasAsEtapas
+        }
+        const resposta = await cadastrarJornada(dadosJornada)
+        console.log('Resposta da API:', resposta)
+        
+        if (resposta.status) {
+            window.location.reload()
+        }
     }
+
+    const formularioApi = ref({
+        nome: '',
+        descricao: ''
+    })
 </script>
 
 <template>
@@ -136,6 +182,7 @@ import { nextTick, ref } from 'vue'
                 <div class="flex flex-col">
                     <span>Nome da jornada</span>
                     <input
+                    v-model="formularioApi.nome"
                     type="text"
                     maxlength="50"
                     placeholder="Ex: Jornada padrão da doadora"
@@ -145,6 +192,7 @@ import { nextTick, ref } from 'vue'
                 <div class="flex flex-col">
                     <span>Descrição</span>
                     <textarea 
+                    v-model="formularioApi.descricao"
                     ref="campoDescricao"
                     @input="textareaAlturaAjustada"
                     type="text"

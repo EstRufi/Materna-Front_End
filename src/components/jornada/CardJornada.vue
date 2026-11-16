@@ -1,7 +1,4 @@
 <script setup>
-import { listarJornada } from '@/services/jornadaService';
-import { onMounted, ref } from 'vue';
-
     const props = defineProps({
         jornada:{
             type: Object,
@@ -15,10 +12,10 @@ import { onMounted, ref } from 'vue';
     class="w-full max-w-[491px] h-[502px] flex flex-col bg-[#FFFFFF] border-2 border-borda rounded-[12px] p-[24px]">
         <nav class="flex flex-row justify-between mb-[16px] bg-blac">
             <div>
-                <h2 class="text-[18px] font-bold">{{ jornada.nome }}B</h2>
+                <h2 class="text-[18px] font-bold">{{ jornada.nome }}</h2>
                 <span class="text-[14px] font-regular">{{ jornada.descricao }}</span>
             </div>
-            <div >
+            <div>
                 <div>
                     <!-- 0 = false 1 = true mudar para ativo e inativo -->
                     <div></div>
