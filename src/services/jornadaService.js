@@ -27,3 +27,15 @@ export async function cadastrarJornada(dados) {
         body: JSON.stringify(dados)
     })
 }
+
+export async function atualizarStatusJornada(id, isAtivo) {
+    return await requisicaoApi(`jornada/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            is_ativo: isAtivo
+        })
+    })
+}

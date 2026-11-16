@@ -1,10 +1,39 @@
 <script setup>
+import { ref } from 'vue';
+import { atualizarStatusJornada } from '@/services/jornadaService'
     const props = defineProps({
         jornada:{
             type: Object,
             required:true
         }
     })
+
+    const ficaAtivo = ref(Number(props.jornada.is_ativo) ===1)
+
+   async function alterarStatus() {
+    const statusAnterior = ficaAtivo.value
+    const novoStatus = !statusAnterior
+
+    // Atualiza o visual imediatamente
+    ficaAtivo.value = novoStatus
+
+    try {
+        const resposta = await atualizarStatusJornada(
+            props.jornada.id,
+            novoStatus
+        )
+
+        if (!resposta || !resposta.status) {
+            throw new Error('Não foi possível atualizar a jornada.')
+        }
+
+    } catch (error) {
+        // Se a API falhar, restaura o estado anterior
+        ficaAtivo.value = statusAnterior
+
+        console.error('Erro ao atualizar o status:', error)
+    }
+}
 </script>
 
 <template>
@@ -16,12 +45,25 @@
                 <span class="text-[14px] font-regular">{{ jornada.descricao }}</span>
             </div>
             <div>
-                <div>
-                    <!-- 0 = false 1 = true mudar para ativo e inativo -->
-                    <div></div>
-                    <p>{{jornada.is_ativo}}</p>
-                </div>
-                <div>bolinha</div>
+                <div class="flex flex-col items-end gap-2">
+    <span class="text-[12px] font-medium">
+        {{ ficaAtivo ? 'Ativa' : 'Inativa' }}
+    </span>
+
+    <button
+        type="button"
+        role="switch"
+        :aria-checked="ficaAtivo"
+        @click="alterarStatus"
+        class="w-[42px] h-[23px] rounded-full flex items-center px-[3px] transition-colors"
+        :class="ficaAtivo ? 'bg-[#DE6771]' : 'bg-gray-300'"
+    >
+        <span
+            class="w-[17px] h-[17px] rounded-full bg-white transition-transform"
+            :class="ficaAtivo ? 'translate-x-[19px]' : 'translate-x-0'"
+        ></span>
+    </button>
+</div>
             </div>
         </nav>
 
