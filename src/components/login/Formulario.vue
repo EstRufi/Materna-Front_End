@@ -1,4 +1,5 @@
 <script setup>
+import Login from '@/views/Login.vue';
 import LateralInformativo from './LateralInformativo.vue';
 import { ref } from 'vue';
 
@@ -33,98 +34,138 @@ function fazerLogin(){
         class="fixed inset-0 z-50 bg-black/50 blackdrop-blur-sm
         flex items-center justify-center">
 
-        <div class="w-[90%] max-w-[1600px] h-[700px] 
+        <div class="w-[90%] max-w-[1600px] h-[1000px] 
         grid grid-cols-2 rounded-xl overflow-hidden">
 
         <!-- Parte rosa -->
         <div class="bg-[#D86B72] p-8">
-                <div class="absolute top-30 left-50 flex items-center gap-2 mt-8 px-5">
-                    <img 
-                    src="@/assets/logoMaterna.svg" 
-                    alt="logo" 
-                    class="w-16 h-16 object-contain">
-
-                    <div>
-                        <h1 class="text-[17px] font-bold text-[#ffffff] -600">
-                            Materna
-                        </h1>
-                        <p class="text-[#ffffff] text-sm">
-                            Painelinstitucional
-                        </p>
-                    </div>
-                 </div>
-
-                 <div class="mt-36 mb-8 w-full min-w-0 px-10">
-                    <h2 class="text-[36px] font-bold leading-10 text left
-                    text-white whitespace-pre-line mb-5">
-                    Recuperação de <br>
-                    acesso institucional
-                    </h2>
-
-                    <p class="mt-10 text-[16px] text-white whitespace-pre-line">
-                        Mantenha sua unidade conectada com segurança à <br>
-                        rede de bancos de leite humano.
-                    </p>
-                </div> 
-
-                    <div class="mt-0 w-full pl-10
-                        flex flex-col items-start gap-2 ">
-                    <div 
-                    v-for="texto in informacoes"
-                    :key="texto"
-                    class="flex items-center gap-3">
-
-                        <div class="flex h-8 w-8 shrink-0 items-center 
-                        justify-center rounded-full bg-white/30">
+                        <div class="absolute top-30 left-50 flex items-center gap-2 mt-36 px-86">
                             <img 
-                            src="/src/assets/telaLogin/Seta.svg" 
-                            alt="Seta" 
-                            class="h-3 w-3 shrink-0 object-contain gap-3">
+                            src="@/assets/logoMaterna.svg" 
+                            alt="logo" 
+                            class="w-16 h-16 object-contain">
+
+                            <div>
+                                <h1 class="text-[17px] font-bold text-[#ffffff] -600">
+                                    Materna
+                                </h1>
+                                <p class="text-[#ffffff] text-sm">
+                                    Painelinstitucional
+                                </p>
+                            </div>
                         </div>
 
-                            <p class="text-[15px] leading-9 text-white ">
+                        <div class="mt-40 mb-9 w-full min-w-0 px-10">
+                            <h2 class="text-[36px] font-bold leading-10 text left
+                            text-white whitespace-pre-line mb-5">
+                            Recuperação de <br>
+                            acesso institucional
+                            </h2>
+
+                            <p class="mt-8 text-[16px] text-white whitespace-pre-line">
+                                Mantenha sua unidade conectada com segurança à <br>
+                                rede de bancos de leite humano.
+                            </p>
+                        </div> 
+
+
+                        <div class="flex flex-col pl-10 gap-3">
+
+                            <!-- Primeiro item -->
+                        <div class="flex items-center gap-3">
+                            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/30">
+                                <img 
+                                    src="/src/assets/telaLogin/Seta2.svg"
+                                    alt="Seta2"
+                                    class="h-3 w-3 object-contain"
+                                >
+                            </div>
+
+                            <p class="text-[15px] leading-9 text-white">
                                 Autenticação em duas etapas
                             </p>
                         </div>
 
-                    <div class="flex h-8 w-8 shrink-0 items-center 
-                        justify-center rounded-full bg-white/30">
-                            <img 
-                            src="/src/assets/telaLogin/Seta.svg" 
-                            alt="Seta" 
-                            class="h-3 w-3 shrink-0 object-contain gap-3">
+                        <!-- Segundo item -->
+                        <div class="flex items-center gap-3">
+                            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/30">
+                                <img 
+                                    src="/src/assets/telaLogin/Seta2.svg"
+                                    alt="Seta2"
+                                    class="h-3 w-3 object-contain"
+                                >
+                            </div>
+
+                            <p class="text-[15px] leading-9 text-white">
+                                Recuperação rápida por e-mail ou SMS
+                            </p>
                         </div>
 
-                        <p class="text-[15px] leading-9 text-white ">
-                            Recuperação rápida por e-mail ou SMS
-                        </p>
+                        <!-- Terceiro item -->
+                        <div class="flex items-center gap-3">
+                            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/30">
+                                <img 
+                                    src="/src/assets/telaLogin/Seta2.svg"
+                                    alt="Seta2"
+                                    class="h-3 w-3 object-contain"
+                                >
+                            </div>
 
-                    </div>
-
-                    <div class="flex h-8 w-8 shrink-0 items-center 
-                        justify-center rounded-full bg-white/30">
-                            <img 
-                            src="/src/assets/telaLogin/Seta.svg" 
-                            alt="Seta" 
-                            class="h-3 w-3 shrink-0 object-contain gap-3">
+                            <p class="text-[15px] leading-9 text-white">
+                                Suporte técnico disponível
+                            </p>
+                        </div>
                         </div>
 
-                        <p class="text-[15px] leading-9 text-white ">
-                            Suporte técnico disponível
-                        </p>
+                         <div class="w-full px-10 mt-70">
+                            <div class="h-px w-170 bg-white/20 mb-16 "></div>
+                        </div>
 
+                        <div class="w-full flex items-center justify-between">
+                            
+                            <p class="text=[11px] text-[#ffffff] ml-10 font-light">
+                                Ambiente Seguro Institucional
+                            </p>
+
+                            <p class="text=[11px] text-[#ffffff] ml-10 font-light px-3">
+                                Rede BLH Brasil
+                            </p>
+                        </div>
                     </div>
-
-                    <div class="w-full px-36 mt-7">
-                        <div class="h-px w-160 bg-gray-100 mb-3 "></div>
-                    </div>
-
-                    <div class="w-full flex items- justify-center gap-1 mt-4">
-                <p class="whitespace-nowrap text-xs text-black/60 text-[14px]">
-                    Ambiente Seguro Institucional
-                </p>
-
                 </div>
+            </div>
+
+            <!-- Parte branca -->
+            <div
+            v-if="recuperarSenha"
+            class="fixed inset-0 z-50 flex items-center justify-center">
+
+                <div class="absolute right-0 w-[50%] max-w-[1900px] h-[1000px] rounded-xl flex items-center justify-center">
+
+                    <div class="bg-white w-[50dvw] m-[2dvh]">
+
+                        <div class="w-full flex justify-center pt-20">
+
+                            <div class="mb-7 w-full max-w-[460px]">
+
+                                <div class="flex h-8 w-70 gap-1 rounded-full flex items-center px-4"
+                                    style="background-color: #F5E6E9;">
+
+                                    <span class="font-bold text-xs"
+                                        style="color: #DE6B72;">
+                                            RECUPERAÇÃO DE SENHA • ETAPA 0 DE 3
+                                    </span>
+                                        </div>
+
+                                        <h1 class="text-[30px] font-bold text-black-900">
+                                            Esqueceu a senha
+                                        </h1>
+                                        <p class="text-sm text-gray-600">
+                                            Insira suas credenciais para continuar.
+                                        </p>
+                                </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
