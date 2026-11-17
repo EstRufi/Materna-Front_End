@@ -1,7 +1,8 @@
 <script setup>
 import { urlDocumento } from '@/composable/urlDocumento';
 import { cadastrarJornada } from '@/services/jornadaService';
-import { nextTick, ref } from 'vue'
+import { validarArquivoEtapa, validarDescricaoEtapa, validarDescricaoJornada, validarNomeJornada, validarTituloEtapa } from '@/validations/jornadaValidation';
+import { nextTick, reactive, ref } from 'vue'
 
     const emit = defineEmits(['fechar'])
 
@@ -32,6 +33,41 @@ import { nextTick, ref } from 'vue'
             campo.style.overflowY =
                 campo.scrollHeight > alturaMaximaE ? 'auto' : 'hidden'
         })
+    }
+
+
+    const errosFormulario = reactive({
+        nome: '',
+        descricao: ''
+    })
+
+
+    const errosEtapa = ref([])
+
+    const erroGeral = ref('')
+
+    function validarEtapas() {
+        errosEtapa.value = etapas.value.map(etapa => ({
+            titulo: validarTituloEtapa(etapa) || '',
+            descricao: validarDescricaoEtapa(etapa) || '',
+            arquivo: validarArquivoEtapa(etapa) || ''
+        }))
+
+        return !errosEtapa.value.some(
+            erro => erro.titulo !== '' || erro.descricao !== '' || erro.arquivo !== ''
+        )
+    }
+
+    function validarFormularioAndEtapa(){
+        errosFormulario.nome = validarNomeJornada(formularioApi.value) || ''
+        errosFormulario.descricao = validarDescricaoJornada(formularioApi.value) || ''
+
+        const formularioValido = Object.values(errosFormulario)
+            .every(erro => erro === '')
+
+        const etapasValidas = validarEtapas()
+
+        return formularioValido && etapasValidas
     }
 
     const camposArquivo = {}
@@ -105,55 +141,66 @@ import { nextTick, ref } from 'vue'
     const { enviarDocumento } = urlDocumento()
 
     async function salvarJornada() {
-        const etapaColeta = {
-            titulo: 'Coleta',
-            descricao: 'Dados da Coleta obrigatório',
-            ordem: 1,
-            documento: null,
-            is_repetivel: 1,
-            is_agendavel: 0,
-            is_obrigatorio: 1,
-            is_solicita_arquivo: 0,
-            is_precisa_aprovacao: 1
-        }
+        try {
+            erroGeral.value = ''
 
-        const etapasComDocumento = await Promise.all(
-            etapas.value.map(async (etapa, index) => {
-                const url = etapa.arquivo
-                    ? await enviarDocumento(etapa.arquivo)
-                    : null
-
-                return {
-                    titulo: etapa.titulo,
-                    descricao: etapa.descricao,
-                    ordem: index + 2,
-                    documento: url,
+            if(!validarFormularioAndEtapa()){
+                erroGeral.value = 'Não foi possível salvar a jornada. Corrija os campos destacados abaixo.'
+            }else{
+                const etapaColeta = {
+                    titulo: 'Coleta',
+                    descricao: 'Dados da Coleta obrigatório',
+                    ordem: 1,
+                    documento: null,
                     is_repetivel: 1,
-                    is_agendavel: etapa.agendavel ? 1 : 0,
-                    is_obrigatorio: 0,
-                    is_solicita_arquivo: etapa.solicitaArquivo ? 1 : 0,
-                    is_precisa_aprovacao: etapa.precisaAprovacao ? 1 : 0
+                    is_agendavel: 0,
+                    is_obrigatorio: 1,
+                    is_solicita_arquivo: 0,
+                    is_precisa_aprovacao: 1
                 }
-            })
-        )
-        
-        const todasAsEtapas = [
-            etapaColeta,
-            ...etapasComDocumento
-        ]
 
-        const dadosJornada = {
-            is_ativo: true,
-            nome: formularioApi.value.nome,
-            descricao: formularioApi.value.descricao,
-            id_instituicao: 1,
-            etapas: todasAsEtapas
-        }
-        const resposta = await cadastrarJornada(dadosJornada)
-        console.log('Resposta da API:', resposta)
-        
-        if (resposta.status) {
-            window.location.reload()
+                const etapasComDocumento = await Promise.all(
+                    etapas.value.map(async (etapa, index) => {
+                        const url = etapa.arquivo
+                            ? await enviarDocumento(etapa.arquivo)
+                            : null
+
+                        return {
+                            titulo: etapa.titulo,
+                            descricao: etapa.descricao,
+                            ordem: index + 2,
+                            documento: url,
+                            is_repetivel: 1,
+                            is_agendavel: etapa.agendavel ? 1 : 0,
+                            is_obrigatorio: 0,
+                            is_solicita_arquivo: etapa.solicitaArquivo ? 1 : 0,
+                            is_precisa_aprovacao: etapa.precisaAprovacao ? 1 : 0
+                        }
+                    })
+                )
+                
+                const todasAsEtapas = [
+                    etapaColeta,
+                    ...etapasComDocumento
+                ]
+
+                const dadosJornada = {
+                    is_ativo: true,
+                    nome: formularioApi.value.nome,
+                    descricao: formularioApi.value.descricao,
+                    id_instituicao: 1,
+                    etapas: todasAsEtapas
+                }
+                const resposta = await cadastrarJornada(dadosJornada)
+                
+                if (resposta.status) {
+                    window.location.reload()
+                }
+            }
+        } catch (error) {
+            console.error('Erro ao publicar jornada:', error)
+
+            erroGeral.value = 'Não foi possível salvar a jornada.Verifique sua conexão e tente novamente.'
         }
     }
 
@@ -175,6 +222,15 @@ import { nextTick, ref } from 'vue'
             </button>
         </header>
 
+                <div v-if="erroGeral" class="mb-5 flex flex-col p-[14px] rounded-[12px] border-2 border-[#FECACA] bg-[#FEF2F2]/80">
+            <div class="flex gap-[12px] ">
+                <img class="w-[20px]" src="@/assets/campanha/erro.svg" alt="">
+                    <p v-if="erroGeral" class="text-[#991B1B] text-[12px] font-bold">
+                        {{ erroGeral }}
+                    </p>
+            </div>
+        </div>
+
         <hr class="border-0 border-t-2 border-[#F1F5F9]">
 
         <nav class="flex flex-col mt-[16px]">
@@ -187,6 +243,9 @@ import { nextTick, ref } from 'vue'
                     maxlength="50"
                     placeholder="Ex: Jornada padrão da doadora"
                     class="w-full h-[56px] px-[14px] py-[10px] text-texto-claro border border-borda rounded-[8px] focus:border-[#D1D5DB] focus:outline-none">
+                    <p v-if="errosFormulario.nome" class="text-[#991B1B] text-[12px] font-bold">
+                        {{ errosFormulario.nome }}
+                    </p>
                 </div>
 
                 <div class="flex flex-col">
@@ -198,6 +257,9 @@ import { nextTick, ref } from 'vue'
                     type="text"
                     placeholder="Breve resumo do objetivo"
                     class="leading-[35px] w-full h-[56px] text-texto-claro border border-borda focus:border-[#D1D5DB] focus:outline-none px-[14px] py-[10px] rounded-[8px] resize-none overflow-hidden"></textarea>
+                    <p v-if="errosFormulario.descricao" class="text-[#991B1B] text-[12px] font-bold">
+                        {{ errosFormulario.descricao }}
+                    </p>
                 </div>
             </div>
 
@@ -221,6 +283,9 @@ import { nextTick, ref } from 'vue'
                     placeholder="Ex: Conheça a doação"
                     maxlength="100"
                     class="w-full focus:outline-none bg-white border border-[#E2E8F0] max-w-[1200px] h-[34px] px-[12px] py-[8px] rounded-[6px]">
+                    <p v-if="errosEtapa[index]?.titulo">
+                        {{ errosEtapa[index].titulo }}
+                    </p>
                 </div>
                 <div class="flex flex-1 flex-col">
                     <span class="text-[12px] font-medium">Tipo</span>
@@ -240,6 +305,9 @@ import { nextTick, ref } from 'vue'
                 placeholder="Breve resumo do objetivo"
                 class="leading-[35px] w-full h-[150px] text-texto-claro border border-borda focus:border-[#D1D5DB] focus:outline-none px-[14px] py-[10px] rounded-[8px] resize-none overflow-hidden"></textarea>
                 
+                <p v-if="errosEtapa[index]?.descricao">
+                    {{ errosEtapa[index].descricao }}
+                </p>
             </div>
 
             <div class="w-full min-w-0 min-h-[65px] bg-white border border-borda flex items-center justify-between p-[12px] rounded-[8px]">
@@ -380,8 +448,11 @@ import { nextTick, ref } from 'vue'
                             Remover
                         </button>
                     </div>
-                </div> 
 
+                </div> 
+                <p v-if="errosEtapa[index]?.arquivo" class="text-red-500 text-[12px]">
+                    {{ errosEtapa[index].arquivo }}
+                </p>
                 <hr 
                 v-if="index === etapas.length - 1"
                 class="my-4 border-0 border-t-2 border-gray-200 ">
