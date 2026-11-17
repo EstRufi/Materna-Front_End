@@ -8,6 +8,7 @@ const senha = ref('')
 const erro = ref('')
 
 const recuperarSenha = ref(false)
+const voltarLogin = ref(false)
 
 function fazerLogin(){
     erro.value = ''
@@ -24,7 +25,6 @@ function fazerLogin(){
         erro.value = 'E-mail ou senha incorretos.Verifique suas credenciais e tente novamente'
         return
      }
-    
 }
 
 </script>
@@ -46,7 +46,7 @@ function fazerLogin(){
                             class="w-16 h-16 object-contain">
 
                             <div>
-                                <h1 class="text-[17px] font-bold text-[#ffffff] -600">
+                                <h1 class="text-[17px] font-bold text-[#ffffff]">
                                     Materna
                                 </h1>
                                 <p class="text-[#ffffff] text-sm">
@@ -67,7 +67,6 @@ function fazerLogin(){
                                 rede de bancos de leite humano.
                             </p>
                         </div> 
-
 
                         <div class="flex flex-col pl-10 gap-3">
 
@@ -131,43 +130,86 @@ function fazerLogin(){
                                 Rede BLH Brasil
                             </p>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Parte branca -->
-            <div
-            v-if="recuperarSenha"
-            class="fixed inset-0 z-50 flex items-center justify-center">
+                        </div>
 
-                <div class="absolute right-0 w-[50%] max-w-[1900px] h-[1000px] rounded-xl flex items-center justify-center">
+                        <!--Tela á direita-->
+                        <div class="bg-[#ffffff] h-full flex items-center justify-center ml-9">
 
-                    <div class="bg-white w-[50dvw] m-[2dvh]">
+                            <div class="w-full max-w-[16000px] px-7 mb-1800">
 
-                        <div class="w-full flex justify-center pt-20">
-
-                            <div class="mb-7 w-full max-w-[460px]">
-
-                                <div class="flex h-8 w-70 gap-1 rounded-full flex items-center px-4"
+                                    <div class="mt-26 mb-30 ml-16 flex h-8 w-80 w-fit rounded-full items-center px-4"
                                     style="background-color: #F5E6E9;">
 
                                     <span class="font-bold text-xs"
                                         style="color: #DE6B72;">
                                             RECUPERAÇÃO DE SENHA • ETAPA 0 DE 3
                                     </span>
-                                        </div>
 
-                                        <h1 class="text-[30px] font-bold text-black-900">
+                                    </div>
+
+                                        <h1 class="text-[30px] font-bold text-black-900 ml-16 mb-1">
                                             Esqueceu a senha
                                         </h1>
-                                        <p class="text-sm text-gray-600">
+
+                                        <p class="text-[14px] text-[#6B7280] ml-16 mb-11 mt-2">
                                             Insira suas credenciais para continuar.
                                         </p>
+
+                                    <!-- CNPJ -->
+                                    <div class="w-90 max-w-[520px] ml-16">
+
+                                    <div class="flex flex-col gap-1">
+                                        <label class="text-[14px] font-bold text-gray-700">
+                                            CNPJ
+                                        </label>
+
+                                        <input 
+                                        type="Seu CNPJ"
+                                        placeholder="Seu email"
+                                        class="h-[60px] w-140 rounded-md border border-gray-300 
+                                        bg-white px-3 text-[14px] text-gray-700 mt-2 mb-10
+                                        outline-none border-gray-300 focus:border-[#D1D5DB]"/>
+                                    </div>
+                                    
+                                    <div class="justify-between">
+                                        <button class="w-140 h-13 rounded-md bg-[#DE6B72]
+                                        text-sm font-medium text-white houver:opacity-90 transition justify-center items-center">
+                                            <span class="mb-4">
+                                                Próximo
+                                            </span>
+                                            
+                                                <img 
+                                                    src="/src/assets/telaLogin/Seta.svg" 
+                                                    alt="Seta" 
+                                                    class="w-4 h-3 object-contain ml-80 mb-2">
+                                        </button>
+                                    </div>
+
+                                    <div class="justify-between ">
+                                    <button 
+                                    @click="voltarLogin = true"
+                                    class="text-[12px] w-120 flex justify-center text-[#DE6B72] 
+                                    houver:opacity-90 transition mb-3 gap-2 mt-3 ml-9">
+                                      <img 
+                                        src="/src/assets/telaLogin/VoltarLogin.svg" 
+                                        alt="VoltaLogin" 
+                                        class="w-4 h-3 object-contain mt-1">
+                                        
+                                    <span>
+                                    Voltar para o login
+                                    </span>
+
+                                    </button>
+                                    </div>
+
                                 </div>
+                            </div>
                         </div>
+
+
                     </div>
                 </div>
-            </div>
 
         <div class="w-full min-h-screen flex flex-col 
         px-3 gap-3 text-left pr-10 mt-60 px-60">
