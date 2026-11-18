@@ -222,10 +222,10 @@ import { nextTick, reactive, ref } from 'vue'
             </button>
         </header>
 
-                <div v-if="erroGeral" class="mb-5 flex flex-col p-[14px] rounded-[12px] border-2 border-[#FECACA] bg-[#FEF2F2]/80">
+        <div v-if="erroGeral" class="mb-5 flex flex-col p-[14px] rounded-[12px] border-2 border-[#FECDD3] bg-[#FFF1F2]">
             <div class="flex gap-[12px] ">
                 <img class="w-[20px]" src="@/assets/campanha/erro.svg" alt="">
-                    <p v-if="erroGeral" class="text-[#991B1B] text-[12px] font-bold">
+                    <p v-if="erroGeral" class="text-[#BE123C] text-[12px] font-medium">
                         {{ erroGeral }}
                     </p>
             </div>
@@ -243,7 +243,7 @@ import { nextTick, reactive, ref } from 'vue'
                     maxlength="50"
                     placeholder="Ex: Jornada padrão da doadora"
                     class="w-full h-[56px] px-[14px] py-[10px] text-texto-claro border border-borda rounded-[8px] focus:border-[#D1D5DB] focus:outline-none">
-                    <p v-if="errosFormulario.nome" class="text-[#991B1B] text-[12px] font-bold">
+                    <p v-if="errosFormulario.nome" class="text-[#E11D48] text-[12px] font-medium">
                         {{ errosFormulario.nome }}
                     </p>
                 </div>
@@ -257,7 +257,7 @@ import { nextTick, reactive, ref } from 'vue'
                     type="text"
                     placeholder="Breve resumo do objetivo"
                     class="leading-[35px] w-full h-[56px] text-texto-claro border border-borda focus:border-[#D1D5DB] focus:outline-none px-[14px] py-[10px] rounded-[8px] resize-none overflow-hidden"></textarea>
-                    <p v-if="errosFormulario.descricao" class="text-[#991B1B] text-[12px] font-bold">
+                    <p v-if="errosFormulario.descricao" class="text-[#E11D48] text-[12px] font-medium">
                         {{ errosFormulario.descricao }}
                     </p>
                 </div>
@@ -283,7 +283,7 @@ import { nextTick, reactive, ref } from 'vue'
                     placeholder="Ex: Conheça a doação"
                     maxlength="100"
                     class="w-full focus:outline-none bg-white border border-[#E2E8F0] max-w-[1200px] h-[34px] px-[12px] py-[8px] rounded-[6px]">
-                    <p v-if="errosEtapa[index]?.titulo">
+                    <p v-if="errosEtapa[index]?.titulo" class="text-[#E11D48] text-[12px] font-medium">
                         {{ errosEtapa[index].titulo }}
                     </p>
                 </div>
@@ -305,7 +305,7 @@ import { nextTick, reactive, ref } from 'vue'
                 placeholder="Breve resumo do objetivo"
                 class="leading-[35px] w-full h-[150px] text-texto-claro border border-borda focus:border-[#D1D5DB] focus:outline-none px-[14px] py-[10px] rounded-[8px] resize-none overflow-hidden"></textarea>
                 
-                <p v-if="errosEtapa[index]?.descricao">
+                <p v-if="errosEtapa[index]?.descricao" class="text-[#E11D48] text-[12px] font-medium">
                     {{ errosEtapa[index].descricao }}
                 </p>
             </div>
@@ -527,5 +527,4 @@ import { nextTick, reactive, ref } from 'vue'
             >Salvar jornada</button>
         </footer>
     </article>
-    oi
 </template>

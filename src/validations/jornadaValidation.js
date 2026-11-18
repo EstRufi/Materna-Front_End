@@ -7,7 +7,7 @@ export function validarNomeJornada(formulario){
 
 export function validarDescricaoJornada(formulario){
     if(formulario.descricao.trim() == "")
-        return 'O nome da jornada é obrigatório.'
+        return 'A descrição da jornada é obrigatório.'
 }
 
 export function validarTituloEtapa(etapa) {
@@ -27,8 +27,9 @@ export function validarDescricaoEtapa(etapa) {
 }
 
 export function validarArquivoEtapa(etapa){
-    if(!etapa.arquivo)
-        return 'O envio do arquivo é obrigatório.'
+    if (!etapa.arquivo) {
+        return ''
+    }
 
     const tiposPermitidos = [
         'application/pdf',
