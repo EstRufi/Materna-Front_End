@@ -12,5 +12,5 @@ import Formulario from './components/login/Formulario.vue';
 </script>
 
 <template>
-    <Login/>
+    <CadastroInstitucional/>
 </template>

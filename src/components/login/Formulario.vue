@@ -34,12 +34,12 @@ function fazerLogin(){
         class="fixed inset-0 z-50 bg-black/50 blackdrop-blur-sm
         flex items-center justify-center">
 
-        <div class="w-[90%] max-w-[1600px] h-[1000px] 
-        grid grid-cols-2 rounded-xl overflow-hidden">
+        <div class="w-[90%] max-w-[1600px] h-[700px] 
+        grid grid-cols-2 rounded-xl overflow-hidden ">
 
         <!-- Parte rosa -->
         <div class="bg-[#D86B72] p-8">
-                        <div class="absolute top-30 left-50 flex items-center gap-2 mt-36 px-86">
+                        <div class="absolute top-30 left-50 flex items-center gap-2 mt-10 px-3">
                             <img 
                             src="@/assets/logoMaterna.svg" 
                             alt="logo" 
@@ -55,7 +55,7 @@ function fazerLogin(){
                             </div>
                         </div>
 
-                        <div class="mt-40 mb-9 w-full min-w-0 px-10">
+                        <div class="mt-34 mb-9 w-full min-w-0 px-10">
                             <h2 class="text-[36px] font-bold leading-10 text left
                             text-white whitespace-pre-line mb-5">
                             Recuperação de <br>
@@ -66,6 +66,7 @@ function fazerLogin(){
                                 Mantenha sua unidade conectada com segurança à <br>
                                 rede de bancos de leite humano.
                             </p>
+
                         </div> 
 
                         <div class="flex flex-col pl-10 gap-3">
@@ -83,6 +84,7 @@ function fazerLogin(){
                             <p class="text-[15px] leading-9 text-white">
                                 Autenticação em duas etapas
                             </p>
+
                         </div>
 
                         <!-- Segundo item -->
@@ -116,8 +118,8 @@ function fazerLogin(){
                         </div>
                         </div>
 
-                         <div class="w-full px-10 mt-70">
-                            <div class="h-px w-170 bg-white/20 mb-16 "></div>
+                         <div class="w-full px-10 mt-27">
+                            <div class="h-px w-170 bg-white/20 mb-8 "></div>
                         </div>
 
                         <div class="w-full flex items-center justify-between">
@@ -138,7 +140,7 @@ function fazerLogin(){
 
                             <div class="w-full max-w-[16000px] px-7 mb-1800">
 
-                                    <div class="mt-26 mb-30 ml-16 flex h-8 w-80 w-fit rounded-full items-center px-4"
+                                    <div class="mt-20 mb-30 ml-14 flex h-8 w-80 w-fit rounded-full items-center px-4"
                                     style="background-color: #F5E6E9;">
 
                                     <span class="font-bold text-xs"
@@ -166,7 +168,7 @@ function fazerLogin(){
 
                                         <input 
                                         type="Seu CNPJ"
-                                        placeholder="Seu email"
+                                        placeholder="Seu CNPJ"
                                         class="h-[60px] w-140 rounded-md border border-gray-300 
                                         bg-white px-3 text-[14px] text-gray-700 mt-2 mb-10
                                         outline-none border-gray-300 focus:border-[#D1D5DB]"/>
@@ -174,15 +176,15 @@ function fazerLogin(){
                                     
                                     <div class="justify-between">
                                         <button class="w-140 h-13 rounded-md bg-[#DE6B72]
-                                        text-sm font-medium text-white houver:opacity-90 transition justify-center items-center">
-                                            <span class="mb-4">
+                                        text-sm font-medium text-white houver:opacity-90 gap-2 flex items-center justify-center transition ">
+                                            <span class="ml-6 ">
                                                 Próximo
                                             </span>
                                             
                                                 <img 
                                                     src="/src/assets/telaLogin/Seta.svg" 
                                                     alt="Seta" 
-                                                    class="w-4 h-3 object-contain ml-80 mb-2">
+                                                    class="w-3 h-3 object-contain mt-1.5">
                                         </button>
                                     </div>
 
@@ -196,7 +198,7 @@ function fazerLogin(){
                                         alt="VoltaLogin" 
                                         class="w-4 h-3 object-contain mt-1">
                                         
-                                    <span>
+                                    <span class="mt-1">
                                     Voltar para o login
                                     </span>
 

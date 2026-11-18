@@ -1,6 +1,8 @@
 <script setup>
 import LateralCadastro from './LateralCadastro.vue';
+import InformacaoEndereco from '../cadastroInstitucional03/InformacaoEndereco.vue';
 import { ref } from 'vue';
+import InformacoesResponsavel from '../cadastroInstitucional02/InformacoesResponsavel.vue';
 
 const processo = ref(true)
 const etapaAtual = ref(1)
@@ -11,9 +13,23 @@ const etapa = [
     'Local&Horário',
     'Acesso'
 ]
+const avancar = () => {
+
+    if(etapaAtual.value < 4){
+        etapaAtual.value++
+    }
+}
+
+const voltar = () => {
+
+    if(etapaAtual.value < 1){
+        etapaAtual.value--
+    }
+}
 
 </script>
 <template>
+    
     <div class="mb-7 w-full text-left px-34">
 
 <div class="w-full flex items-center justify-between">
@@ -166,7 +182,9 @@ const etapa = [
         </div>
 
            <!-- Botão -->
-            <div class="text-left px-160 flex-col ">
+            <div 
+            @click="avancar"
+            class="text-left px-160 flex-col ">
                 <button class="relative w-38 h-[48px] rounded-md 
                 bg-[#DE6B72] justify-center flex items-center 
                 text-sm font-medium text-white hover:opacity-30 transition">
