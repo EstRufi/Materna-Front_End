@@ -1,9 +1,9 @@
 <script setup>
     const jornadaDoadoras =[
-        {nome:"Maria Silva",progresso: 40},
-        {nome:"Socoro Silva",progresso: 50},
-        {nome:"Gson Silva",progresso: 10},
-        {nome:"juaninha Silva",progresso: 20}
+        {nome:"Maria Silva",progresso: 80},
+        {nome:"Ana Souza",progresso: 40},
+        {nome:"Carla Nunes",progresso: 100},
+        {nome:"João Ribeiro",progresso: 20}
     ]
 
     function validarPorcentagem(progresso){
@@ -19,7 +19,7 @@
 </script>
 
 <template>
-    <div class=" w-full max-w-[350px] flex flex-col justify-around min-h-[352px] box-border rounded-[16px] bg-white p-[24px] border-2 border-gray-200">
+    <div class="w-full flex flex-col justify-around min-h-[352px] box-border rounded-[16px] bg-white p-[24px] border border-gray-200">
        <h3 class="text-[18px] font-bold mb-[5px]">Doadoras em jornada</h3>
        <div class="flex items-center gap-[8px]">
             <p class="text-[30px] font-bold">{{ jornadaDoadoras.length }}</p> 

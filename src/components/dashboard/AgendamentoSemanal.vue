@@ -62,7 +62,7 @@ const maiorQuantidade = Math.max(...agendamento.map(item => item.quantidade))
 </script>
 
 <template>
-    <div class="w-full max-w-[750px] min-h-[352px] rounded-[16px] bg-white p-[24px] border-2 border-gray-200">
+    <div class="w-full min-h-[352px] rounded-[16px] bg-white p-[24px] border border-gray-200">
         <h3 class="text-[18px] font-bold">Agendamentos da semana</h3>
         <p class="text-[14px]" :class="corPeloPercentual">{{textoPercentual}}</p>
         <div class="h-[220px] flex flex-row gap-[8px]">

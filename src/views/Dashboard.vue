@@ -46,11 +46,11 @@ import DoadorasJornada from '@/components/dashboard/DoadorasJornada.vue';
     
     <CardIndicador/>
     <div class="flex justify-between flex-row items-stretch gap-6 w-full mt-[30px]">
-        <div class="w-full max-w-[750px] min-w-0">
+        <div class="flex-1 min-w-0">
         <AgendamentoSemanal/>
         </div>
 
-        <div class="w-full max-w-[350px] min-w-0 flex">
+        <div class="w-[30%] max-w-[350px] min-w-[230px] min-h-0 flex">
             <DoadorasJornada/>
         </div>
 
@@ -60,4 +60,3 @@ import DoadorasJornada from '@/components/dashboard/DoadorasJornada.vue';
     </div>
 </main>
 </template>
-

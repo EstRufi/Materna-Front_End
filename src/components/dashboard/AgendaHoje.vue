@@ -4,7 +4,7 @@ import { computed } from 'vue'
     const agenda =[
         {
             id: 1,
-            data: "2026-11-03",
+            data: "2026-11-25",
             horario: "10:00:00",
             nome: "Maria Silva",
             tipo: "Doação de leite humano",
@@ -12,19 +12,19 @@ import { computed } from 'vue'
         },
         {
             id: 2,
-            data: "2026-10-24",
+            data: "2026-11-25",
             horario: "11:00:00",
             nome: "Sofia Michele",
             tipo: "Orientação inicial",
             status: "Pendente"
         },
         {
-            id: 2,
-            data: "2026-10-24",
-            horario: "11:00:00",
-            nome: "Sof",
-            tipo: "Orientação inicial",
-            status: "Cancelado"
+            id: 3,
+            data: "2026-11-25",
+            horario: "14:00:00",
+            nome: "Carla Nunes",
+            tipo: "Doação de leite humano",
+            status: "Confirmado"
         }
     ]
 
@@ -77,7 +77,7 @@ import { computed } from 'vue'
     }
 </script>
  <template>
-    <footer class="w-full rounded-[16px] bg-white border-2 border-gray-200">
+    <footer class="w-full rounded-[16px] bg-white border border-gray-200">
         <div class="p-[20px]">
             <h2 class="text-[18px] font-bold">Agenda de hoje</h2>
             <RouterLink
