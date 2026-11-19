@@ -9,6 +9,7 @@ import Jornada from '@/views/Jornada.vue'
 
 
 import Login from '@/views/Login.vue'
+import PerfilDoadora from '@/views/PerfilDoadora.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 // não colocar login ainda pois está sendo feito no momento
 const router = createRouter({
@@ -63,6 +64,15 @@ const router = createRouter({
         titulo: "Instituição"
       }
     },
+    {
+      path: 'perfilDoadora/:id',
+      name: 'perfilDoadora',
+      component: PerfilDoadora,
+      meta:{
+        titulo: "Voltar para doadores",
+        voltar: '/doadora'
+      }
+    }
   
   ]
   }],

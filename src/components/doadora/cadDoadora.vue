@@ -30,7 +30,12 @@
 </script>
 
 <template>
-    <article class="p-[24px] w-full max-w-[347px] h-[266px] bg-[#FFFFFF] border-2 border-borda rounded-[12px]">
+    <RouterLink 
+    :to="{
+        name: 'perfilDoadora',
+        params: { id: doadora.id }
+    }"
+    class="block p-[24px] w-full max-w-[347px] h-[266px] bg-[#FFFFFF] border-2 border-borda rounded-[12px]">
         <header class="flex  mb-[20px] gap-3">
             <div class="min-w-[48px] h-[48px] bg-[#F2F4F5] flex justify-center items-center rounded-full">
                 <span class="text-[14px] text-materna font-bold">aa</span>
@@ -82,5 +87,5 @@
                 ></div>
             </div>
         </footer>
-    </article>
+    </RouterLink>
 </template>
