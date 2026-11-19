@@ -1,5 +1,9 @@
+import CriacaoConta from '@/components/cadastroInstitucional/CriacaoConta.vue'
+import InformacoesResponsavel from '@/components/cadastroInstitucional02/InformacoesResponsavel.vue'
 import LayoutPrincipal from '@/layout/LayoutPrincipal.vue'
 import Agenda from '@/views/Agenda.vue'
+import CadastroInstitucional from '@/views/CadastroInstitucional.vue'
+import CadastroInstitucional02 from '@/views/CadastroInstitucional02.vue'
 import Campanha from '@/views/Campanha.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import Doadora from '@/views/Doadora.vue'
@@ -63,9 +67,17 @@ const router = createRouter({
         titulo: "Instituição"
       }
     },
-  
   ]
-  }],
+  },
+      {
+      path: '/cadastro/instituicao',
+      component: CadastroInstitucional
+    },
+    {
+      path: '/cadastro/responsavel',
+      component: CadastroInstitucional02
+    }
+  ],
 })
 
 export default router
