@@ -78,7 +78,7 @@ async function excluirCampanha(id) {
 
         </Transition>
 
-        <div class="flex flex-wrap gap-[25px] mt-[30px]">
+        <div class="mt-[30px] justify-items-center grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-[25px]">
             <CardCampanha 
             v-for="itensCampanha in campanha"
             :key="itensCampanha.id"

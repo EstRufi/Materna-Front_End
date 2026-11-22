@@ -38,7 +38,7 @@ import { atualizarStatusJornada } from '@/services/jornadaService'
 
 <template>
     <article 
-    class="w-full max-w-[491px] h-[502px] flex flex-col bg-[#FFFFFF] border-2 border-borda rounded-[12px] p-[24px]">
+    class="w-full max-w-[550px] h-[502px] flex flex-col bg-[#FFFFFF] border-2 border-borda rounded-[12px] p-[24px]">
         <nav class="flex flex-row justify-between mb-[16px] bg-blac">
             <div>
                 <h2 class="text-[18px] font-bold">{{ jornada.nome }}</h2>
@@ -46,7 +46,7 @@ import { atualizarStatusJornada } from '@/services/jornadaService'
             </div>
             <div>
                 <div class="flex flex-col items-end gap-2">
-                    <span class="h-[26px] flex items-center justify-center gap-[6px] py-[4px] px-[10px] rounded-full"
+                    <span class="ml-1 h-[26px] flex items-center justify-center gap-[6px] py-[4px] px-[10px] rounded-full"
                     :class="ficaAtivo
                     ? 'bg-materna/10 text-materna border border-materna'
                     : 'bg-[#ECEEEF] text-[#404849] border-2 border-[#C1C7C8]'">

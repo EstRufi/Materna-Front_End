@@ -142,7 +142,7 @@ const doadoras = ref([
                 </button>
             </section>
         </header>
-        <div class="mt-[30px] flex flex-wrap gap-[25px]">
+        <div class="mt-[30px] justify-items-center grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-[25px]">
             <CadDoadora
                 v-for="doadora in doadorasFiltradas"
                 :key="doadora.id"
