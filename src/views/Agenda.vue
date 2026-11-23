@@ -1,8 +1,8 @@
 <script setup>
 import { computed, ref } from 'vue'
 
-const dataSelecionada = ref('2026-01-25')
-const mesSelecionado = ref('2026-01')
+const dataSelecionada = ref('2026-08-25')
+const mesSelecionado = ref('2026-08')
 const calendarioAberto = ref(false)
 const anoCalendario = ref(2026)
 const mesCalendario = ref(1)
@@ -106,12 +106,74 @@ const agendamentos = ref([
 const novoHorario = ref({
   data: '26/01/2026',
   jornada: '',
-  horario: '09:00',
-  capacidade: 0
+  horario: '09:00'
 })
 
 const secaoAgenda = ref('Atendimentos do dia')
-const horariosCadastrados = ref([])
+const filtroEtapa = ref('Todas')
+const filtroStatus = ref('Todos')
+const horariosCadastrados = ref([
+  {
+    id: 1,
+    data: '2026-08-25',
+    horario: '09:00',
+    horarioFim: '09:45',
+    jornada: 'Doação de leite humano',
+    etapa: 'Coleta (Etapa Obrigatória)',
+    agendamentos: ['Ana Souza #1028', 'Joana Prado #1035'],
+    status: 'Lotado'
+  },
+  {
+    id: 2,
+    data: '2026-08-25',
+    horario: '10:00',
+    horarioFim: '10:45',
+    jornada: 'Doação de leite humano',
+    etapa: 'Coleta (Etapa Obrigatória)',
+    agendamentos: ['Maria Silva #1035'],
+    status: '1 vaga restante'
+  },
+  {
+    id: 3,
+    data: '2026-08-25',
+    horario: '11:00',
+    horarioFim: '11:45',
+    jornada: 'Orientação inicial / Apoio à amamentação',
+    etapa: 'Etapa Cadastrada: Orientação Inicial',
+    agendamentos: ['Gabriela Ribeiro #1030'],
+    status: 'Lotado'
+  },
+  {
+    id: 4,
+    data: '2026-08-25',
+    horario: '14:00',
+    horarioFim: '14:45',
+    jornada: 'Doação de leite humano',
+    etapa: 'Coleta (Etapa Obrigatória)',
+    agendamentos: ['Carla Nunes #1031', 'Beatriz Costa #1032'],
+    status: 'Lotado'
+  },
+  {
+    id: 5,
+    data: '2026-08-25',
+    horario: '15:00',
+    horarioFim: '15:45',
+    jornada: 'Doação de leite humano',
+    etapa: 'Coleta (Etapa Obrigatória)',
+    agendamentos: [],
+    status: 'Disponível (2 livres)'
+  },
+  {
+    id: 6,
+    data: '2026-08-25',
+    horario: '16:00',
+    horarioFim: '16:45',
+    jornada: 'Doação de leite humano',
+    etapa: 'Coleta (Etapa Obrigatória)',
+    agendamentos: [],
+    status: 'Disponível (2 livres)'
+  }
+])
 
 const agendamentosFiltrados = computed(() => {
   if (secaoAgenda.value === 'Horários cadastrados') return []
@@ -120,7 +182,16 @@ const agendamentosFiltrados = computed(() => {
 })
 
 const horariosFiltrados = computed(() => {
-  return horariosCadastrados.value.filter(item => item.data === dataSelecionada.value)
+  return horariosCadastrados.value.filter(item => {
+    const dataCorreta = item.data === dataSelecionada.value
+    const etapaCorreta = filtroEtapa.value === 'Todas'
+      || item.etapa?.includes(filtroEtapa.value)
+    const statusCorreto = filtroStatus.value === 'Todos'
+      || (filtroStatus.value === 'Lotado' && item.status === 'Lotado')
+      || (filtroStatus.value === 'Disponível' && item.status.startsWith('Disponível'))
+
+    return dataCorreta && etapaCorreta && statusCorreto
+  })
 })
 
 function aceitarAgendamento(item) {
@@ -197,7 +268,6 @@ function criarHorario(formulario) {
     id: Date.now(),
     data: `${ano}-${mes}-${dia}`,
     horario: formulario.horario,
-    capacidade: formulario.capacidade,
     jornada: formulario.jornada
   })
 
@@ -208,6 +278,57 @@ function criarHorario(formulario) {
 
 <template>
   <main class="min-h-full w-full bg-[#F8FAFC] p-[30px]">
+    <section
+      v-if="secaoAgenda === 'Horários cadastrados'"
+      class="mb-[16px] grid grid-cols-3 gap-[16px]"
+    >
+      <article class="flex h-[90px] items-center justify-between rounded-[10px] border border-borda bg-white px-[20px]">
+        <div>
+          <p class="text-[13px] text-[#94A3B8]">Horários na Semana</p>
+          <div class="mt-[4px] flex items-end gap-[6px]">
+            <strong class="text-[28px] leading-none text-slate-700">38</strong>
+            <span class="pb-[2px] text-[11px] text-[#94A3B8]">slots</span>
+          </div>
+        </div>
+        <div class="flex h-[38px] w-[38px] items-center justify-center rounded-full bg-[#F8FAFC] text-materna">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <rect x="3" y="4" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M6 2V5M12 2V5M3 7H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </article>
+
+      <article class="flex h-[90px] items-center justify-between rounded-[10px] border border-borda bg-white px-[20px]">
+        <div>
+          <p class="text-[13px] text-[#94A3B8]">Vagas Ocupadas</p>
+          <div class="mt-[4px] flex items-end gap-[8px]">
+            <strong class="text-[28px] leading-none text-slate-700">29</strong>
+            <span class="pb-[2px] text-[11px] text-[#22A06B]">76%</span>
+          </div>
+        </div>
+        <div class="flex h-[38px] w-[38px] items-center justify-center rounded-full bg-[#ECFDF3] text-[#22A06B]">
+          <span class="text-[20px]">↗</span>
+        </div>
+      </article>
+
+      <article class="flex h-[90px] items-center justify-between rounded-[10px] border border-borda bg-white px-[20px]">
+        <div>
+          <p class="text-[13px] text-[#94A3B8]">Vagas Disponíveis</p>
+          <div class="mt-[4px] flex items-end gap-[8px]">
+            <strong class="text-[28px] leading-none text-slate-700">9</strong>
+            <span class="pb-[2px] text-[11px] text-[#E37A86]">livres</span>
+          </div>
+        </div>
+        <div class="flex h-[38px] w-[38px] items-center justify-center rounded-full bg-[#FFF2F3] text-materna">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <circle cx="9" cy="9" r="6.5" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M9 5.5V9.25L12 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </article>
+
+    </section>
+
     <div class="mb-[30px] grid grid-cols-1 items-center gap-[16px] xl:grid-cols-[minmax(0,1fr)_320px]">
       <div class="flex min-w-0 items-center justify-between gap-[12px]">
         <p class="min-w-[300px] text-[14px] text-texto-claro">
@@ -324,6 +445,39 @@ function criarHorario(formulario) {
       </div>
     </div>
 
+    <div
+      v-if="secaoAgenda === 'Horários cadastrados'"
+      class="mb-[16px] flex w-full flex-wrap items-center gap-[8px]"
+    >
+      <div class="relative w-full sm:w-[190px]">
+        <select
+          v-model="filtroEtapa"
+          class="h-[38px] w-full appearance-none rounded-[8px] border border-borda bg-white px-[14px] pr-[36px] text-[13px] text-[#64748B] outline-none focus:border-[#CBD5E1] focus:ring-0"
+        >
+          <option value="Todas">Todas as etapas</option>
+          <option value="Coleta">Coleta</option>
+          <option value="Orientação">Orientação</option>
+        </select>
+        <svg class="pointer-events-none absolute right-[12px] top-1/2 h-[14px] w-[14px] -translate-y-1/2 text-[#94A3B8]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="relative w-full sm:w-[190px]">
+        <select
+          v-model="filtroStatus"
+          class="h-[38px] w-full appearance-none rounded-[8px] border border-borda bg-white px-[14px] pr-[36px] text-[13px] text-[#64748B] outline-none focus:border-[#CBD5E1] focus:ring-0"
+        >
+          <option value="Todos">Todos os status</option>
+          <option value="Lotado">Lotado</option>
+          <option value="Disponível">Disponível</option>
+        </select>
+        <svg class="pointer-events-none absolute right-[12px] top-1/2 h-[14px] w-[14px] -translate-y-1/2 text-[#94A3B8]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
     <div class="grid grid-cols-1 items-stretch gap-[24px] xl:grid-cols-[minmax(0,1fr)_320px]">
       <article class="rounded-[16px] border border-borda bg-white p-[20px] shadow-[0_1px_2px_rgba(15,23,42,0.02)]">
         <h2 class="mb-[16px] text-[18px] font-bold">
@@ -332,18 +486,55 @@ function criarHorario(formulario) {
 
         <div class="flex flex-col gap-[12px]">
           <template v-if="secaoAgenda === 'Horários cadastrados'">
+            <div class="grid grid-cols-[150px_minmax(220px,1fr)_minmax(220px,1fr)_180px] border-b border-borda pb-[10px] text-[11px] font-medium uppercase text-texto-claro">
+              <span>Horário</span>
+              <span>Serviço &amp; etapa vinculada</span>
+              <span>Agendamentos vinculados</span>
+              <span>Status da vaga</span>
+            </div>
             <div
               v-for="item in horariosFiltrados"
               :key="item.id"
-              class="flex min-h-[78px] items-center rounded-[12px] border border-borda bg-white px-[16px]"
+              class="grid min-h-[78px] grid-cols-[150px_minmax(220px,1fr)_minmax(220px,1fr)_180px] items-center border-b border-borda last:border-b-0"
             >
-              <div class="mr-[16px] flex w-[70px] items-center gap-[8px] text-[13px] text-texto-claro">
-                <span class="h-[8px] w-[8px] rounded-full border border-slate-400"></span>
-                {{ item.horario }}
+              <div class="flex items-center gap-[8px] text-[12px] font-medium text-texto-claro">
+                <span class="flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-full border border-slate-300">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                    <circle cx="6" cy="6" r="4.25" stroke="currentColor" stroke-width="1"/>
+                    <path d="M6 3.5V6.25L8 7.25" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                {{ item.horario }} - {{ item.horarioFim }}
               </div>
-              <div class="min-w-0 flex-1">
-                <p class="text-[13px] font-bold">{{ item.jornada || 'Etapa não informada' }}</p>
-                <p class="mt-[2px] text-[11px] text-texto-claro">Capacidade: {{ item.capacidade }}</p>
+              <div class="min-w-0">
+                <p class="text-[12px] font-medium text-slate-700">{{ item.jornada || 'Etapa não informada' }}</p>
+                <p class="mt-[4px] w-fit rounded-full bg-[#FFF3F4] px-[8px] py-[3px] text-[9px] text-[#B46A6A]">
+                  <span class="mr-[4px] text-materna">●</span>{{ item.etapa }}
+                </p>
+              </div>
+              <div class="flex min-w-0 flex-wrap gap-[6px] pr-[12px]">
+                <template v-if="item.agendamentos.length">
+                  <span
+                    v-for="agendamento in item.agendamentos"
+                    :key="agendamento"
+                    class="rounded-full border border-borda bg-slate-50 px-[8px] py-[4px] text-[9px] text-texto-claro"
+                  >
+                    {{ agendamento }}
+                  </span>
+                </template>
+                <p v-else class="text-[10px] text-[#94A3B8]">Nenhuma doadora alocada</p>
+              </div>
+              <div>
+                <span
+                  class="rounded-full px-[8px] py-[4px] text-[10px]"
+                  :class="item.status.startsWith('Disponível')
+                    ? 'border border-[#8CD8B9] bg-[#F0FBF7] text-[#459E7E]'
+                    : item.status === 'Lotado'
+                      ? 'bg-[#FEECEF] text-[#D85F68]'
+                      : 'bg-[#FFF1E7] text-[#D58A55]'"
+                >
+                  {{ item.status === 'Lotado' ? 'Lotado' : item.status }}
+                </span>
               </div>
             </div>
             <p
@@ -449,15 +640,9 @@ function criarHorario(formulario) {
               </select>
             </div>
 
-            <div class="grid grid-cols-2 gap-[12px]">
-              <div>
-                <label class="mb-[4px] block text-[12px]">Horário</label>
-                <input v-model="novoHorario.horario" type="time" class="h-[40px] w-full rounded-[7px] border border-borda px-[12px] text-[12px] outline-none focus:border-materna">
-              </div>
-              <div>
-                <label class="mb-[4px] block text-[12px]">Capacidade</label>
-                <input v-model.number="novoHorario.capacidade" type="number" min="0" class="h-[40px] w-full rounded-[7px] border border-borda px-[12px] text-[12px] outline-none focus:border-materna">
-              </div>
+            <div>
+              <label class="mb-[4px] block text-[12px]">Horário</label>
+              <input v-model="novoHorario.horario" type="time" class="h-[40px] w-full rounded-[7px] border border-borda px-[12px] text-[12px] outline-none focus:border-materna">
             </div>
 
             <button type="submit" class="mt-[4px] h-[40px] w-full rounded-[7px] bg-materna text-[12px] font-bold text-white transition-colors hover:bg-[#C95B64]">

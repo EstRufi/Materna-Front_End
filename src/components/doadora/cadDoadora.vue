@@ -19,16 +19,16 @@
         </header>
 
         <main class="mb-[32px] flex flex-col gap-2 text-[13px] text-[#4B5563]">
-            <div class="flex gap-2"> 
+            <div class="flex gap-2">
                 <img class="w-[13px]" src="@/assets/doadora/e-mail.svg" alt="Icon de uma carta que representa gmail">
                 <p>E-mail ou Telefone ou CIdade</p>
             </div>
-            
+
             <div class="flex gap-2">
                 <img class="w-[13px]" src="@/assets/doadora/telefone.svg" alt="Icon de telefone">
                 <p>E-mail ou Telefone ou CIdade</p>
             </div>
-            
+
             <div class="flex gap-2">
                 <img class="w-[13px]" src="@/assets/doadora/localizador.svg" alt="Icon de local">
                 <p>E-mail ou Telefone ou CIdade</p>

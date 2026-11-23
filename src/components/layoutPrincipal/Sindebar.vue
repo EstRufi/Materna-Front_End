@@ -8,7 +8,7 @@
     class="w-[320px] p-5 bg-white flex flex-col border-r-2 border-gray-200">
         <div class="flex items-center gap-2 py-3">
             <img 
-            class="h-20 "
+            class="h-20"
             src="@/assets/logoMaterna.svg" 
             alt="Uma mãe segurando um bebe dormindo com chupeta, onde ambos estão com os olhos fechados">
             <div>
@@ -26,7 +26,7 @@
                     to="/dashboard"
                     class="group flex items-center space-x-3 w-full rounded-xl px-4 py-3 text-slate-600 hover:bg-pink-50 transition-colors font-medium [&.router-link-exact-active]:bg-[#DE6771] [&.router-link-exact-active]:text-white" >
                     <img 
-                        class="w-[30px] h-[25px] pr-[12px] brightness-0 opacity-60 group-[.router-link-exact-active]:brightness-0 group-[.router-link-exact-active]:invert group-[.router-link-exact-active]:opacity-100""
+                        class="w-[30px] h-[25px] pr-[12px] brightness-0 opacity-60 group-[.router-link-exact-active]:brightness-0 group-[.router-link-exact-active]:invert group-[.router-link-exact-active]:opacity-100"
                         src="@/assets/sindebar/dashborard.svg" 
                         alt="um icon com 4 quadados meio aredondados">
                     Dashboard
