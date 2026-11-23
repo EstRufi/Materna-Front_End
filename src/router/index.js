@@ -23,7 +23,7 @@ const router = createRouter({
     children: [
       {
       path: '',
-      redirect: '/dashboard',
+      redirect: '/cadastro/instituicao',
     },
     {
       path: 'dashboard',
