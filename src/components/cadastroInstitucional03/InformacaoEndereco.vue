@@ -1,4 +1,5 @@
 <script setup>
+import { cadastro } from '@/stores/cadastroInstituicaoStores';
 import { ref } from 'vue';
 
 const processo = ref(true)
@@ -31,6 +32,15 @@ function replicarHorario() {
         dia.inicio = inicio
         dia.fim = fim
     })
+}
+function salvarHorarios() {
+    cadastro.id_coleta = tipoColeta.value === 'domicilio' ? 1 : 2
+    
+    cadastro.horarios = dias.value.map((dia, index) => ({
+        dia: index + 1,
+        abre: dia.ativo ? dia.inicio : '00:00',
+        fecha: dia.ativo ? dia.fim : '00:00'
+    }))
 }
 </script>
 
@@ -129,6 +139,7 @@ function replicarHorario() {
                         </label>
 
                         <input 
+                        v-model="cadastro.cep"
                         type="text"
                         placeholder="01310-100"
                         class="h-[47px] w-110 rounded-md border border-gray-300 
@@ -144,6 +155,7 @@ function replicarHorario() {
                             </label>
 
                             <input 
+                            v-model="cadastro.logradouro"
                             type="text"
                             placeholder="Ex: Av. Paulista"
                             class="h-[47px] w-110 rounded-md border border-gray-300 
@@ -163,7 +175,8 @@ function replicarHorario() {
                             </label>
 
                             <input 
-                            type="text"
+                            v-model="cadastro.numero"
+                            type="number"
                             placeholder="1000"
                             class="h-[47px] w-110 rounded-md border border-gray-300 
                             bg-white px-3 text-[14px] text-gray-700
@@ -179,6 +192,7 @@ function replicarHorario() {
                         </label>
 
                         <input 
+                        v-model="cadastro.complemento"
                         type="text"
                         placeholder="Ex: Bloco B, 3º andar"
                         class="h-[47px] w-110 rounded-md border border-gray-300 
@@ -198,6 +212,7 @@ function replicarHorario() {
                         </label>
 
                         <input 
+                        v-model="cadastro.bairro"
                         type="text"
                         placeholder="Bela Vista"
                         class="h-[47px] w-90 rounded-md border border-gray-300 
@@ -213,6 +228,7 @@ function replicarHorario() {
                         </label>
 
                         <input 
+                        v-model="cadastro.cidade"
                         type="text"
                         placeholder="São Paulo"
                         class="h-[47px] w-90 rounded-md border border-gray-300 
@@ -228,6 +244,7 @@ function replicarHorario() {
                         </label>
 
                         <input 
+                        v-model="cadastro.sigla_estado"
                         type="text"
                         placeholder="SP"
                         class="h-[47px] w-43 rounded-md border text-center border-gray-300 
@@ -452,9 +469,11 @@ function replicarHorario() {
                     alt="voltar" 
                     class="w-4 h-4 object-contain">
 
-                    <span class="text-black text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4">
+                    <RouterLink
+                    to="/cadastro/responsavel"
+                    class="text-black text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4">
                         Voltar
-                    </span>
+                    </RouterLink>
 
                     </button>
                 </div>
@@ -464,9 +483,12 @@ function replicarHorario() {
                 bg-[#DE6B72] justify-center flex items-center 
                 text-sm font-medium text-white hover:opacity-30 transition gap-3">
 
-                <span class="text-white text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4">
+                <RouterLink
+                to="/cadastro/finalizado"
+                @click="salvarHorarios"
+                class="text-white text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4">
                     Avançar
-                </span>
+                </RouterLink>
                 
                 <img 
                 src="/src/assets/cadastro/Seta2.svg" 

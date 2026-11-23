@@ -1,6 +1,7 @@
 <script setup>
-import credenciaisFinalizada from '@/components/cadastroFinalizado/CredenciaisFinalizada.vue';
-import LateralCredenciais from '@/components/cadastroFinalizado/LateralCredenciais.vue';
+
+import Credenciais from '@/components/credenciaisFinalizadas/Credenciais.vue';
+import LateralCredenciais from '@/components/credenciaisFinalizadas/LateralCredenciais.vue';
 
 </script>
 <template>
@@ -29,7 +30,7 @@ import LateralCredenciais from '@/components/cadastroFinalizado/LateralCredencia
         />
     
         <div class="flex-1 min-w-0">
-            <credenciaisFinalizada/>
+            <Credenciais/>
         </div>
     </main>
 

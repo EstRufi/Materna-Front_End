@@ -1,4 +1,5 @@
 <script setup>
+import { cadastro } from '@/stores/cadastroInstituicaoStores.js';
 import LateralCredenciais from './LateralCredenciais.vue';
 import { ref } from 'vue';
 
@@ -106,6 +107,7 @@ const termodDeUso = ref(false)
                     </label>
 
                     <input 
+                    v-model="cadastro.funcionario.email"
                     type="text"
                     placeholder="Ex: contato@bancodeleite.org.br"
                     class="h-[40px] w-160 rounded-md border border-gray-300 
@@ -125,6 +127,7 @@ const termodDeUso = ref(false)
                         </label>
 
                         <input 
+                        v-model="cadastro.funcionario.senha"
                         type="password"
                         placeholder="Mínimo 8 caracteres"
                         class="h-[40px] w-76 rounded-md border border-gray-300 
@@ -141,6 +144,7 @@ const termodDeUso = ref(false)
                         </label>
 
                         <input 
+                        v-model="cadastro.funcionario.senha"
                         type="password"
                         placeholder="Repita a senha"
                         class="h-[40px] w-76 rounded-md border border-gray-300 
@@ -263,10 +267,12 @@ const termodDeUso = ref(false)
                     alt="voltar" 
                     class="w-4 h-4 object-contain">
 
-                    <span class="text-black text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4">
-                        Voltar
-                    </span>
-
+                    <RouterLink
+                    to="/cadastro/endereco"
+                    class="text-black text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4">
+                    Voltar
+                    </RouterLink>
+                   
                     </button>
                 </div>
 
@@ -275,10 +281,14 @@ const termodDeUso = ref(false)
                         bg-[#DE6B72] justify-center flex items-center 
                         text-sm text-white hover:opacity-30 transition gap-3">
 
-                        <span class="text-white text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4">
-                            Finalizar cadastro
-                        </span>
+                        <RouterLink
+                        to="/login"
+                        class="text-white text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4"
+                        >
+                        Finalizar cadastro
 
+                        </RouterLink>
+                      
                         <img 
                         src="/src/assets/cadastro/Seta2.svg" 
                         alt="Seta2" 

@@ -1,4 +1,6 @@
 <script setup>
+
+import { cadastro } from '@/stores/cadastroInstituicaoStores';
 import { ref } from 'vue';
 
 const processo = ref(true)
@@ -103,6 +105,7 @@ const etapa = [
                     </label>
 
                     <input 
+                    v-model="cadastro.funcionario.nome"
                     type="text"
                     placeholder="Ex: Dra. Mariana Vasconcelos Silva"
                     class="h-[47px] w-160 rounded-md border border-gray-300 
@@ -121,6 +124,7 @@ const etapa = [
                         </label>
 
                         <input 
+                        v-model="cadastro.funcionario.cpf"
                         type="text"
                         placeholder="000.000.000-00"
                         class="h-[47px] w-80 rounded-md border border-gray-300 
@@ -136,7 +140,8 @@ const etapa = [
                             Data de Nascimento
                         </label>
 
-                        <input 
+                        <input
+                        v-model="cadastro.funcionario.data_nascimento" 
                         type="text"
                         placeholder="DD/MM/AAAA"
                         class="h-[47px] w-79 rounded-md border border-gray-300 
@@ -154,6 +159,7 @@ const etapa = [
                     </label>
 
                     <input 
+                    v-model="cadastro.funcionario.telefone"
                     type="text"
                     placeholder="(11) 98765-4321"
                     class="h-[47px] w-160 rounded-md border border-gray-300 
@@ -170,6 +176,7 @@ const etapa = [
                     </label>
 
                     <input 
+                    v-model="cadastro.funcionario.email"
                     type="text"
                     placeholder="mariana.silva@bancodeleite.org.br"
                     class="h-[47px] w-160 rounded-md border border-gray-300 
@@ -196,9 +203,11 @@ const etapa = [
                     alt="voltar" 
                     class="w-4 h-4 object-contain">
 
-                    <span class="text-black text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4">
+                    <RouterLink
+                    to="/cadastro/instituicao"
+                    class="text-black text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4">
                         Voltar
-                    </span>
+                    </RouterLink>
 
                     </button>
                 </div>
@@ -208,9 +217,11 @@ const etapa = [
                 bg-[#DE6B72] justify-center flex items-center 
                 text-sm font-medium text-white hover:opacity-30 transition gap-3">
 
-                <span class="text-white text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4">
+                <RouterLink
+                to="/cadastro/endereco"
+                class="text-white text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4">
                     Avançar
-                </span>
+                </RouterLink>
                 
                 <img 
                 src="/src/assets/cadastro/Seta2.svg" 

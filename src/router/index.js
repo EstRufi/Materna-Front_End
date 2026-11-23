@@ -1,10 +1,11 @@
-import CriacaoConta from '@/components/cadastroInstitucional/CriacaoConta.vue'
-import InformacoesResponsavel from '@/components/cadastroInstitucional02/InformacoesResponsavel.vue'
 import LayoutPrincipal from '@/layout/LayoutPrincipal.vue'
 import Agenda from '@/views/Agenda.vue'
 import CadastroInstitucional from '@/views/CadastroInstitucional.vue'
 import CadastroInstitucional02 from '@/views/CadastroInstitucional02.vue'
+import CadastroInstitucional03 from '@/views/CadastroInstitucional03.vue'
+
 import Campanha from '@/views/Campanha.vue'
+import CredenciaisFinalizadas from '@/views/CredenciaisFinalizadas.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import Doadora from '@/views/Doadora.vue'
 import Instituicao from '@/views/Instituicao.vue'
@@ -76,7 +77,20 @@ const router = createRouter({
     {
       path: '/cadastro/responsavel',
       component: CadastroInstitucional02
+    },
+    {
+       path: '/cadastro/endereco',
+      component: CadastroInstitucional03
+    },
+    {
+       path: '/cadastro/finalizado',
+      component: CredenciaisFinalizadas
+    },
+    {
+       path: '/login',
+      component: Login
     }
+
   ],
 })
 

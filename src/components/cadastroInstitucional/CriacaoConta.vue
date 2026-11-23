@@ -1,5 +1,7 @@
 
 <script setup>
+
+import { cadastro } from '@/stores/cadastroInstituicaoStores'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -114,6 +116,7 @@ const avancar = () => {
                 </label>
 
                 <input
+                v-model="cadastro.nome"
                     type="text"
                     placeholder="Ex: Banco de Leite Humano Santa Clara"
                     class="h-[40px] w-160 rounded-md border border-gray-300
@@ -134,6 +137,7 @@ const avancar = () => {
                 </label>
 
                 <input
+                v-model="cadastro.cnpj"
                     type="text"
                     placeholder="00.000.000/0001-00"
                     class="h-[40px] w-160 rounded-md border border-gray-300
@@ -154,6 +158,7 @@ const avancar = () => {
                 </label>
 
                 <input
+                v-model="cadastro.email"
                     type="text"
                     placeholder="contato@bancodeleite.org.br"
                     class="h-[40px] w-160 rounded-md border border-gray-300
@@ -174,6 +179,7 @@ const avancar = () => {
                 </label>
 
                 <input
+                v-model="cadastro.telefone"
                     type="text"
                     placeholder="(11) 3214-5678"
                     class="h-[40px] w-160 rounded-md border border-gray-300
