@@ -27,15 +27,23 @@
 
         return classes[status] || 'bg-gray-100 text-gray-600 border-gray-200'
     }
+
+    function formatarData(data) {
+        if (!data) return ''
+        const dataSemHorario = data.split('T')[0]
+
+        const [ano, mes, dia] = dataSemHorario.split('-')
+        return `${dia}/${mes}/${ano}`
+    }
 </script>
 
 <template>
     <RouterLink 
     :to="{
         name: 'perfilDoadora',
-        params: { id: doadora.id }
+        params: { id: doadora.id },
     }"
-    class="block p-[24px] w-full max-w-[347px] h-[266px] bg-[#FFFFFF] border-2 border-borda rounded-[12px]">
+    class="block p-[24px] w-full max-w-[350px] h-[266px] bg-[#FFFFFF] border-2 border-borda rounded-[12px]">
         <header class="flex  mb-[20px] gap-3">
             <div class="min-w-[48px] h-[48px] bg-[#F2F4F5] flex justify-center items-center rounded-full">
                 <span class="text-[14px] text-materna font-bold">aa</span>
@@ -44,7 +52,7 @@
                 <div class="flex flex-col gap-1">
                     <h1 class="text-[15px] font-semibold">{{ doadora.nome }}</h1>
 
-                    <span class="text-[#6b7280] text-[12px]">Desde 12/12/12</span>
+                    <span class="text-[#6b7280] text-[12px]">Desde {{ formatarData(doadora.data_inicio) }}</span>
                 </div>
                 <div
                 class="h-[28px] flex px-[10px] py-2 items-center gap-2 rounded-full border-2 text-[12px] font-medium"
@@ -89,3 +97,9 @@
         </footer>
     </RouterLink>
 </template>
+
+<!-- Etapa for agendavel não pode nada 
+ 
+e quando tiver os dois de baixo true o agendavel tem que ser false
+quando há uma ativa os outros não podem estar ativos
+-->
