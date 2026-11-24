@@ -11,4 +11,4 @@ export async function cadastrarInstituicao(dados){
     })
 
     return resposta
-}
+} 

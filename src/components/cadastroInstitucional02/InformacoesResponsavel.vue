@@ -142,7 +142,7 @@ function formatarData(valor) {
                         </label>
 
                         <input 
-                        v-model="cadastro.funcionario.cpf"
+                        :value="cadastro.funcionario.cpf"
                         @input="cadastro.funcionario.cpf = formatarCPF($event.target.value)"
                         type="text"
                         maxlength="14"

@@ -42,22 +42,27 @@ const finalizarCadastro = async () => {
         // Preparar os dados para enviar à API
         const dadosEnvio = {
             ...cadastro,
+                foto: cadastro.foto || null,
 
             telefone: cadastro.telefone.replace(/\D/g, ''),
 
             funcionario: {
                 ...cadastro.funcionario,
 
+                cpf: cadastro.funcionario.cpf,
+
                 data_nascimento: converterDataParaAPI(
                     cadastro.funcionario.data_nascimento
                 ),
-
-                cpf: cadastro.funcionario.cpf.replace(/\D/g, ''),
 
                 telefone: cadastro.funcionario.telefone.replace(/\D/g, '')
             }
         }
 
+        console.log('Data digitada:', cadastro.funcionario.data_nascimento)
+console.log('Data enviada:', dadosEnvio.funcionario.data_nascimento)
+console.log('CPF enviado:', dadosEnvio.funcionario.cpf)
+        console.log('CPF enviado:', dadosEnvio.funcionario.cpf)
         console.log('Dados enviados:', dadosEnvio)
 
         // Enviar os dados convertidos
