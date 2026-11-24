@@ -5,6 +5,25 @@
             required:true
         }
     })
+
+    function classeStatus(status) {
+        const classes = {
+            'Iniciadas': 'bg-[#FFFBEB] text-[#B45309] border-[#FEF3C7]',
+            'Em andamento': 'bg-[#FFF7ED] text-[#C2410C] border-[#FFEDD5]',
+            'Ativas': 'bg-[#ECFDF5] text-[#047857] border-[#A7F3D0]',
+            'Finalizadas': 'bg-[#DE6B72]/10 text-materna border-materna'
+        }
+
+        return classes[status] || 'bg-gray-100 text-gray-600 border-gray-200'
+    }
+
+    function formatarTelefone(telefone) {
+        if (!telefone) return ''
+
+        const numero = telefone.replace(/\D/g, '')
+
+        return `(${numero.slice(0, 2)}) ${numero.slice(2)}`
+    }
 </script>
 <template>
     <article>
@@ -45,6 +64,13 @@
                         <p>{{ doadora.cidade}}</p>
                     </div>
                 </div>
+            </div>
+
+            <div>
+                <div>
+                    <img src="" alt="">
+                    <p>3</p>
+                    <span>DOAÇÕES CONCLUÍDAS</span></div>
             </div>
         </div>
     </article>

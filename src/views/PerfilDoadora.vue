@@ -29,13 +29,16 @@ const doadora = ref({
 })
 </script>
 <template>
-    <main class="w-full min-h-full bg-[#F8FAFC] p-[30px] ">
-        <div>
-            <LateralPerfilDoadora
-                v-for="dadosDoadora in doadora"
-                :key="dadosDoadora.id"
-                :doadora="dadosDoadora"
-            />
+    <main class="w-full min-h-full bg-[#F8FAFC] p-[30px]">
+        <div class="grid grid-cols-1 lg:grid-cols-[350px_minmax(0,1fr)] gap-[24px] items-start">
+
+            <aside class="w-full min-w-0">
+                <LateralPerfilDoadora :doadora="doadora" />
+            </aside>
+
+            <section class="w-full min-w-0">
+                <JornadaDoadora :doadora="doadora" />
+            </section>
         </div>
     </main>
 </template>
