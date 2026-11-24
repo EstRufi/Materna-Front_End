@@ -1,13 +1,24 @@
-
 <script setup>
 
 import { cadastro } from '@/stores/cadastroInstituicaoStores'
 import { useRouter } from 'vue-router'
 
+function formatarCNPJ(valor) {
+    return valor
+        .replace(/\D/g, '')
+        .slice(0, 14)
+        .replace(/^(\d{2})(\d)/, '$1.$2')
+        .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+        .replace(/\.(\d{3})(\d)/, '.$1/$2')
+        .replace(/(\d{4})(\d)/, '$1-$2')
+}
+
+
 const router = useRouter()
 
 const avancar = () => {
     console.log('Botão Avançar foi clicado')
+    console.log('CNPJ salvo:', cadastro.cnpj)
 
     router.push('/cadastro/responsavel')
 }
@@ -136,14 +147,17 @@ const avancar = () => {
                     CNPJ
                 </label>
 
-                <input
-                v-model="cadastro.cnpj"
-                    type="text"
-                    placeholder="00.000.000/0001-00"
-                    class="h-[40px] w-160 rounded-md border border-gray-300
-                    bg-white px-3 text-[14px] text-gray-700
-                    outline-none focus:border-[#D1D5DB]"
-                >
+            <input
+                :value="cadastro.cnpj"
+                @input="cadastro.cnpj = formatarCNPJ($event.target.value)"
+                type="text"
+                maxlength="18"
+                placeholder="00.000.000/0000-00"
+                class="h-[40px] w-160 rounded-md border border-gray-300
+                bg-white px-3 text-[14px] text-gray-700
+                outline-none focus:border-[#D1D5DB]"
+            >
+
 
             </div>
         </div>
@@ -175,13 +189,14 @@ const avancar = () => {
             <div class="flex flex-col gap-2">
 
                 <label class="text-[14px] text-gray-700 font-semibold">
-                    Telefone fixo / Recepção E-mail institucional oficial
+                    Telefone fixo / Recepção 
                 </label>
 
                 <input
                 v-model="cadastro.telefone"
                     type="text"
                     placeholder="(11) 3214-5678"
+                    maxlength="14"
                     class="h-[40px] w-160 rounded-md border border-gray-300
                     bg-white px-3 text-[14px] text-gray-700
                     outline-none focus:border-[#D1D5DB]"

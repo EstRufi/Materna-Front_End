@@ -12,6 +12,24 @@ const etapa = [
     'Local&Horário',
     'Acesso'
 ]
+
+function formatarCPF(valor) {
+    return valor
+        .replace(/\D/g, '')
+        .slice(0, 11)
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+}
+
+function formatarData(valor) {
+    return valor
+        .replace(/\D/g, '')
+        .slice(0, 8)
+        .replace(/(\d{2})(\d)/, '$1/$2')
+        .replace(/(\d{2})(\d)/, '$1/$2')
+
+}
 </script>
 
 <template>
@@ -125,7 +143,9 @@ const etapa = [
 
                         <input 
                         v-model="cadastro.funcionario.cpf"
+                        @input="cadastro.funcionario.cpf = formatarCPF($event.target.value)"
                         type="text"
+                        maxlength="14"
                         placeholder="000.000.000-00"
                         class="h-[47px] w-80 rounded-md border border-gray-300 
                         bg-white px-3 text-[14px] text-gray-700
@@ -143,10 +163,13 @@ const etapa = [
                         <input
                         v-model="cadastro.funcionario.data_nascimento" 
                         type="text"
+                        @input="cadastro.funcionario.data_nascimento = formatarData($event.target.value)"
+                        maxlength="10"
                         placeholder="DD/MM/AAAA"
                         class="h-[47px] w-79 rounded-md border border-gray-300 
                         bg-white px-3 text-[14px] text-gray-700
-                        outline-none border-gray-300 focus:border-[#D1D5DB]">
+                        outline-none border-gray-300 focus:border-[#D1D5DB]
+                        required">
                     </div>
                 </div>
             </div>
@@ -162,6 +185,7 @@ const etapa = [
                     v-model="cadastro.funcionario.telefone"
                     type="text"
                     placeholder="(11) 98765-4321"
+                    maxlength="15"
                     class="h-[47px] w-160 rounded-md border border-gray-300 
                     bg-white px-3 text-[14px] text-gray-700
                     outline-none border-gray-300 focus:border-[#D1D5DB]">

@@ -33,6 +33,13 @@ function replicarHorario() {
         dia.fim = fim
     })
 }
+function formatarCEP(valor) {
+    return valor
+        .replace(/\D/g, '')
+        .slice(0, 8)
+        .replace(/(\d{5})(\d)/, '$1-$2')
+}
+
 function salvarHorarios() {
     cadastro.id_coleta = tipoColeta.value === 'domicilio' ? 1 : 2
     
@@ -128,42 +135,44 @@ function salvarHorarios() {
 
 
 
-            <!--Endereco/CEP-Lougadoro -->
-            <div class="w-[1013px] flex justify-between gap-6 px-36">
+                    <!-- Endereço/CEP-Logradouro -->
+            <div class="w-full grid grid-cols-2 gap-6 px-36 mb-6">
 
-                <div class="flex-1 w-full min-w-0 text-left mb-6">
-                    <div class="flex flex-col gap-1">
+                <!-- CEP -->
+                <div class="flex flex-col gap-1 min-w-0">
+                    <label class="text-[12px] font-medium text-gray-700">
+                        CEP
+                    </label>
 
-                        <label class="text-[12px] font-medium text-gray-700">
-                            CEP                  
-                        </label>
-
-                        <input 
+                    <input
                         v-model="cadastro.cep"
                         type="text"
+                        @input="cadastro.cep = formatarCEP($event.target.value)"
                         placeholder="01310-100"
-                        class="h-[47px] w-110 rounded-md border border-gray-300 
+                        maxlength="9"
+                        class="h-[47px] w-full rounded-md border border-gray-300
                         bg-white px-3 text-[12px] text-gray-700
-                        outline-none border-gray-300 focus:border-[#D1D5DB] ">
-                    </div>
+                        outline-none focus:border-[#D1D5DB]"
+                    >
                 </div>
 
-                    <div class="flex-1 min-w-0 mb-6 px-110">
-                        <div class="flex flex-col ">
-                            <label class="text-[12px] font-medium text-gray-700">
-                                Logradouro
-                            </label>
+                <!-- Logradouro -->
+                <div class="flex flex-col gap-1 min-w-0">
+                    <label class="text-[12px] font-medium text-gray-700">
+                        Logradouro
+                    </label>
 
-                            <input 
-                            v-model="cadastro.logradouro"
-                            type="text"
-                            placeholder="Ex: Av. Paulista"
-                            class="h-[47px] w-110 rounded-md border border-gray-300 
-                            bg-white px-3 text-[14px] text-gray-700
-                            outline-none border-gray-300 focus:border-[#D1D5DB] mt-1">
-                        </div>
-                    </div>
+                    <input
+                        v-model="cadastro.logradouro"
+                        type="text"
+                        placeholder="Ex: Av. Paulista"
+                        class="h-[47px] w-full rounded-md border border-gray-300
+                        bg-white px-3 text-[14px] text-gray-700
+                        outline-none focus:border-[#D1D5DB]"
+                    >
                 </div>
+
+            </div>
 
 
                 <!--Endereco/Numero-Complemento -->

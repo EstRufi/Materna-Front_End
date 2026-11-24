@@ -1,29 +1,62 @@
 const Api_Url = import.meta.env.VITE_API_URL
 
-export async function requisicaoApi (endPoint, options = {}){
+export async function requisicaoApi(endPoint, options = {}) {
     try {
-        const resposta = await fetch(`${Api_Url}/${endPoint}`,{
+        const resposta = await fetch(`${Api_Url}/${endPoint}`, {
             ...options,
-            headers:{
-                ...options.headers,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
             }
         })
-        
 
-        
-        if (resposta.status ===204)
-            return null
-        else if(resposta.status === 404) 
-            return null
-        
+        const dados = await resposta.text()
 
-        if(!resposta.ok){
+        if (!resposta.ok) {
+            console.error('Status:', resposta.status)
+            console.error('Resposta do backend:', dados)
+
             throw new Error(`Erro na requisição: ${resposta.status}`)
         }
-        
-        return resposta.json()
+
+        if (resposta.status === 204 || !dados) {
+            return null
+        }
+
+        return JSON.parse(dados)
+
     } catch (error) {
         console.error('Erro na requisição da API:', error)
         throw error
     }
 }
+
+// const Api_Url = import.meta.env.VITE_API_URL
+
+// export async function requisicaoApi (endPoint, options = {}){
+//     try {
+//         const resposta = await fetch(`${Api_Url}/${endPoint}`,{
+//             ...options,
+//             headers:{
+//                 ...options.headers,
+//             }
+//         })
+        
+
+        
+//         if (resposta.status ===204)
+//             return null
+//         else if(resposta.status === 404) 
+//             return null
+        
+
+//         if(!resposta.ok){
+//             throw new Error(`Erro na requisição: ${resposta.status}`)
+//         }
+        
+//         return resposta.json()
+//     } catch (error) {
+//         console.error('Erro na requisição da API:', error)
+//         throw error
+//     }
+// }

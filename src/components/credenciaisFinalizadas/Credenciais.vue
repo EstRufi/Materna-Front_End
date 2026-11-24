@@ -2,6 +2,11 @@
 import { cadastro } from '@/stores/cadastroInstituicaoStores.js';
 import LateralCredenciais from './LateralCredenciais.vue';
 import { ref } from 'vue';
+import { cadastrarInstituicao } from '@/services/instituicaoService.js';
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const confirmarSenha = ref('')
 
 const processo = ref(true)
 const etapaAtual = ref(4)
@@ -12,7 +17,61 @@ const etapa = [
     'Local&Horário',
     'Acesso'
 ]
+
+function converterDataParaAPI(data) {
+    if (!data) return ''
+
+    const [dia, mes, ano] = data.split('/')
+
+    return `${ano}-${mes}-${dia}`
+}
+
 const termodDeUso = ref(false)
+const finalizarCadastro = async () => {
+    if (cadastro.funcionario.senha !== confirmarSenha.value) {
+        alert('As senhas não coincidem!')
+        return
+    }
+
+    if (!termodDeUso.value) {
+        alert('Você precisa aceitar os termos de uso!')
+        return
+    }
+
+    try {
+        // Preparar os dados para enviar à API
+        const dadosEnvio = {
+            ...cadastro,
+
+            telefone: cadastro.telefone.replace(/\D/g, ''),
+
+            funcionario: {
+                ...cadastro.funcionario,
+
+                data_nascimento: converterDataParaAPI(
+                    cadastro.funcionario.data_nascimento
+                ),
+
+                cpf: cadastro.funcionario.cpf.replace(/\D/g, ''),
+
+                telefone: cadastro.funcionario.telefone.replace(/\D/g, '')
+            }
+        }
+
+        console.log('Dados enviados:', dadosEnvio)
+
+        // Enviar os dados convertidos
+        const resposta = await cadastrarInstituicao(dadosEnvio)
+
+        console.log('Cadastro realizado com sucesso!', resposta)
+
+        router.push('/login')
+
+    } catch (error) {
+        console.error('Erro ao cadastrar instituição:', error)
+    }
+}
+
 
 </script>
 <template>
@@ -144,7 +203,7 @@ const termodDeUso = ref(false)
                         </label>
 
                         <input 
-                        v-model="cadastro.funcionario.senha"
+                        v-model="confirmarSenha"
                         type="password"
                         placeholder="Repita a senha"
                         class="h-[40px] w-76 rounded-md border border-gray-300 
@@ -277,17 +336,14 @@ const termodDeUso = ref(false)
                 </div>
 
                     <div class="justify-between px-34">
-                        <button class="w-48 h-[48px] rounded-md 
+                        <button 
+                        @click="finalizarCadastro"
+                        type="button"
+                        class="w-48 h-[48px] rounded-md 
                         bg-[#DE6B72] justify-center flex items-center 
                         text-sm text-white hover:opacity-30 transition gap-3">
 
-                        <RouterLink
-                        to="/login"
-                        class="text-white text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4"
-                        >
                         Finalizar cadastro
-
-                        </RouterLink>
                       
                         <img 
                         src="/src/assets/cadastro/Seta2.svg" 
