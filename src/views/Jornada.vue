@@ -1,20 +1,54 @@
 <script setup>
 import CadastroJornada from '@/components/jornada/CadastroJornada.vue';
 import CardJornada from '@/components/jornada/CardJornada.vue';
-import { listarJornada } from '@/services/jornadaService';
+import { atualizarStatusJornada, listarJornada } from '@/services/jornadaService';
 import { onMounted, ref } from 'vue';
 
 const mostrarCadastroJornada = ref(false)
 
 const jornada = ref([])
-    onMounted(async () => {
-        try {
-            jornada.value = await listarJornada(1)
-        } catch (error) {
-            console.error(error)
-        }
-    })
+    
+onMounted(async () => {
+    try {
+        jornada.value = await listarJornada(1)
+    } catch (error) {
+        console.error(error)
+    }
+})
 
+async function alterarStatusJornada(idSelecionado) {
+    const selecionada = jornada.value.find(
+        item => item.id === idSelecionado
+    )
+
+    if (!selecionada) return
+
+    const novoStatus = Number(selecionada.is_ativo) !== 1
+
+    try {
+
+        for (const item of jornada.value) {
+            const status = item.id === idSelecionado && novoStatus
+
+            const resposta = await atualizarStatusJornada(
+                item.id,
+                status
+            )
+
+            if (!resposta || !resposta.status) {
+                throw new Error('Erro ao atualizar jornada.')
+            }
+        }
+
+        // Atualiza os estados locais somente após sucesso
+        jornada.value.forEach(item => {
+            item.is_ativo = item.id === idSelecionado && novoStatus
+        })
+
+    } catch (error) {
+        console.error('Erro ao atualizar as jornadas:', error)
+    }
+}
 </script>
 
 <template>
@@ -44,7 +78,8 @@ const jornada = ref([])
             <CardJornada
             v-for="itensJornada in jornada"
             :key="itensJornada.id"
-            :jornada="itensJornada"/>
+            :jornada="itensJornada"
+            @alterar-status="alterarStatusJornada"/>
         </div>
         
     </main>

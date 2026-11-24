@@ -78,6 +78,11 @@ import { nextTick, reactive, ref } from 'vue'
     }
 
     function selecionarArquivo(event, etapa) {
+        if (etapa.agendavel) {
+            event.target.value = ''
+            return
+        }
+
         const arquivo = event.target.files[0]
 
         if (!arquivo) return
@@ -137,6 +142,16 @@ import { nextTick, reactive, ref } from 'vue'
 
         etapas.value.pop()
     }
+
+function agendamentoBloqueado(etapa) {
+    return etapa.precisaAprovacao ||
+           etapa.solicitaArquivo ||
+           etapa.arquivo !== null
+}
+
+function outrasOpcoesBloqueadas(etapa) {
+    return etapa.agendavel
+}
 
     const { enviarDocumento } = urlDocumento()
 
@@ -310,7 +325,7 @@ import { nextTick, reactive, ref } from 'vue'
                 </p>
             </div>
 
-            <div class="w-full min-w-0 min-h-[65px] bg-white border border-borda flex items-center justify-between p-[12px] rounded-[8px]">
+            <div class="w-full min-w-0 min-h-[65px] bg-white border border-borda flex items-center justify-between p-[12px] rounded-[8px] gap-2">
                 <div class="flex gap-[8px]">
                     <img 
                     class="w-[20px] "
@@ -325,6 +340,7 @@ import { nextTick, reactive, ref } from 'vue'
                     <input
                     type="checkbox"
                     v-model="etapa.agendavel"
+                    :disabled="agendamentoBloqueado(etapa)"
                     class="sr-only peer">
 
                     <div class="w-[40px] h-[22px] bg-[#E2E8F0] rounded-full
@@ -335,12 +351,32 @@ import { nextTick, reactive, ref } from 'vue'
                     after:bg-white after:rounded-full
                     after:h-[16px] after:w-[16px]
                     after:transition-transform after:duration-300
-                    peer-checked:after:translate-x-[18px]">
+                    peer-checked:after:translate-x-[18px]
+                    peer-disabled:opacity-50">
                     </div>
                 </label>
+
+                <div v-if="agendamentoBloqueado(etapa)"
+                class="flex flex-col gap-1 mt-1">
+
+                    <p v-if="etapa.precisaAprovacao"
+                    class="text-[11px] text-[#94A3B8]">
+                        Desative a aprovação para habilitar o agendamento.
+                    </p>
+
+                    <p v-if="etapa.solicitaArquivo"
+                    class="text-[11px] text-[#94A3B8]">
+                        Desative o envio de arquivo para habilitar o agendamento.
+                    </p>
+
+                    <p v-if="etapa.arquivo"
+                    class="text-[11px] text-[#94A3B8]">
+                        Remova o arquivo anexado para habilitar o agendamento.
+                    </p>
+                </div>
             </div>
 
-            <div class="w-full min-w-0 min-h-[65px] bg-white border border-borda flex items-center justify-between p-[12px] rounded-[8px]">
+            <div class="w-full min-w-0 min-h-[65px] bg-white border border-borda flex items-center justify-between p-[12px] rounded-[8px] gap-2">
                 <div class="flex gap-[8px]">
                     <img 
                     class="w-[20px] "
@@ -355,6 +391,7 @@ import { nextTick, reactive, ref } from 'vue'
                     <input
                     type="checkbox"
                     v-model="etapa.precisaAprovacao"
+                    :disabled="outrasOpcoesBloqueadas(etapa)"
                     class="sr-only peer">
 
                     <div class="w-[40px] h-[22px] bg-[#E2E8F0] rounded-full
@@ -365,12 +402,17 @@ import { nextTick, reactive, ref } from 'vue'
                     after:bg-white after:rounded-full
                     after:h-[16px] after:w-[16px]
                     after:transition-transform after:duration-300
-                    peer-checked:after:translate-x-[18px]">
+                    peer-checked:after:translate-x-[18px]
+                    peer-disabled:opacity-50">
                     </div>
                 </label>
+                <p v-if="etapa.agendavel"
+                class="text-[11px] text-[#94A3B8] mt-1">
+                    Não é possível solicitar aprovação em uma etapa agendável.
+                </p>
             </div>
 
-            <div class="w-full min-w-0 min-h-[65px] bg-white border border-borda flex items-center justify-between p-[12px] rounded-[8px]">
+            <div class="w-full min-w-0 min-h-[65px] bg-white border border-borda flex items-center justify-between p-[12px] rounded-[8px] gap-2">
                 <div class="flex gap-[8px]">
                     <img 
                     class="w-[20px] "
@@ -385,7 +427,8 @@ import { nextTick, reactive, ref } from 'vue'
                     <input
                     type="checkbox"
                     v-model="etapa.solicitaArquivo"
-                    class="sr-only peer">
+                    :disabled="outrasOpcoesBloqueadas(etapa)"
+                    class="sr-only peer ">
 
                     <div class="w-[40px] h-[22px] bg-[#E2E8F0] rounded-full
                     peer-checked:bg-materna
@@ -395,9 +438,14 @@ import { nextTick, reactive, ref } from 'vue'
                     after:bg-white after:rounded-full
                     after:h-[16px] after:w-[16px]
                     after:transition-transform after:duration-300
-                    peer-checked:after:translate-x-[18px]">
+                    peer-checked:after:translate-x-[18px]
+                    peer-disabled:opacity-50">
                     </div>
                 </label>
+                <p v-if="etapa.agendavel"
+                class="text-[11px] text-[#94A3B8] mt-1">
+                    Etapas agendáveis não permitem o envio de arquivos.
+                </p>
             </div>
 
             <div class="flex flex-col">
@@ -432,12 +480,18 @@ import { nextTick, reactive, ref } from 'vue'
                         @change="selecionarArquivo($event, etapa)">
 
                         <button
-                        class="text-[14px] text-materna flex flex-row gap-2"
+                        class="text-[14px] text-materna flex flex-row gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         type="button"
+                        :disabled="etapa.agendavel"
                         @click="abrirSeletorArquivo(etapa.id)">
                             <img class="w-[16px]" src="@/assets/jornada/baixar.svg" alt="Icon indicando dowloand">
                             Adicionar
                         </button>
+
+                        <p v-if="etapa.agendavel"
+                        class="text-[11px] text-[#94A3B8] mt-1 ml-3">
+                            Etapas agendáveis não permitem o envio de arquivos.
+                        </p>
 
                         <button
                         v-if="etapa.arquivo"
@@ -450,9 +504,7 @@ import { nextTick, reactive, ref } from 'vue'
                     </div>
 
                 </div> 
-                <p v-if="errosEtapa[index]?.arquivo" class="text-red-500 text-[12px]">
-                    {{ errosEtapa[index].arquivo }}
-                </p>
+
                 <hr 
                 v-if="index === etapas.length - 1"
                 class="my-4 border-0 border-t-2 border-gray-200 ">
