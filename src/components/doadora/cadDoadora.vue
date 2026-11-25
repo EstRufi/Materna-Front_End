@@ -1,46 +1,105 @@
 <script setup>
+import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
+import { calcularProgressoJornada } from '@/services/doadoraService'
 
+const props = defineProps({
+    doadora: {
+        type: Object,
+        required: true
+    }
+})
+
+const progresso = computed(() => calcularProgressoJornada(props.doadora))
+
+const status = computed(() => {
+    if (progresso.value >= 100) return 'Finalizada'
+    if (progresso.value > 0) return 'Em andamento'
+    return 'Iniciada'
+})
+
+const iniciais = computed(() =>
+    props.doadora.nome
+        .split(' ')
+        .map((parte) => parte[0])
+        .slice(0, 2)
+        .join('')
+        .toUpperCase()
+)
+
+const localizacao = computed(() => {
+    const { cidade, estado } = props.doadora.endereco ?? {}
+    return [cidade, estado].filter(Boolean).join(', ')
+})
+
+const dataNascimento = computed(() => {
+    const data = props.doadora.data_nascimento
+    if (!data) return ''
+
+    const [ano, mes, dia] = data.split('-').map(Number)
+    return new Intl.DateTimeFormat('pt-BR').format(new Date(ano, mes - 1, dia))
+})
 </script>
 
 <template>
-    <article class="p-[24px] w-full max-w-[347px] h-[266px] bg-[#FFFFFF] border-2 border-borda rounded-[12px]">
-        <header class="flex mb-[20px] gap-3">
-            <div class="w-[48px] h-[48px] bg-[#F2F4F5] flex justify-center items-center rounded-full">
-                <span>aa</span>
+    <RouterLink
+        :to="`/doadora/${doadora.id}`"
+        class="block min-h-[188px] w-full max-w-[347px] rounded-[12px] border border-borda bg-white p-4 transition-shadow hover:shadow-md focus-visible:outline-2 focus-visible:outline-materna"
+    >
+        <header class="mb-4 flex min-w-0 items-start gap-2">
+            <img
+                v-if="doadora.foto"
+                :src="doadora.foto"
+                :alt="`Foto de ${doadora.nome}`"
+                class="h-[36px] w-[36px] shrink-0 rounded-full object-cover"
+            >
+            <div v-else class="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full bg-[#F1F3F5] text-[12px] font-semibold text-materna">
+                {{ iniciais }}
             </div>
-            <div class="flex flex-col gap-1">
-                <h1 class="text-[15px] font-semibold">nome {{ nome }}</h1>
 
-                <span class="text-[#6b7280] text-[12px]">Desde 12/12/12</span>
+            <div class="min-w-0 flex-1">
+                <h2 class="truncate text-[13px] font-semibold text-slate-800">{{ doadora.nome }}</h2>
+                <p class="mt-0.5 text-[11px] text-slate-500">
+                    {{ dataNascimento ? `Nascimento ${dataNascimento}` : 'Cadastro de doadora' }}
+                </p>
             </div>
-            <div>
-                status
-            </div>
+
+            <span
+                class="inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-1 text-[10px]"
+                :class="status === 'Finalizada'
+                    ? 'bg-emerald-50 text-emerald-700'
+                    : status === 'Iniciada'
+                        ? 'bg-amber-50 text-amber-700'
+                        : 'bg-orange-50 text-orange-700'"
+            >
+                <span class="h-1 w-1 rounded-full bg-current"></span>
+                {{ status }}
+            </span>
         </header>
 
-        <main class="mb-[32px] flex flex-col gap-2 text-[13px] text-[#4B5563]">
-            <div class="flex gap-2">
-                <img class="w-[13px]" src="@/assets/doadora/e-mail.svg" alt="Icon de uma carta que representa gmail">
-                <p>E-mail ou Telefone ou CIdade</p>
-            </div>
+        <div class="mb-5 flex flex-col gap-2 text-[11px] text-slate-500">
+            <p class="flex min-w-0 items-center gap-2">
+                <img class="h-[12px] w-[12px] shrink-0" src="@/assets/doadora/e-mail.svg" alt="">
+                <span class="truncate">{{ doadora.email }}</span>
+            </p>
+            <p class="flex items-center gap-2">
+                <img class="h-[12px] w-[12px] shrink-0" src="@/assets/doadora/telefone.svg" alt="">
+                <span>{{ doadora.telefone }}</span>
+            </p>
+            <p class="flex items-center gap-2">
+                <img class="h-[12px] w-[12px] shrink-0" src="@/assets/doadora/localizador.svg" alt="">
+                <span>{{ localizacao }}</span>
+            </p>
+        </div>
 
-            <div class="flex gap-2">
-                <img class="w-[13px]" src="@/assets/doadora/telefone.svg" alt="Icon de telefone">
-                <p>E-mail ou Telefone ou CIdade</p>
+        <footer v-if="doadora.jornada">
+            <div class="mb-1.5 flex justify-between gap-3 text-[11px]">
+                <span class="font-medium text-slate-700">Jornada</span>
+                <span class="shrink-0 text-slate-500">{{ progresso }}%</span>
             </div>
-
-            <div class="flex gap-2">
-                <img class="w-[13px]" src="@/assets/doadora/localizador.svg" alt="Icon de local">
-                <p>E-mail ou Telefone ou CIdade</p>
+            <div class="h-[6px] overflow-hidden rounded-full bg-[#E5E7E7]">
+                <div class="h-full rounded-full bg-materna" :style="{ width: `${progresso}%` }"></div>
             </div>
-        </main>
-
-        <footer class="mt-[9px]">
-            <div class="flex justify-between">
-                <span class="text-[13px] font-medium">Jornada</span>
-                <span class="text-[13px] text-[#6b7280]">Percentual</span>
-            </div>
-            <div> A porcentagem</div>
         </footer>
-    </article>
+    </RouterLink>
 </template>

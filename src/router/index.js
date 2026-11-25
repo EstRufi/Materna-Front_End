@@ -3,6 +3,7 @@ import Agenda from '@/views/Agenda.vue'
 import Campanha from '@/views/Campanha.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import Doadora from '@/views/Doadora.vue'
+import PerfilDoadora from '@/views/PerfilDoadora.vue'
 import Instituicao from '@/views/Instituicao.vue'
 
 import Jornada from '@/views/Jornada.vue'
@@ -14,9 +15,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [{
-    path: '/',
-    component: LayoutPrincipal,
-    children: [
+      path: '/',
+      component: LayoutPrincipal,
+      children: [
       {
       path: '',
       redirect: '/dashboard',
@@ -46,7 +47,16 @@ const router = createRouter({
       path: 'doadora',
       component: Doadora,
       meta:{
-        titulo: "Doadora"
+        titulo: "Doadoras",
+        exibeBusca: true
+      }
+    },
+    {
+      path: 'doadora/:id',
+      component: PerfilDoadora,
+      meta:{
+        exibeBusca: true,
+        exibeVoltarDoadoras: true
       }
     },
     {
@@ -63,8 +73,7 @@ const router = createRouter({
         titulo: "Instituição"
       }
     },
-  
-  ]
+      ]
   }],
 })
 

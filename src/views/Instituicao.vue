@@ -135,7 +135,7 @@ function abrirAdicionarUsuario() {
 
 function abrirEditarUsuario(usuario, indice) {
     usuarioIndiceEdicao.value = indice
-    usuarioFormulario.value = { nome: usuario.nome, email: usuario.email, tipo: usuario.tipo }
+    usuarioFormulario.value = { nome: usuario.nome, email: usuario.email }
     modalUsuario.value = true
 }
 
@@ -164,7 +164,6 @@ function salvarUsuario() {
         usuario.iniciais = iniciais
         usuario.nome = nome
         usuario.email = email
-        usuario.tipo = usuarioFormulario.value.tipo
     }
 
     modalUsuario.value = false
@@ -491,13 +490,6 @@ function salvarUsuario() {
                             </div>
                         </template>
 
-                        <label v-if="usuarioIndiceEdicao !== null" class="text-[13px] font-semibold text-[#374151]">Perfil de acesso
-                            <select v-model="usuarioFormulario.tipo" class="mt-[8px] h-[50px] w-full rounded-[10px] border border-[#DCE2E8] bg-white px-[14px] text-[13px] font-normal text-[#475569] outline-none focus:border-materna">
-                                <option>Administrador</option>
-                                <option>Operador</option>
-                                <option>Ativo</option>
-                            </select>
-                        </label>
                     </div>
 
                     <footer class="mt-[24px] flex justify-end gap-[12px]">
