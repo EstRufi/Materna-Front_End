@@ -63,14 +63,20 @@ const finalizarCadastro = async () => {
 console.log('Data enviada:', dadosEnvio.funcionario.data_nascimento)
 console.log('CPF enviado:', dadosEnvio.funcionario.cpf)
         console.log('CPF enviado:', dadosEnvio.funcionario.cpf)
-        console.log('Dados enviados:', dadosEnvio)
+        console.log(
+    'JSON ENVIADO PARA API:',
+    JSON.stringify(dadosEnvio, null, 2)
+)
 
         // Enviar os dados convertidos
         const resposta = await cadastrarInstituicao(dadosEnvio)
 
         console.log('Cadastro realizado com sucesso!', resposta)
 
-        router.push('/login')
+        if (resposta.status === true) {
+            console.log('Cadastro realizado com sucesso!', resposta)
+            router.push('/login')
+        }
 
     } catch (error) {
         console.error('Erro ao cadastrar instituição:', error)

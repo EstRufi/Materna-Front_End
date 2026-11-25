@@ -20,6 +20,9 @@ const avancar = () => {
     console.log('Botão Avançar foi clicado')
     console.log('CNPJ salvo:', cadastro.cnpj)
 
+    console.log('CNPJ:', cadastro.cnpj)
+    console.log('E-mail:', cadastro.email)
+
     router.push('/cadastro/responsavel')
 }
 </script>
