@@ -1,16 +1,17 @@
 <script setup>
-import Login from '@/views/Login.vue';
-import LateralInformativo from './LateralInformativo.vue';
 import { ref } from 'vue';
+import { fazerLogin as autenticar } from '@/services/loginService.js';
+import { useRouter } from 'vue-router';
 
 const email = ref('')
 const senha = ref('')
 const erro = ref('')
+const router = useRouter();
 
 const recuperarSenha = ref(false)
 const voltarLogin = ref(false)
 
-function fazerLogin(){
+async function fazerLogin(){
     erro.value = ''
 
     if(!email.value.trim() || !senha.value){
@@ -18,13 +19,28 @@ function fazerLogin(){
         return
     }
 
-    if(
-        email.value !== emailCorreto ||
-        senha.value !== senhaCorreta
-     ){
-        erro.value = 'E-mail ou senha incorretos.Verifique suas credenciais e tente novamente'
-        return
-     }
+    try {
+        const resposta = await autenticar({
+            email: email.value.trim(),
+            senha: senha.value
+        })
+
+        if (!resposta.status) {
+            erro.value = 'E-mail ou senha incorretos.'
+            return
+        }
+
+        localStorage.setItem('token', resposta.response.token)
+
+        router.push('/dashboard')
+    } catch (error) {
+        console.error(error)
+        
+        if (error.status === 401) 
+            erro.value = 'E-mail ou senha incorretos.'
+        else 
+            erro.value = 'Erro ao realizar login.'
+    }
 }
 
 </script>
@@ -263,7 +279,8 @@ function fazerLogin(){
                         E-mail
                     </label>
 
-                    <input 
+                    <input
+                    v-model="email" 
                     type="email"
                     placeholder="seu@email.com.br"
                     class="h-[40px] w-120 rounded-md border border-gray-300 
@@ -277,7 +294,8 @@ function fazerLogin(){
                         Senha
                     </label>
 
-                    <input 
+                    <input
+                    v-model="senha" 
                     type="password"
                     placeholder="..........."
                     class="h-[40px] w-120 rounded-md border border-gray-300 
@@ -296,7 +314,9 @@ function fazerLogin(){
                 
                 <!--Botão-->
                 </div>
-                <button class="w-120 h-10 rounded-md bg-[#DE6B72]
+                <button 
+                @click="fazerLogin"
+                class="w-120 h-10 rounded-md bg-[#DE6B72]
                 text-sm font-medium text-white houver:opacity-90 transition"
                 >
                 Entrar
