@@ -2,7 +2,7 @@ import { requisicaoApi } from "./api";
 
 export async function listarCampanha(){
 
-    const resposta = await requisicaoApi('campanha')
+    const resposta = await requisicaoApi('campanha',{}, true)
 
     if (!resposta) {
         return []
@@ -19,7 +19,7 @@ export async function cadastrarCampanha(dados){
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(dados),
-    })
+    }, true)
 
     return resposta
 }
@@ -31,7 +31,7 @@ export async function atualizarCampanha(id,dados) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(dados),
-    })
+    }, true)
 
     return resposta
 }
@@ -39,7 +39,7 @@ export async function atualizarCampanha(id,dados) {
 export async function deletarCampanha(id) {
     const resposta = await requisicaoApi(`campanha/${id}`, {
         method: 'DELETE'
-    })
+    }, true)
 
     return resposta
 }

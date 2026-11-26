@@ -1,32 +1,49 @@
-const Api_Url = import.meta.env.VITE_API_URL
-
-export async function requisicaoApi(endPoint, options = {}) {
+export async function requisicaoApi(endPoint, options = {}, autenticado = false) {
     try {
-        const resposta = await fetch(`${Api_Url}/${endPoint}`, {
-            ...options,
-            headers: {
-                'Content-Type': 'application/json',
-                ...options.headers
-            }
-        })
-
-        const dados = await resposta.text()
-
-        if (!resposta.ok) {
-            console.error('Status:', resposta.status)
-            console.error('Resposta do backend:', dados)
-
-            throw new Error(`Erro na requisição: ${resposta.status}`)
+        const headers = {
+            'Content-Type': 'application/json',
+            ...options.headers
         }
 
-        if (resposta.status === 204 || !dados) {
+        if (autenticado) {
+            const token = localStorage.getItem('token')
+
+            if (!token) {
+                console.error('Token JWT não encontrado.')
+                return null
+            }
+
+            headers.Authorization = `Bearer ${token}`
+        }
+
+        const response = await fetch(
+            `${import.meta.env.VITE_API_URL}/${endPoint}`,
+            {
+                ...options,
+                headers
+            }
+        )
+
+        if (!response.ok) {
+            const erro = await response.text()
+            console.error('Erro na API:', erro)
             return null
         }
 
-        return JSON.parse(dados)
+        if (response.status === 204) {
+            return null
+        }
 
-    } catch (error) {
-        console.error('Erro na requisição da API:', error)
-        throw error
+        const resposta = await response.text()
+
+        if (!resposta) {
+            return null
+        }
+
+        return JSON.parse(resposta)
+
+    } catch (erro) {
+        console.error('Erro na requisição:', erro)
+        return null
     }
 }

@@ -3,7 +3,7 @@ import { requisicaoApi } from "./api";
 
 export async function listarJornada(idInstituicao) {
 
-    const resposta = await requisicaoApi(`instituicao/${idInstituicao}`)
+    const resposta = await requisicaoApi(`instituicao/${idInstituicao}`,{},true)
 
     if (!resposta || !resposta.status) {
         return []
@@ -25,7 +25,7 @@ export async function cadastrarJornada(dados) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(dados)
-    })
+    },true)
 }
 
 export async function atualizarStatusJornada(id, isAtivo) {
@@ -37,5 +37,5 @@ export async function atualizarStatusJornada(id, isAtivo) {
         body: JSON.stringify({
             is_ativo: isAtivo
         })
-    })
+    },true)
 }
