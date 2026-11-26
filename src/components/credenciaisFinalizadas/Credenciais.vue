@@ -1,0 +1,387 @@
+<script setup>
+import { cadastro } from '@/stores/cadastroInstituicaoStores.js';
+import LateralCredenciais from './LateralCredenciais.vue';
+import { ref } from 'vue';
+import { cadastrarInstituicao } from '@/services/instituicaoService.js';
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const confirmarSenha = ref('')
+
+const processo = ref(true)
+const etapaAtual = ref(4)
+
+const etapa = [
+    'Instituicao',
+    'Responsável',
+    'Local&Horário',
+    'Acesso'
+]
+
+function converterDataParaAPI(data) {
+    if (!data) return ''
+
+    const [dia, mes, ano] = data.split('/')
+
+    return `${ano}-${mes}-${dia}`
+}
+
+const termodDeUso = ref(false)
+const finalizarCadastro = async () => {
+    if (cadastro.funcionario.senha !== confirmarSenha.value) {
+        alert('As senhas não coincidem!')
+        return
+    }
+
+    if (!termodDeUso.value) {
+        alert('Você precisa aceitar os termos de uso!')
+        return
+    }
+
+    try {
+        // Preparar os dados para enviar à API
+        const dadosEnvio = {
+            ...cadastro,
+                foto: cadastro.foto || null,
+
+            telefone: cadastro.telefone.replace(/\D/g, ''),
+
+            funcionario: {
+                ...cadastro.funcionario,
+
+                cpf: cadastro.funcionario.cpf,
+
+                data_nascimento: converterDataParaAPI(
+                    cadastro.funcionario.data_nascimento
+                ),
+
+                telefone: cadastro.funcionario.telefone.replace(/\D/g, '')
+            }
+        }
+
+        console.log('Data digitada:', cadastro.funcionario.data_nascimento)
+console.log('Data enviada:', dadosEnvio.funcionario.data_nascimento)
+console.log('CPF enviado:', dadosEnvio.funcionario.cpf)
+        console.log('CPF enviado:', dadosEnvio.funcionario.cpf)
+        console.log(
+    'JSON ENVIADO PARA API:',
+    JSON.stringify(dadosEnvio, null, 2)
+)
+
+        // Enviar os dados convertidos
+        const resposta = await cadastrarInstituicao(dadosEnvio)
+
+        console.log('Cadastro realizado com sucesso!', resposta)
+
+        if (resposta.status === true) {
+            console.log('Cadastro realizado com sucesso!', resposta)
+            router.push('/login')
+        }
+
+    } catch (error) {
+        console.error('Erro ao cadastrar instituição:', error)
+    }
+}
+
+
+</script>
+<template>
+    <div class="mb-7 w-full text-left px-34">
+
+<div class="w-full flex items-center justify-between">
+
+    <!-- Etapas -->
+    <div class="h-8 w-30 rounded-lg flex mt-14"
+    style="background-color:#F5E6E9;">
+    
+    <span class="font-bold rounded-full text-xs 
+        text-[12px] items-center px-5 mt-2" 
+        style="color: #DE6B72;">
+        ETAPA 4 DE 4
+        </span>
+
+    <!-- Dados -->
+    </div>
+            <span class="text-[12px] text-[#94A3B8] mt-20">
+                Acesso e Confirmação
+            </span>
+
+        </div>
+
+
+        <h1 class="text-[2rem] font-bold text-black text- mt-2">
+            Criar conta institucional
+        </h1>
+
+        <p class="text-sm text-gray-600 text-[14px] mb-9">
+            Crie sua senha de acesso seguro para o painel institucional e conclua o cadastro.
+        </p>
+
+
+    </div>
+
+        <!--Indica de etapas-->
+        <div v-if="processo" class="mb-8 flex w-full max-w-[960px] px-20">
+
+            <div
+                v-for="(etapa, index) in ['Instituição', 'Responsável', 'Local e Horário', 'Acesso']"
+                :key="index"
+                class="flex flex-1 flex-col items-center">
+
+
+                <div class="flex w-full items-center">
+
+                    <div
+                        class="h-[1px] flex-1"
+                        :class="index === 0 ? 'bg-traslate' : 'bg-gray-300 '">
+                    </div>
+
+                    <div
+                        class="relative z-10 shrick-0 flex h-8 w-8 items-center justify-center rounded-full text-xs"
+                        :class="index + 1 <= etapaAtual
+                            ? 'bg-[#DE6B72] text-white'
+                            : 'border border-gray-300 bg-white text-gray-400'">
+                        {{ index + 1 }}
+                    </div>
+
+                    <div
+                        class="h-[1px] flex-1"
+                        :class="index === 3 ? 'bg-transparent' : 'bg-gray-300'">
+                    </div>
+
+                </div>
+
+                <p class="mt-2 whitespace-nowrap text-[12px] text-[#DE6B72] font-bold mb-2">
+                    {{ etapa }}
+                </p>
+
+            </div>
+        </div>
+
+            <!--Informacoes-->
+        <div class="items-center px-38 mb-5">
+            <h1 class="text-[16px] font-bold text-black">
+                4. Credenciais de Acesso
+            </h1>
+            <p class="text-[12px] text-[#64748B]">
+                Defina as credenciais para gerenciar a conta da unidade no ConectaLeite.
+            </p>
+        </div>
+
+            <!--Formulário/ E-mail-->
+            <div class="w-full min-w-[520px] text-left px-36 mb-3">
+                <div class="flex flex-col gap-2 ">
+                   
+                    <label class="text-[14px] text-gray-700 font-semibold">
+                       E-mail de Acesso
+                    </label>
+
+                    <input 
+                    v-model="cadastro.funcionario.email"
+                    type="text"
+                    placeholder="Ex: contato@bancodeleite.org.br"
+                    class="h-[40px] w-160 rounded-md border border-gray-300 
+                    bg-white px-3 text-[14px] text-gray-700
+                    outline-none border-gray-300 focus:border-[#D1D5DB]">
+                    </div>
+        
+            </div>
+
+            <!-- Formulário/Senha -->
+             <div class="w-[960px] flex justify-between gap-1">
+
+                <div class="w-1/2 space-y-2 text-left px-36 mb-2">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-[14px] text-gray-700 font-semibold">
+                            Criar Senha
+                        </label>
+
+                        <input 
+                        v-model="cadastro.funcionario.senha"
+                        type="password"
+                        placeholder="Mínimo 8 caracteres"
+                        class="h-[40px] w-76 rounded-md border border-gray-300 
+                        bg-white px-3 text-[14px] text-gray-700
+                        outline-none border-gray-300 focus:border-[#D1D5DB]">
+                    </div>
+                </div>
+
+             
+                <div class="w-1/2 justify-between text-left mb-1">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-[14px] text-gray-700 font-semibold">
+                            Confirmar Senha
+                        </label>
+
+                        <input 
+                        v-model="confirmarSenha"
+                        type="password"
+                        placeholder="Repita a senha"
+                        class="h-[40px] w-76 rounded-md border border-gray-300 
+                        bg-white px-3 text-[14px] text-gray-700
+                        outline-none border-gray-300 focus:border-[#D1D5DB]">
+                    </div>
+                </div>
+            </div>
+
+        <!-- Requisitos -->
+        <div class="ml-36 w-160 rounded-xl border border-[#E2E8F0]/80 bg-[#E2E8F0]/10 p-3 mb-4 mt-4 ">
+
+            <p class="text-[#334155] text-[12px] font-bold mb-2">
+                Requisitos de segurança:
+            </p>
+
+            <div class="flex items-center gap-2 flex-wrap">
+
+                <span class="flex items-center gap-2 rounded-md border border-[#DE6B72]
+                bg-[#DE6B72]/10 px-2 py-1 text-[11px] text-[#DE6B72]">
+
+                <img 
+                    src="/src/assets/credenciais/CorretoRosa.svg" 
+                    alt="Correto" 
+                    class="h-3 w-3 object-contain">
+
+                Mínimo 8 dígitos
+                </span>
+
+                <span class="flex items-center gap-2 rounded-md border border-[#DE6B72]
+                bg-[#DE6B72]/10 px-2 py-1 text-[11px] text-[#DE6B72]">
+
+                <img 
+                    src="/src/assets/credenciais/CorretoRosa.svg" 
+                    alt="Correto" 
+                    class="h-3 w-3 object-contain">
+
+                1 letra maiúscula
+                </span>
+
+                <span class="flex items-center gap-2 rounded-md border border-[#DE6B72]
+                bg-[#DE6B72]/10 px-2 py-1 text-[11px] text-[#DE6B72]">
+
+                <img 
+                    src="/src/assets/credenciais/CorretoRosa.svg" 
+                    alt="Correto" 
+                    class="h-3 w-3 object-contain">
+
+                1 número ou símbolo
+                </span>
+
+            </div>
+
+        </div>
+
+        <!--Resumo-->
+        <div class="ml-36 items-start w-160 rounded-xl border border-[#DE6B72]/20 bg-[#DE6B72]/10 p-2 mb-4">
+            <div class="flex items-center gap-1">
+                <div class="relative left-1 top-3 h-8 w-8 rounded-md bg-[#DE6B72]/20">
+                    <img 
+                            src="/src/assets/credenciais/logoResumo.svg" 
+                            alt="Correto" 
+                            class="h-5 w-5 object-contain flex ml-1.5 mt-1">
+                            </div>
+
+                    <h1  class="text-[12px] text-[#DE6B72] font-bold px-4 mt-2">
+                    Resumo da Instituição
+                </h1>
+            </div>
+
+            <p class="text-[11px] text[#334155] ml-13 mt-0">
+                Banco de Leite Humano Santa Clara • CNPJ 00.000.000/0001-00 • Resp: Dra. Mariana <br>
+                Silva
+            </p>
+
+        </div>
+
+        <!--Termos de Uso-->
+        <label class="flex gap-3 items-start cursor-pointer px-36 mt-5 mb-6">
+
+            <input 
+            type="checkbox"
+            v-model="termodDeUso"
+            class="mt-1 h-4 w-4 shrink-0 cursor-pointer accent-[#DE6B72] rounded-mx mt-2">
+            
+
+            <span class="text-[14px] leading-[1.5] text-[#475569] mt-1 font-medium">
+                Concordo com os
+
+                <a 
+                href="#" 
+                class="text-[14px] text-[#DE6B72] underline underline-offset-4">
+                    Termos de Uso 
+                </a>
+                e autorizo o tratamento de dados conforme a <br>
+
+                <a 
+                href="" 
+                class="text-[14px] text-[#DE6B72] underline underline-offset-4">
+                    Política de Privacidade e LGPD
+                </a>
+
+            </span>
+        </label>
+
+        <div class="w-full px-36 mt-7">
+            <div class="h-px w-160 bg-gray-100 mb-3 "></div>
+        </div>
+       
+           <!-- Botões -->
+            <div class=" flex w-full justify-between items-center mt-7">
+                <div class="justify-between px-36">
+                    <button class="w-34 h-[48px] rounded-md 
+                    bg-[#FFFFFF] justify-center flex items-center 
+                    text-sm font-medium text-white hover:opacity-30 transition 
+                    border border-gray-300 gap-3 ">
+
+                    <img 
+                    src="/src/assets/InformacoesResponsavel/voltar.svg" 
+                    alt="voltar" 
+                    class="w-4 h-4 object-contain">
+
+                    <RouterLink
+                    to="/cadastro/endereco"
+                    class="text-black text-[16px] flex justify-end top-1/2 -translate-y-1/2 mt-6 gap-4">
+                    Voltar
+                    </RouterLink>
+                   
+                    </button>
+                </div>
+
+                    <div class="justify-between px-34">
+                        <button 
+                        @click="finalizarCadastro"
+                        type="button"
+                        class="w-48 h-[48px] rounded-md 
+                        bg-[#DE6B72] justify-center flex items-center 
+                        text-sm text-white hover:opacity-30 transition gap-3">
+
+                        Finalizar cadastro
+                      
+                        <img 
+                        src="/src/assets/cadastro/Seta2.svg" 
+                        alt="Seta2" 
+                        class="w-4 h-3 object-contain">
+
+                        </button>
+                    </div>
+
+            </div>
+
+        <div class="w-full px-36 mt-17">
+            <div class="h-px w-160 bg-gray-100 mb-3 "></div>
+        </div>
+
+            <div class="w-full flex items- justify-center gap-1 mt-4">
+            <p class="whitespace-nowrap text-xs text-black/60 text-[14px]">
+                Já possui uma conta institucional? 
+            </p>
+
+            <a href="#" class="text-[15px] text-[#DE6B72] 
+                        font-semibold hover:underline">
+                Entrar
+            </a>
+
+        </div>
+        
+
+            
+</template>

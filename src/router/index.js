@@ -1,6 +1,11 @@
 import LayoutPrincipal from '@/layout/LayoutPrincipal.vue'
 import Agenda from '@/views/Agenda.vue'
+import CadastroInstitucional from '@/views/CadastroInstitucional.vue'
+import CadastroInstitucional02 from '@/views/CadastroInstitucional02.vue'
+import CadastroInstitucional03 from '@/views/CadastroInstitucional03.vue'
+
 import Campanha from '@/views/Campanha.vue'
+import CredenciaisFinalizadas from '@/views/CredenciaisFinalizadas.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import Doadora from '@/views/Doadora.vue'
 import PerfilDoadora from '@/views/PerfilDoadora.vue'
@@ -20,7 +25,7 @@ const router = createRouter({
       children: [
       {
       path: '',
-      redirect: '/dashboard',
+      redirect: '/cadastro/instituicao',
     },
     {
       path: 'dashboard',
@@ -73,8 +78,30 @@ const router = createRouter({
         titulo: "Instituição"
       }
     },
-      ]
-  }],
+  ]
+  },
+      {
+      path: '/cadastro/instituicao',
+      component: CadastroInstitucional
+    },
+    {
+      path: '/cadastro/responsavel',
+      component: CadastroInstitucional02
+    },
+    {
+       path: '/cadastro/endereco',
+      component: CadastroInstitucional03
+    },
+    {
+       path: '/cadastro/finalizado',
+      component: CredenciaisFinalizadas
+    },
+    {
+       path: '/login',
+      component: Login
+    }
+
+  ],
 })
 
 export default router

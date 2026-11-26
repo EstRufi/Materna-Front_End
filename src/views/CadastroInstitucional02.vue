@@ -1,6 +1,5 @@
 <script setup>
 import InformacoesResponsavel from '@/components/cadastroInstitucional02/InformacoesResponsavel.vue';
-import CriacaoConta from '@/components/cadastroInstitucional02/InformacoesResponsavel.vue';
 import LateralCadastro from '@/components/cadastroInstitucional02/LateralInformacoes.vue';
 
 </script>
