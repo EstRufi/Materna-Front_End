@@ -1,6 +1,4 @@
 <script setup>
-import { ref } from 'vue';
-import { atualizarStatusJornada } from '@/services/jornadaService'
     const props = defineProps({
         jornada:{
             type: Object,
@@ -8,37 +6,16 @@ import { atualizarStatusJornada } from '@/services/jornadaService'
         }
     })
 
-    const ficaAtivo = ref(Number(props.jornada.is_ativo) ===1)
+    const emit = defineEmits(['alterar-status'])
 
-   async function alterarStatus() {
-    const statusAnterior = ficaAtivo.value
-    const novoStatus = !statusAnterior
-
-    // Atualiza o visual imediatamente
-    ficaAtivo.value = novoStatus
-
-    try {
-        const resposta = await atualizarStatusJornada(
-            props.jornada.id,
-            novoStatus
-        )
-        
-        if (!resposta || !resposta.status) {
-            throw new Error('Não foi possível atualizar a jornada.')
-        }
-
-    } catch (error) {
-        // Se a API falhar, restaura o estado anterior
-        ficaAtivo.value = statusAnterior
-
-        console.error('Erro ao atualizar o status:', error)
+    function alterarStatus() {
+        emit('alterar-status', props.jornada.id)
     }
-}
 </script>
 
 <template>
     <article 
-    class="w-full max-w-[491px] h-[502px] flex flex-col bg-[#FFFFFF] border-2 border-borda rounded-[12px] p-[24px]">
+    class="w-full max-w-[550px] h-[502px] flex flex-col bg-[#FFFFFF] border-2 border-borda rounded-[12px] p-[24px]">
         <nav class="flex flex-row justify-between mb-[16px] bg-blac">
             <div>
                 <h2 class="text-[18px] font-bold">{{ jornada.nome }}</h2>
@@ -46,30 +23,30 @@ import { atualizarStatusJornada } from '@/services/jornadaService'
             </div>
             <div>
                 <div class="flex flex-col items-end gap-2">
-                    <span class="h-[26px] flex items-center justify-center gap-[6px] py-[4px] px-[10px] rounded-full"
-                    :class="ficaAtivo
+                    <span class="ml-1 h-[26px] flex items-center justify-center gap-[6px] py-[4px] px-[10px] rounded-full"
+                    :class="Number(jornada.is_ativo) === 1
                     ? 'bg-materna/10 text-materna border border-materna'
                     : 'bg-[#ECEEEF] text-[#404849] border-2 border-[#C1C7C8]'">
 
                         <span
                             class="w-[6px] h-[6px] rounded-full shrink-0"
-                            :class="ficaAtivo
+                            :class="Number(jornada.is_ativo) === 1
                                 ? 'bg-materna'
                                 : 'bg-[#C1C7C8]'"
                         ></span>
-                        {{ ficaAtivo ? 'Ativa' : 'Inativa' }}
+                        {{ Number(jornada.is_ativo) === 1 ? 'Ativa' : 'Inativa' }}
                     </span>
 
                     <button
                     type="button"
                     role="switch"
-                    :aria-checked="ficaAtivo"
+                    :aria-checked="Number(jornada.is_ativo) === 1"
                     @click="alterarStatus"
                     class="w-[42px] h-[23px] rounded-full flex items-center px-[3px] transition-colors"
-                    :class="ficaAtivo ? 'bg-materna' : 'bg-[#D1D5DB]'">
+                    :class="Number(jornada.is_ativo) === 1 ? 'bg-materna' : 'bg-[#D1D5DB]'">
                         <span
                         class="w-[17px] h-[17px] rounded-full bg-white transition-transform"
-                        :class="ficaAtivo ? 'translate-x-[19px]' : 'translate-x-0'"
+                        :class="Number(jornada.is_ativo) === 1 ? 'translate-x-[19px]' : 'translate-x-0'"
                         ></span>
                     </button>
                 </div>
