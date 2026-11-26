@@ -1,40 +1,55 @@
 <script setup>
-import { ref } from 'vue'
 
-const instituicaoEditando = ref(false)
-const responsavelEditando = ref(false)
-
-const instituicao = ref({
-    nome: 'Banco de Leite Humano A',
-    cnpj: '12.345.678/0001-90',
-    telefone: '(11) 91234-5678',
-    email: 'contato@bancoleite.org.br',
-})
-
-const responsavel = ref({
-    nome: 'Dra. Renata Vasconcellos',
-    cargo: 'Coordenadora Geral',
-    cpf: '138.578.432-51',
-    telefone: '(11) 98765-4321',
-    email: 'renata.vasconcellos@bancoleite.org.br',
-    nascimento: '14/08/1982',
-})
-
-const endereco = ref({
-    cep: '01230-100',
-    logradouro: 'Av. Paulista',
-    numero: '1000',
-    complemento: 'Bloco B',
-    bairro: 'Bela Vista',
-    cidade: 'São Paulo',
-    uf: 'SP',
-})
-const enderecoRascunho = ref({ ...endereco.value })
+import { buscarFuncionariosInstituicao } from '@/services/funcionarioService'
+import { buscarMinhaInstituicao } from '@/services/instituicaoService'
+import { onMounted, ref } from 'vue'
 
 const modalInstituicao = ref(false)
 const modalResponsavel = ref(false)
 const modalUsuario = ref(false)
+const idColeta = ref(null)
+
+const instituicao = ref({
+    id: null,
+    nome: '',
+    cnpj: '',
+    telefone: '',
+    email: '',
+})
+
+const instituicaoRascunho = ref({ ...instituicao.value })
+
+const responsavel = ref({
+    nome: '',
+    cargo: '',
+    cpf: '',
+    telefone: '',
+    email: '',
+    nascimento: '',
+})
+
+const responsavelRascunho = ref({ ...responsavel.value })
+
+const endereco = ref({
+    cep: '',
+    logradouro: '',
+    numero: '',
+    complemento: '',
+    bairro: '',
+    cidade: '',
+    uf: '',
+})
+
+const enderecoRascunho = ref({ ...endereco.value })
+
+const fotoInstituicaoRascunho = ref('')
+const seletorFoto = ref(null)
+
+const usuarios = ref([])
+const usuariosRascunho = ref([])
+
 const usuarioIndiceEdicao = ref(null)
+
 const usuarioFormulario = ref({
     nome: '',
     email: '',
@@ -42,46 +57,116 @@ const usuarioFormulario = ref({
     telefone: '',
     senha: '',
     confirmarSenha: '',
-    tipo: 'Operador',
+    tipo: 'Ativo',
 })
+
 const mostrarSenha = ref(false)
 const mostrarConfirmarSenha = ref(false)
 
-const usuarios = ref([
-    { iniciais: 'RV', nome: 'Dra. Renata Vasconcellos', email: 'renata.vasconcellos@bancoleite.org.br', tipo: 'Administrador', ativo: true },
-    { iniciais: 'CM', nome: 'Carlos Eduardo Mendes', email: 'carlos.mendes@bancoleite.org.br', tipo: 'Ativo', ativo: true },
-    { iniciais: 'JR', nome: 'Juliana Ribeiro', email: 'juliana.ribeiro@bancoleite.org.br', tipo: 'Operador', ativo: true },
-])
-const usuariosRascunho = ref(usuarios.value.map(usuario => ({ ...usuario })))
+async function carregarInstituicao() {
+    const dados = await buscarMinhaInstituicao()
 
-const instituicaoRascunho = ref({ ...instituicao.value })
-const responsavelRascunho = ref({ ...responsavel.value })
-const fotoInstituicao = ref('')
-const fotoInstituicaoRascunho = ref('')
-const seletorFoto = ref(null)
+    if (!dados) {
+        console.error('Não foi possível carregar os dados da instituição.')
+        return
+    }
+
+    idColeta.value = dados.id_coleta
+
+    instituicao.value = {
+        id: dados.id,
+        nome: dados.nome ?? '',
+        cnpj: dados.cnpj ?? '',
+        telefone: dados.telefone ?? '',
+        email: dados.email ?? '',
+    }
+
+    instituicaoRascunho.value = { ...instituicao.value }
+
+    endereco.value = {
+        cep: dados.cep ?? '',
+        logradouro: dados.logradouro ?? '',
+        numero: dados.numero ?? '',
+        complemento: dados.complemento ?? '',
+        bairro: dados.bairro ?? '',
+        cidade: dados.cidade ?? '',
+        uf: dados.sigla_estado ?? '',
+    }
+
+    enderecoRascunho.value = { ...endereco.value }
+
+    fotoInstituicaoRascunho.value = dados.foto ?? ''
+}
+
+async function carregarFuncionarios() {
+    const dados = await buscarFuncionariosInstituicao()
+
+    console.log('Funcionários da instituição:', dados)
+
+    usuarios.value = dados.map(funcionario => {
+        const nome = funcionario.nome ?? ''
+
+        const iniciais = nome
+            .split(/\s+/)
+            .filter(Boolean)
+            .slice(0, 2)
+            .map(parte => parte[0])
+            .join('')
+            .toUpperCase()
+
+        return {
+            id: funcionario.id,
+            iniciais,
+            nome,
+            email: funcionario.email ?? '',
+            tipo: Number(funcionario.adm) === 1
+                ? 'Administrador'
+                : 'Ativo',
+        }
+    })
+
+    usuariosRascunho.value = usuarios.value.map(usuario => ({ ...usuario }))
+
+    
+    const principal = dados.find(
+        funcionario => Number(funcionario.adm) === 1
+    )
+
+    if (!principal) return
+
+    const dataNascimento = principal.data_nascimento
+        ? new Date(principal.data_nascimento).toLocaleDateString('pt-BR', {
+            timeZone: 'UTC'
+        })
+        : ''
+
+    responsavel.value = {
+        nome: principal.nome ?? '',
+        email: principal.email ?? '',
+        telefone: principal.telefone ?? '',
+        cpf: principal.cpf ?? '',
+        nascimento: dataNascimento,
+        cargo: principal.cargo ?? 'Administrador',
+    }
+
+    responsavelRascunho.value = { ...responsavel.value }
+}
+
+onMounted(() => {
+    carregarInstituicao()
+    carregarFuncionarios()
+})
 
 function salvar() {
-    instituicaoEditando.value = false
-    responsavelEditando.value = false
     instituicao.value = { ...instituicaoRascunho.value }
-    fotoInstituicao.value = fotoInstituicaoRascunho.value
     responsavel.value = { ...responsavelRascunho.value }
     endereco.value = { ...enderecoRascunho.value }
     usuarios.value = usuariosRascunho.value.map(usuario => ({ ...usuario }))
 }
 
-function removerUsuario(indice) {
-    usuariosRascunho.value.splice(indice, 1)
-}
-
 function abrirEditarInstituicao() {
     instituicaoRascunho.value = { ...instituicao.value }
     modalInstituicao.value = true
-}
-
-function abrirEditarResponsavel() {
-    responsavelRascunho.value = { ...responsavel.value }
-    modalResponsavel.value = true
 }
 
 function confirmarInstituicao() {
@@ -92,6 +177,11 @@ function confirmarInstituicao() {
 function cancelarInstituicao() {
     instituicaoRascunho.value = { ...instituicao.value }
     modalInstituicao.value = false
+}
+
+function abrirEditarResponsavel() {
+    responsavelRascunho.value = { ...responsavel.value }
+    modalResponsavel.value = true
 }
 
 function confirmarResponsavel() {
@@ -114,20 +204,39 @@ function selecionarFoto(event) {
     }
 
     const leitor = new FileReader()
+
     leitor.onload = () => {
         fotoInstituicaoRascunho.value = String(leitor.result)
     }
+
     leitor.readAsDataURL(arquivo)
 }
 
 function removerFoto() {
     fotoInstituicaoRascunho.value = ''
-    if (seletorFoto.value) seletorFoto.value.value = ''
+
+    if (seletorFoto.value) {
+        seletorFoto.value.value = ''
+    }
+}
+
+function removerUsuario(indice) {
+    usuariosRascunho.value.splice(indice, 1)
 }
 
 function abrirAdicionarUsuario() {
     usuarioIndiceEdicao.value = null
-    usuarioFormulario.value = { nome: '', email: '', cpf: '', telefone: '', senha: '', confirmarSenha: '', tipo: 'Operador' }
+
+    usuarioFormulario.value = {
+        nome: '',
+        email: '',
+        cpf: '',
+        telefone: '',
+        senha: '',
+        confirmarSenha: '',
+        tipo: 'Ativo',
+    }
+
     mostrarSenha.value = false
     mostrarConfirmarSenha.value = false
     modalUsuario.value = true
@@ -135,17 +244,29 @@ function abrirAdicionarUsuario() {
 
 function abrirEditarUsuario(usuario, indice) {
     usuarioIndiceEdicao.value = indice
-    usuarioFormulario.value = { nome: usuario.nome, email: usuario.email }
+
+    usuarioFormulario.value = {
+        nome: usuario.nome,
+        email: usuario.email,
+        cpf: usuario.cpf ?? '',
+        telefone: usuario.telefone ?? '',
+        senha: '',
+        confirmarSenha: '',
+        tipo: usuario.tipo,
+    }
+
     modalUsuario.value = true
 }
 
 function salvarUsuario() {
     const nome = usuarioFormulario.value.nome.trim()
     const email = usuarioFormulario.value.email.trim()
+
     if (!nome || !email) return
 
     const iniciais = nome
         .split(/\s+/)
+        .filter(Boolean)
         .slice(0, 2)
         .map(parte => parte[0])
         .join('')
@@ -157,17 +278,20 @@ function salvarUsuario() {
             nome,
             email,
             tipo: usuarioFormulario.value.tipo,
-            ativo: true,
         })
     } else {
         const usuario = usuariosRascunho.value[usuarioIndiceEdicao.value]
+
         usuario.iniciais = iniciais
         usuario.nome = nome
         usuario.email = email
+        usuario.cpf = usuarioFormulario.value.cpf
+        usuario.telefone = usuarioFormulario.value.telefone
     }
 
     modalUsuario.value = false
 }
+
 </script>
 
 <template>
@@ -208,22 +332,22 @@ function salvarUsuario() {
 
                 <div class="mt-[16px] grid gap-x-[20px] gap-y-[12px]">
                     <label class="text-[10px] text-[#94A3B8]">Nome da instituição
-                        <input v-model="instituicao.nome" :readonly="!instituicaoEditando"
-                            class="mt-[4px] h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna" />
+                        <input v-model="instituicao.nome" disabled
+                            class="mt-[4px] h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna disabled:cursor-not-allowed disabled:bg-[#F8FAFC]" />
                     </label>
                     <div class="grid grid-cols-1 gap-[16px] md:grid-cols-2">
                         <label class="text-[10px] text-[#94A3B8]">CNPJ
-                            <input v-model="instituicao.cnpj" :readonly="!instituicaoEditando"
-                                class="mt-[4px] h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna" />
+                            <input v-model="instituicao.cnpj" disabled
+                                class="mt-[4px] h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna disabled:cursor-not-allowed disabled:bg-[#F8FAFC]" />
                         </label>
                         <label class="text-[10px] text-[#94A3B8]">Telefone
-                            <input v-model="instituicao.telefone" :readonly="!instituicaoEditando"
-                                class="mt-[4px] h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna" />
+                            <input v-model="instituicao.telefone" disabled
+                                class="mt-[4px] h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna disabled:cursor-not-allowed disabled:bg-[#F8FAFC]" />
                         </label>
                     </div>
                     <label class="text-[10px] text-[#94A3B8]">E-mail da instituição
-                        <input v-model="instituicao.email" :readonly="!instituicaoEditando"
-                            class="mt-[4px] h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna" />
+                        <input v-model="instituicao.email" disabled
+                            class="mt-[4px] h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna disabled:cursor-not-allowed disabled:bg-[#F8FAFC]" />
                     </label>
                 </div>
             </article>
@@ -242,33 +366,33 @@ function salvarUsuario() {
 
                 <div class="mt-[12px] rounded-[7px] border border-[#E5E7EB] p-[14px]">
                 <div class="grid grid-cols-1 items-center gap-[12px] md:grid-cols-[70px_minmax(0,1fr)_minmax(0,1fr)]">
-                    <div class="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-[#FFE7EA] text-[13px] font-semibold text-materna">RV</div>
+                    <div class="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-[#FFE7EA] text-[13px] font-semibold text-materna">{{ responsavel.nome.split(' ').map(p => p[0]).slice(0, 2).join('').toUpperCase() }}</div>
                     <label class="min-w-0 text-[9px] text-[#94A3B8]">Nome completo
-                        <input v-model="responsavel.nome" :readonly="!responsavelEditando"
-                            class="mt-[4px] block h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna" />
+                        <input v-model="responsavel.nome" disabled
+                            class="mt-[4px] block h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna disabled:cursor-not-allowed disabled:bg-[#F8FAFC]" />
                     </label>
                     <label class="min-w-0 text-[9px] text-[#94A3B8]">Telefone direto
-                        <input v-model="responsavel.telefone" :readonly="!responsavelEditando"
-                            class="mt-[4px] block h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna" />
+                        <input v-model="responsavel.telefone" disabled
+                            class="mt-[4px] block h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna disabled:cursor-not-allowed disabled:bg-[#F8FAFC]" />
                     </label>
                 </div>
 
                 <div class="mt-[10px] grid grid-cols-1 gap-x-[16px] gap-y-[10px] md:grid-cols-2">
                     <label class="text-[9px] text-[#94A3B8]">CPF
-                        <input v-model="responsavel.cpf" :readonly="!responsavelEditando"
-                            class="mt-[4px] block h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna" />
+                        <input v-model="responsavel.cpf" disabled
+                            class="mt-[4px] block h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna disabled:cursor-not-allowed disabled:bg-[#F8FAFC]" />
                     </label>
                     <label class="text-[9px] text-[#94A3B8]">Data de nascimento
-                        <input v-model="responsavel.nascimento" :readonly="!responsavelEditando"
-                            class="mt-[4px] block h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna" />
+                        <input v-model="responsavel.nascimento" disabled
+                            class="mt-[4px] block h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna disabled:cursor-not-allowed disabled:bg-[#F8FAFC]" />
                     </label>
                     <label class="text-[9px] text-[#94A3B8]">Cargo
-                        <input v-model="responsavel.cargo" :readonly="!responsavelEditando"
-                            class="mt-[4px] block h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna" />
+                        <input v-model="responsavel.cargo" disabled
+                            class="mt-[4px] block h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna disabled:cursor-not-allowed disabled:bg-[#F8FAFC]" />
                     </label>
                     <label class="text-[9px] text-[#94A3B8]">E-mail corporativo
-                        <input v-model="responsavel.email" :readonly="!responsavelEditando"
-                            class="mt-[4px] block h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna" />
+                        <input v-model="responsavel.email" disabled
+                            class="mt-[4px] block h-[36px] w-full rounded-[7px] border border-[#EEF0F3] px-[10px] text-[11px] text-[#475569] outline-none focus:border-materna disabled:cursor-not-allowed disabled:bg-[#F8FAFC]" />
                     </label>
                     </div>
                 </div>
