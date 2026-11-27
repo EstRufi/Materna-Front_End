@@ -1,11 +1,60 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
+import { buscarMinhaInstituicao } from '@/services/instituicaoService'
+import { listarJornada } from '@/services/jornadaService'
+import { listarHorariosInstituicao, cadastrarHorario } from '@/services/horarioService'
+import { listarAgendamentosInstituicao } from '@/services/agendamentoService'
 
-const dataSelecionada = ref('2026-08-25')
-const mesSelecionado = ref('2026-08')
+const instituicao = ref(null)
+const jornadas = ref([])
+const horariosApi = ref([])
+const agendamentosApi = ref([])
+const carregandoAgenda = ref(false)
+
+async function carregarDadosAgenda() {
+    carregandoAgenda.value = true
+
+    try {
+        instituicao.value = await buscarMinhaInstituicao()
+
+        if (!instituicao.value) {
+            console.error('Não foi possível encontrar a instituição.')
+            return
+        }
+
+        const idInstituicao = instituicao.value.id
+
+        console.log('Instituição encontrada:', instituicao.value)
+        console.log('ID da instituição:', idInstituicao)
+
+        jornadas.value = await listarJornada(idInstituicao)
+     
+        horariosApi.value = await listarHorariosInstituicao()
+
+        agendamentosApi.value = await listarAgendamentosInstituicao()
+
+        console.log('Jornadas da instituição:', jornadas.value)
+        console.log('Horários da API:', horariosApi.value)
+        console.log('Agendamentos da API:', agendamentosApi.value)
+
+    } catch (erro) {
+        console.error('Erro ao carregar dados da Agenda:', erro)
+    } finally {
+        carregandoAgenda.value = false
+    }
+}
+
+const hoje = new Date()
+
+const anoAtual = hoje.getFullYear()
+const mesAtual = String(hoje.getMonth() + 1).padStart(2, '0')
+const diaAtual = String(hoje.getDate()).padStart(2, '0')
+
+const dataSelecionada = ref(`${anoAtual}-${mesAtual}-${diaAtual}`)
+const mesSelecionado = ref(`${anoAtual}-${mesAtual}`)
 const calendarioAberto = ref(false)
-const anoCalendario = ref(2026)
-const mesCalendario = ref(1)
+const anoCalendario = ref(anoAtual)
+const mesCalendario = ref(Number(mesAtual))
 
 const meses = [
   { valor: '2026-01', rotulo: 'Janeiro' },
@@ -104,76 +153,96 @@ const agendamentos = ref([
 ])
 
 const novoHorario = ref({
-  data: '26/01/2026',
-  jornada: '',
-  horario: '09:00'
+  data: `${diaAtual}/${mesAtual}/${anoAtual}`,
+  id_etapa: '',
+  horario: ''
+})
+
+const etapasAgendaveis = computed(() => {
+    return jornadas.value.flatMap(jornada =>
+        (jornada.etapas ?? [])
+            .filter(etapa => etapa.is_agendavel === 1)
+            .map(etapa => ({
+                ...etapa,
+                nomeJornada: jornada.nome
+            }))
+    )
 })
 
 const secaoAgenda = ref('Atendimentos do dia')
 const filtroEtapa = ref('Todas')
 const filtroStatus = ref('Todos')
-const horariosCadastrados = ref([
-  {
-    id: 1,
-    data: '2026-08-25',
-    horario: '09:00',
-    horarioFim: '09:45',
-    jornada: 'Doação de leite humano',
-    etapa: 'Coleta (Etapa Obrigatória)',
-    agendamentos: ['Ana Souza #1028', 'Joana Prado #1035'],
-    status: 'Lotado'
-  },
-  {
-    id: 2,
-    data: '2026-08-25',
-    horario: '10:00',
-    horarioFim: '10:45',
-    jornada: 'Doação de leite humano',
-    etapa: 'Coleta (Etapa Obrigatória)',
-    agendamentos: ['Maria Silva #1035'],
-    status: '1 vaga restante'
-  },
-  {
-    id: 3,
-    data: '2026-08-25',
-    horario: '11:00',
-    horarioFim: '11:45',
-    jornada: 'Orientação inicial / Apoio à amamentação',
-    etapa: 'Etapa Cadastrada: Orientação Inicial',
-    agendamentos: ['Gabriela Ribeiro #1030'],
-    status: 'Lotado'
-  },
-  {
-    id: 4,
-    data: '2026-08-25',
-    horario: '14:00',
-    horarioFim: '14:45',
-    jornada: 'Doação de leite humano',
-    etapa: 'Coleta (Etapa Obrigatória)',
-    agendamentos: ['Carla Nunes #1031', 'Beatriz Costa #1032'],
-    status: 'Lotado'
-  },
-  {
-    id: 5,
-    data: '2026-08-25',
-    horario: '15:00',
-    horarioFim: '15:45',
-    jornada: 'Doação de leite humano',
-    etapa: 'Coleta (Etapa Obrigatória)',
-    agendamentos: [],
-    status: 'Disponível (2 livres)'
-  },
-  {
-    id: 6,
-    data: '2026-08-25',
-    horario: '16:00',
-    horarioFim: '16:45',
-    jornada: 'Doação de leite humano',
-    etapa: 'Coleta (Etapa Obrigatória)',
-    agendamentos: [],
-    status: 'Disponível (2 livres)'
-  }
-])
+
+const horariosCadastrados = computed(() => {
+    return horariosApi.value.map(horario => {
+        const jornadaEncontrada = jornadas.value.find(jornada =>
+            (jornada.etapas ?? []).some(
+                etapa => Number(etapa.id) === Number(horario.id_etapa)
+            )
+        )
+
+        const etapaEncontrada = jornadaEncontrada?.etapas?.find(
+            etapa => Number(etapa.id) === Number(horario.id_etapa)
+        )
+
+        return {
+            id: horario.id,
+            data: horario.dia?.slice(0, 10),
+            horario: horario.horario?.slice(0, 5),
+            jornada: jornadaEncontrada?.nome ?? 'Jornada não encontrada',
+            etapa: etapaEncontrada?.titulo ?? 'Etapa não encontrada',
+            agendamentos: [],
+            status: Number(horario.disponivel) === 1
+                ? 'Disponível'
+                : 'Indisponível'
+        }
+    })
+})
+
+const horariosDaSemana = computed(() => {
+    const dataBase = new Date(`${dataSelecionada.value}T12:00:00`)
+
+    const inicioSemana = new Date(dataBase)
+    const diaSemana = (inicioSemana.getDay() + 6) % 7
+    inicioSemana.setDate(inicioSemana.getDate() - diaSemana)
+
+    const fimSemana = new Date(inicioSemana)
+    fimSemana.setDate(fimSemana.getDate() + 6)
+
+    return horariosCadastrados.value.filter(item => {
+        if (!item.data) return false
+
+        const dataHorario = new Date(`${item.data}T12:00:00`)
+
+        return dataHorario >= inicioSemana && dataHorario <= fimSemana
+    })
+})
+
+const totalHorariosSemana = computed(() => {
+    return horariosDaSemana.value.length
+})
+
+const horariosDisponiveisSemana = computed(() => {
+    return horariosDaSemana.value.filter(
+        item => item.status === 'Disponível'
+    ).length
+})
+
+const horariosIndisponiveisSemana = computed(() => {
+    return horariosDaSemana.value.filter(
+        item => item.status === 'Indisponível'
+    ).length
+})
+
+const etapasDisponiveis = computed(() => {
+    return [
+        ...new Set(
+            horariosCadastrados.value
+                .map(item => item.etapa)
+                .filter(etapa => etapa && etapa !== 'Etapa não encontrada')
+        )
+    ]
+})
 
 const agendamentosFiltrados = computed(() => {
   if (secaoAgenda.value === 'Horários cadastrados') return []
@@ -182,16 +251,18 @@ const agendamentosFiltrados = computed(() => {
 })
 
 const horariosFiltrados = computed(() => {
-  return horariosCadastrados.value.filter(item => {
-    const dataCorreta = item.data === dataSelecionada.value
-    const etapaCorreta = filtroEtapa.value === 'Todas'
-      || item.etapa?.includes(filtroEtapa.value)
-    const statusCorreto = filtroStatus.value === 'Todos'
-      || (filtroStatus.value === 'Lotado' && item.status === 'Lotado')
-      || (filtroStatus.value === 'Disponível' && item.status.startsWith('Disponível'))
+    return horariosCadastrados.value.filter(item => {
+        const dataCorreta = item.data === dataSelecionada.value
 
-    return dataCorreta && etapaCorreta && statusCorreto
-  })
+        const etapaCorreta = filtroEtapa.value === 'Todas'
+            || item.etapa === filtroEtapa.value
+
+        const statusCorreto = filtroStatus.value === 'Todos'
+            || (filtroStatus.value === 'Disponível' && item.status === 'Disponível')
+            || (filtroStatus.value === 'Indisponível' && item.status === 'Indisponível')
+
+        return dataCorreta && etapaCorreta && statusCorreto
+    })
 })
 
 function aceitarAgendamento(item) {
@@ -260,20 +331,48 @@ function selecionarDia(data) {
   novoHorario.value.data = `${dia}/${mes}/${ano}`
 }
 
-function criarHorario(formulario) {
-  if (!formulario.horario) return
+async function criarHorario(formulario) {
+    if (!formulario.data || !formulario.id_etapa || !formulario.horario) {
+        alert('Preencha todos os campos para criar o horário.')
+        return
+    }
 
-  const [dia, mes, ano] = formulario.data.split('/')
-  horariosCadastrados.value.push({
-    id: Date.now(),
-    data: `${ano}-${mes}-${dia}`,
-    horario: formulario.horario,
-    jornada: formulario.jornada
-  })
+    const [dia, mes, ano] = formulario.data.split('/')
 
-  formulario.horario = ''
-  formulario.jornada = ''
+    const dados = {
+        dia: `${ano}-${mes}-${dia}`,
+        horario: formulario.horario,
+        id_etapa: Number(formulario.id_etapa)
+    }
+
+    console.log('Dados enviados para cadastrar horário:', dados)
+
+    try {
+        const resposta = await cadastrarHorario(dados)
+
+        console.log('Resposta do cadastro do horário:', resposta)
+
+        if (!resposta || !resposta.status) {
+            alert('Não foi possível cadastrar o horário.')
+            return
+        }
+
+        alert('Horário cadastrado com sucesso!')
+
+        horariosApi.value = await listarHorariosInstituicao()
+
+        formulario.id_etapa = ''
+        formulario.horario = ''
+
+    } catch (erro) {
+        console.error('Erro ao cadastrar horário:', erro)
+        alert('Ocorreu um erro ao cadastrar o horário.')
+    }
 }
+
+onMounted(() => {
+    carregarDadosAgenda()
+})
 </script>
 
 <template>
@@ -286,7 +385,7 @@ function criarHorario(formulario) {
         <div>
           <p class="text-[13px] text-[#94A3B8]">Horários na Semana</p>
           <div class="mt-[4px] flex items-end gap-[6px]">
-            <strong class="text-[28px] leading-none text-slate-700">38</strong>
+            <strong class="text-[28px] leading-none text-slate-700">{{ totalHorariosSemana }}</strong>
             <span class="pb-[2px] text-[11px] text-[#94A3B8]">slots</span>
           </div>
         </div>
@@ -300,7 +399,7 @@ function criarHorario(formulario) {
 
       <article class="flex h-[90px] items-center justify-between rounded-[10px] border border-borda bg-white px-[20px]">
         <div>
-          <p class="text-[13px] text-[#94A3B8]">Vagas Ocupadas</p>
+          <p class="text-[13px] text-[#94A3B8]">Horários Indisponíveis</p>
           <div class="mt-[4px] flex items-end gap-[8px]">
             <strong class="text-[28px] leading-none text-slate-700">29</strong>
             <span class="pb-[2px] text-[11px] text-[#22A06B]">76%</span>
@@ -315,7 +414,7 @@ function criarHorario(formulario) {
         <div>
           <p class="text-[13px] text-[#94A3B8]">Vagas Disponíveis</p>
           <div class="mt-[4px] flex items-end gap-[8px]">
-            <strong class="text-[28px] leading-none text-slate-700">9</strong>
+            <strong class="text-[28px] leading-none text-slate-700">{{ horariosDisponiveisSemana }}</strong>
             <span class="pb-[2px] text-[11px] text-[#E37A86]">livres</span>
           </div>
         </div>
@@ -455,8 +554,13 @@ function criarHorario(formulario) {
           class="h-[38px] w-full appearance-none rounded-[8px] border border-borda bg-white px-[14px] pr-[36px] text-[13px] text-[#64748B] outline-none focus:border-[#CBD5E1] focus:ring-0"
         >
           <option value="Todas">Todas as etapas</option>
-          <option value="Coleta">Coleta</option>
-          <option value="Orientação">Orientação</option>
+          <option
+              v-for="etapa in etapasDisponiveis"
+              :key="etapa"
+              :value="etapa"
+          >
+              {{ etapa }}
+          </option>
         </select>
         <svg class="pointer-events-none absolute right-[12px] top-1/2 h-[14px] w-[14px] -translate-y-1/2 text-[#94A3B8]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -469,8 +573,8 @@ function criarHorario(formulario) {
           class="h-[38px] w-full appearance-none rounded-[8px] border border-borda bg-white px-[14px] pr-[36px] text-[13px] text-[#64748B] outline-none focus:border-[#CBD5E1] focus:ring-0"
         >
           <option value="Todos">Todos os status</option>
-          <option value="Lotado">Lotado</option>
           <option value="Disponível">Disponível</option>
+          <option value="Indisponível">Indisponível</option>
         </select>
         <svg class="pointer-events-none absolute right-[12px] top-1/2 h-[14px] w-[14px] -translate-y-1/2 text-[#94A3B8]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -504,7 +608,7 @@ function criarHorario(formulario) {
                     <path d="M6 3.5V6.25L8 7.25" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 </span>
-                {{ item.horario }} - {{ item.horarioFim }}
+                {{ item.horario }}
               </div>
               <div class="min-w-0">
                 <p class="text-[12px] font-medium text-slate-700">{{ item.jornada || 'Etapa não informada' }}</p>
@@ -632,11 +736,15 @@ function criarHorario(formulario) {
 
             <div>
               <label class="mb-[4px] block text-[12px]">Etapa da jornada</label>
-              <select v-model="novoHorario.jornada" class="h-[40px] w-full rounded-[7px] border border-borda bg-white px-[12px] text-[12px] outline-none focus:border-materna">
+              <select v-model="novoHorario.id_etapa" class="h-[40px] w-full rounded-[7px] border border-borda bg-white px-[12px] text-[12px] outline-none focus:border-materna">
                 <option value="">Selecione uma etapa</option>
-                <option>Triagem</option>
-                <option>Coleta</option>
-                <option>Orientação</option>
+                  <option
+                    v-for="etapa in etapasAgendaveis"
+                    :key="etapa.id"
+                    :value="etapa.id"
+                      >
+                    {{ etapa.titulo }} - {{ etapa.nomeJornada }}
+                  </option>
               </select>
             </div>
 
