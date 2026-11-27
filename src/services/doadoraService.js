@@ -101,9 +101,16 @@ const doadoras = [
 
 export function calcularProgressoJornada(doadora) {
     const jornada = doadora?.jornada
-    if (!jornada?.total_etapas) return 0
 
-    return Math.min(100, Math.round((jornada.total_etapas_feitas / jornada.total_etapas) * 100))
+    const totalEtapas = Number(jornada?.total_etapas ?? 0)
+    const etapasFeitas = Number(jornada?.total_etapas_feitas ?? 0)
+
+    if (totalEtapas <= 0) return 0
+
+    return Math.min(
+        100,
+        Math.max(0, Math.round((etapasFeitas / totalEtapas) * 100))
+    )
 }
 
 export async function listarDoadoras() {

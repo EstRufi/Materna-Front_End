@@ -33,3 +33,14 @@ export async function atualizarInstituicao(id, dados) {
 
     return resposta
 }
+
+
+export async function listarDoadorasInstituicao() {
+    const resposta = await requisicaoApi('instituicao/1/doadoras', {}, true)
+
+    console.log('Resposta das doadoras:', resposta)
+
+    if (!resposta || !resposta.status) return []
+
+    return resposta.response.doadoras ?? []
+}

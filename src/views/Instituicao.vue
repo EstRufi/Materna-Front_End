@@ -1,6 +1,6 @@
 <script setup>
 
-import { buscarFuncionariosInstituicao } from '@/services/funcionarioService'
+import { atualizarFuncionario, buscarFuncionariosInstituicao, cadastrarFuncionario } from '@/services/funcionarioService'
 import { buscarMinhaInstituicao } from '@/services/instituicaoService'
 import { onMounted, ref } from 'vue'
 
@@ -8,6 +8,11 @@ const modalInstituicao = ref(false)
 const modalResponsavel = ref(false)
 const modalUsuario = ref(false)
 const idColeta = ref(null)
+
+const senhaResponsavel = ref('')
+const confirmarSenhaResponsavel = ref('')
+const mostrarSenhaResponsavel = ref(false)
+const mostrarConfirmarSenhaResponsavel = ref(false)
 
 const instituicao = ref({
     id: null,
@@ -20,6 +25,7 @@ const instituicao = ref({
 const instituicaoRascunho = ref({ ...instituicao.value })
 
 const responsavel = ref({
+    id: null,
     nome: '',
     cargo: '',
     cpf: '',
@@ -55,6 +61,7 @@ const usuarioFormulario = ref({
     email: '',
     cpf: '',
     telefone: '',
+    data_nascimento: '',
     senha: '',
     confirmarSenha: '',
     tipo: 'Ativo',
@@ -131,7 +138,7 @@ async function carregarFuncionarios() {
     const principal = dados.find(
         funcionario => Number(funcionario.adm) === 1
     )
-
+    console.log('Data original da API:', principal?.data_nascimento)
     if (!principal) return
 
     const dataNascimento = principal.data_nascimento
@@ -141,14 +148,15 @@ async function carregarFuncionarios() {
         : ''
 
     responsavel.value = {
+        id: principal.id,
         nome: principal.nome ?? '',
         email: principal.email ?? '',
         telefone: principal.telefone ?? '',
         cpf: principal.cpf ?? '',
         nascimento: dataNascimento,
-        cargo: principal.cargo ?? 'Administrador',
+        cargo: 'Administrador',
     }
-
+    console.log('Data exibida no formulário:', responsavel.value.nascimento)
     responsavelRascunho.value = { ...responsavel.value }
 }
 
@@ -157,11 +165,54 @@ onMounted(() => {
     carregarFuncionarios()
 })
 
-function salvar() {
+async function salvar() {
+    if (!senhaResponsavel.value) {
+        alert('Informe a nova senha do responsável.')
+        return
+    }
+
+    if (senhaResponsavel.value !== confirmarSenhaResponsavel.value) {
+        alert('As senhas não coincidem.')
+        return
+    }
+
+    if (!responsavelRascunho.value.id || !instituicao.value.id) {
+        alert('Não foi possível identificar o responsável ou a instituição.')
+        return
+    }
+
+    const dadosResponsavel = {
+        nome: responsavelRascunho.value.nome,
+        cpf: responsavelRascunho.value.cpf,
+        data_nascimento: formatarDataParaApi(
+            responsavelRascunho.value.nascimento
+        ),
+        email: responsavelRascunho.value.email,
+        adm: true,
+        senha: senhaResponsavel.value,
+        telefone: responsavelRascunho.value.telefone.replace(/\D/g, ''),
+        id_instituicao: instituicao.value.id,
+    }
+
+    const resposta = await atualizarFuncionario(
+        responsavelRascunho.value.id,
+        dadosResponsavel
+    )
+
+    if (!resposta || !resposta.status) {
+        alert('Não foi possível atualizar os dados do responsável.')
+        return
+    }
+
     instituicao.value = { ...instituicaoRascunho.value }
     responsavel.value = { ...responsavelRascunho.value }
     endereco.value = { ...enderecoRascunho.value }
     usuarios.value = usuariosRascunho.value.map(usuario => ({ ...usuario }))
+
+    senhaResponsavel.value = ''
+    confirmarSenhaResponsavel.value = ''
+
+    alert('Dados do responsável atualizados com sucesso!')
 }
 
 function abrirEditarInstituicao() {
@@ -181,6 +232,13 @@ function cancelarInstituicao() {
 
 function abrirEditarResponsavel() {
     responsavelRascunho.value = { ...responsavel.value }
+
+    senhaResponsavel.value = ''
+    confirmarSenhaResponsavel.value = ''
+
+    mostrarSenhaResponsavel.value = false
+    mostrarConfirmarSenhaResponsavel.value = false
+
     modalResponsavel.value = true
 }
 
@@ -191,6 +249,13 @@ function confirmarResponsavel() {
 
 function cancelarResponsavel() {
     responsavelRascunho.value = { ...responsavel.value }
+
+    senhaResponsavel.value = ''
+    confirmarSenhaResponsavel.value = ''
+
+    mostrarSenhaResponsavel.value = false
+    mostrarConfirmarSenhaResponsavel.value = false
+
     modalResponsavel.value = false
 }
 
@@ -232,6 +297,7 @@ function abrirAdicionarUsuario() {
         email: '',
         cpf: '',
         telefone: '',
+        data_nascimento: '',
         senha: '',
         confirmarSenha: '',
         tipo: 'Ativo',
@@ -258,11 +324,16 @@ function abrirEditarUsuario(usuario, indice) {
     modalUsuario.value = true
 }
 
-function salvarUsuario() {
+async function salvarUsuario() {
     const nome = usuarioFormulario.value.nome.trim()
     const email = usuarioFormulario.value.email.trim()
+    const cpf = formatarCPF(usuarioFormulario.value.cpf)
+    const telefone = usuarioFormulario.value.telefone.replace(/\D/g, '')
 
-    if (!nome || !email) return
+    if (!nome || !email || !cpf || !telefone) {
+        alert('Preencha todos os campos obrigatórios.')
+        return
+    }
 
     const iniciais = nome
         .split(/\s+/)
@@ -273,23 +344,88 @@ function salvarUsuario() {
         .toUpperCase()
 
     if (usuarioIndiceEdicao.value === null) {
-        usuariosRascunho.value.push({
-            iniciais,
-            nome,
-            email,
-            tipo: usuarioFormulario.value.tipo,
-        })
-    } else {
-        const usuario = usuariosRascunho.value[usuarioIndiceEdicao.value]
 
-        usuario.iniciais = iniciais
-        usuario.nome = nome
-        usuario.email = email
-        usuario.cpf = usuarioFormulario.value.cpf
-        usuario.telefone = usuarioFormulario.value.telefone
+        if (!usuarioFormulario.value.data_nascimento) {
+            alert('Informe a data de nascimento.')
+            return
+        }
+
+        if (!usuarioFormulario.value.senha) {
+            alert('Informe uma senha provisória.')
+            return
+        }
+
+        if (usuarioFormulario.value.senha !== usuarioFormulario.value.confirmarSenha) {
+            alert('As senhas não coincidem.')
+            return
+        }
+
+        if (!instituicao.value.id) {
+            alert('Não foi possível identificar a instituição.')
+            return
+        }
+
+        const dadosFuncionario = {
+            nome,
+            cpf,
+            data_nascimento: usuarioFormulario.value.data_nascimento,
+            email,
+            adm: false,
+            senha: usuarioFormulario.value.senha,
+            telefone,
+            id_instituicao: instituicao.value.id,
+        }
+
+        const resposta = await cadastrarFuncionario(dadosFuncionario)
+
+        if (!resposta || !resposta.status) {
+            alert('Não foi possível cadastrar o funcionário.')
+            console.error('Erro ao cadastrar funcionário:', resposta)
+            return
+        }
+
+        await carregarFuncionarios()
+
+        modalUsuario.value = false
+
+        alert('Funcionário cadastrado com sucesso!')
+
+        return
     }
 
+    // EDITAR FUNCIONÁRIO
+    const usuario = usuariosRascunho.value[usuarioIndiceEdicao.value]
+
+    usuario.iniciais = iniciais
+    usuario.nome = nome
+    usuario.email = email
+    usuario.cpf = cpf
+    usuario.telefone = usuarioFormulario.value.telefone
+
     modalUsuario.value = false
+}
+
+function formatarDataParaApi(data) {
+    if (!data) return ''
+
+    const partes = data.split('/')
+
+    if (partes.length !== 3) return ''
+
+    const [dia, mes, ano] = partes
+
+    if (!dia || !mes || !ano) return ''
+
+    return `${ano}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`
+}
+
+function formatarCPF(valor) {
+    return valor
+        .replace(/\D/g, '')
+        .slice(0, 11)
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
 }
 
 </script>
@@ -510,7 +646,7 @@ function salvarUsuario() {
             <section class="w-full max-w-[560px] rounded-[12px] bg-white shadow-xl">
                 <header class="flex items-center justify-between border-b border-borda px-[20px] py-[16px]">
                     <h2 class="text-[15px] font-semibold text-[#475569]">Editar responsável</h2>
-                    <button type="button" @click="modalResponsavel = false" class="grid h-[30px] w-[30px] place-items-center rounded-full text-[18px] text-[#94A3B8] hover:bg-slate-50">×</button>
+                    <button type="button" @click="cancelarResponsavel" class="grid h-[30px] w-[30px] place-items-center rounded-full text-[18px] text-[#94A3B8] hover:bg-slate-50">×</button>
                 </header>
                 <div class="grid grid-cols-1 gap-[12px] p-[20px] md:grid-cols-2">
                     <label class="text-[10px] text-[#94A3B8] md:col-span-2">Nome completo
@@ -531,6 +667,43 @@ function salvarUsuario() {
                     <label class="text-[10px] text-[#94A3B8] md:col-span-2">E-mail corporativo
                         <input v-model="responsavelRascunho.email" type="email" class="mt-[4px] h-[40px] w-full rounded-[7px] border border-borda px-[10px] text-[12px] text-[#475569] outline-none focus:border-materna" />
                     </label>
+                    <div class="grid grid-cols-1 gap-[12px]">
+                        <label class="text-[10px] text-[#94A3B8]">Nova senha *
+                            <div class="relative mt-[4px]">
+                                <input
+                                    v-model="senhaResponsavel"
+                                    :type="mostrarSenhaResponsavel ? 'text' : 'password'"
+                                    placeholder="Digite a nova senha"
+                                    class="h-[40px] w-full rounded-[7px] border border-borda px-[10px] pr-[55px] text-[12px] text-[#475569] outline-none focus:border-materna"
+                                />
+                                <button
+                                    type="button"
+                                    @click="mostrarSenhaResponsavel = !mostrarSenhaResponsavel"
+                                    class="absolute right-[10px] top-1/2 -translate-y-1/2 text-[10px] text-[#94A3B8]"
+                                >
+                                    {{ mostrarSenhaResponsavel ? 'Ocultar' : 'Mostrar' }}
+                                </button>
+                            </div>
+                        </label>
+
+                        <label class="text-[10px] text-[#94A3B8]">Confirmar nova senha *
+                            <div class="relative mt-[4px]">
+                                <input
+                                    v-model="confirmarSenhaResponsavel"
+                                    :type="mostrarConfirmarSenhaResponsavel ? 'text' : 'password'"
+                                    placeholder="Confirme a nova senha"
+                                    class="h-[40px] w-full rounded-[7px] border border-borda px-[10px] pr-[55px] text-[12px] text-[#475569] outline-none focus:border-materna"
+                                />
+                                <button
+                                    type="button"
+                                    @click="mostrarConfirmarSenhaResponsavel = !mostrarConfirmarSenhaResponsavel"
+                                    class="absolute right-[10px] top-1/2 -translate-y-1/2 text-[10px] text-[#94A3B8]"
+                                >
+                                    {{ mostrarConfirmarSenhaResponsavel ? 'Ocultar' : 'Mostrar' }}
+                                </button>
+                            </div>
+                        </label>
+                    </div>
                 </div>
                 <footer class="flex justify-end gap-[8px] border-t border-borda px-[20px] py-[14px]">
                     <button type="button" @click="cancelarResponsavel" class="h-[36px] rounded-[7px] border border-borda px-[14px] text-[12px] text-[#64748B]">Cancelar</button>
@@ -574,9 +747,31 @@ function salvarUsuario() {
                                 class="mt-[8px] h-[50px] w-full rounded-[10px] border border-[#DCE2E8] px-[14px] text-[13px] font-normal text-[#475569] outline-none placeholder:text-[#94A3B8] focus:border-materna" />
                         </label>
 
+                        <div class="flex flex-col gap-1.5">
+                            <label
+                                for="data_nascimento"
+                                class="text-sm font-medium text-texto-claro"
+                            >
+                                Data de nascimento *
+                            </label>
+
+                            <input
+                                id="data_nascimento"
+                                type="date"
+                                v-model="usuarioFormulario.data_nascimento"
+                                required
+                                class="w-full h-10 px-3 rounded-lg border border-borda bg-white text-sm text-texto-claro outline-none transition focus:border-materna focus:ring-2 focus:ring-materna/10"
+                            />
+                        </div>
+
                         <div class="grid grid-cols-1 gap-[14px] md:grid-cols-2">
                             <label class="text-[13px] font-semibold text-[#374151]">CPF *
-                                <input v-model="usuarioFormulario.cpf" required placeholder="000.000.000-00"
+                                <input
+                                    :value="usuarioFormulario.cpf"
+                                    @input="usuarioFormulario.cpf = formatarCPF($event.target.value)"
+                                    required
+                                    maxlength="14"
+                                    placeholder="000.000.000-00"
                                     class="mt-[8px] h-[50px] w-full rounded-[10px] border border-[#DCE2E8] px-[14px] text-[13px] font-normal text-[#475569] outline-none placeholder:text-[#94A3B8] focus:border-materna" />
                             </label>
                             <label class="text-[13px] font-semibold text-[#374151]">Telefone / WhatsApp
